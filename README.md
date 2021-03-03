@@ -1,5 +1,13 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## To run our project
+Open two terminal and run the following command on two seperated terminal
+### `npm start`
+This will serve as the frontend
+
+### `yarm start-api`
+This will serve as the backend 
+
 ## Available Scripts
 
 In the project directory, you can run:
