@@ -15,7 +15,7 @@ function App() {
     <div className="App">
       <header className="App-header">
 
-       <img src={logo} className="App-logo" alt="logo" />
+       {/* <img src={logo} className="App-logo" alt="logo" /> */}
        <h2>Welcome to React</h2> 
        <p>The current time is {currentTime}.</p>
 	</header>
