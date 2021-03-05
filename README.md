@@ -1,5 +1,8 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## TODO
+Figure out how to redirect to another page
+
 ## To run our project
 Open two terminal and run the following command on two seperate terminal
 ### `npm start`
