@@ -1,22 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Login from './Login'
-import Home from './Home';
+import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-const appContainer = document.getElementById('home')
-
-const loginComponent = <Login />
-const homeComponenet =  <Home />
-
-const components = <>
-  {homeComponenet}
-  {loginComponent}
-  
-</>
-
-ReactDOM.render(components, appContainer)
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('home')
+);
 
   
 // If you want your app to work offline and load faster, you can change
