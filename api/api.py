@@ -13,6 +13,7 @@ def get_current_time():
 @app.route('/login', methods = ["POST"])
 def login():
     data = json.loads(request.data)
+    print(data["username"],data["password"])
     if data["username"] in username and data["password"] in password :
         print("SUCCESS")
         return {"success":True}
