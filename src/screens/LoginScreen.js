@@ -1,39 +1,36 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Text, View, TextInput, StyleSheet, Button } from 'react-native';
+import { Context } from '../context/WebContext';
 // import { Extypo } from '@expo/vector-icons';
 
 
-const LoginScreen = props => {
-    const [username, setUserName] = useState('');
-    const [password, setPassword] = useState('');
+const LoginScreen = ({ navigation }) => {
+    const {state, setUserName, onSubmit, setPassword} = useContext(Context); 
 
-    const onSubmit = async () => {
-        const reqOption = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username: username, password: password })
-        };
-        let resp = await fetch('/login', reqOption).then(data => data.json())
-        return resp.success ? props.navigation.navigate('Home') : doNothing()
-    }
-
-    const checkInput = (usernameInput, passwordInput) => {
-        if (usernameInput == '' || passwordInput == '') return false;
-        return true;
-    }
-
-    const doNothing = () => { }
+    // const onSubmit = async () => {
+    //     const reqOption = {
+    //         method: 'POST',
+    //         headers: { 'Content-Type': 'application/json' },
+    //         body: JSON.stringify({ username: state.username, password: state.password })
+    //     };
+    //     try {
+    //         let resp = await fetch('/login', reqOption).then(data => data.json());
+    //         return resp.success;
+    //     } catch (error) {
+    //         console.log(`Error: ${error}`)
+    //     }
+    // };
 
     return (
         <View>
             <Text>Username</Text>
-            <TextInput placeholder="Enter username" autoCapitalize="none" autoCorrect={false} value={username} onChangeText={(newValue) => setUserName(newValue)}></TextInput>
+            <TextInput placeholder="Enter username" autoCapitalize="none" autoCorrect={false} value={state.username} onChangeText={setUserName}></TextInput>
             <Text>Password</Text>
-            <TextInput secureTextEntry={password} placeholder="Enter password" autoCapitalize="none" autoCorrect={false} value={password} onChangeText={(newValue) => setPassword(newValue)}></TextInput>
-            <Button color='green' title='Login' onPress={() => checkInput(username, password) ? onSubmit() : doNothing} />
+            <TextInput secureTextEntry={state.password} placeholder="Enter password" autoCapitalize="none" autoCorrect={false} value={state.password} onChangeText={setPassword}></TextInput>
+            <Button color='green' title='Login' onPress={() => onSubmit(true, () => state.success ? navigation.navigate('Home') : () => {} ) } />
             <label>
-                <input type="checkbox" name="remember" onChange={doNothing} /> Remember me
-                    </label>
+                <input type="checkbox" name="remember" onChange={() => {}} /> Remember me
+            </label>
         </View>
     );
 };
@@ -41,7 +38,7 @@ const LoginScreen = props => {
 const styles = StyleSheet.create({
     text: {
         fontSize: 30
-    },
+    }
 });
 
 export default LoginScreen;

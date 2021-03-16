@@ -5,6 +5,8 @@ import HomeScreen from './screens/HomeScreen';
 import DatabaseScreen from './screens/DatabaseScreen';
 import UploadScreen from './screens/UploadScreen';
 import logo from './logo.svg';
+import { Provider } from './context/WebContext';
+import React from 'react';
 
 const navigator =  createStackNavigator(
   {
@@ -22,4 +24,12 @@ const navigator =  createStackNavigator(
 );
 
 // export default App;
-export default createAppContainer(navigator);
+const App = createAppContainer(navigator);
+
+export default () => {
+  return (
+    <Provider>
+      <App />
+    </Provider>
+  )
+}
