@@ -7,3 +7,4 @@ News.md created to log progress
 Added new context classes to improve state management
 Any functions intended to create in the future could simply be created by createWebContext and WebContext.js 
 Modified LoginScreen and App.js for better state management
+Added required steps to launch the application successfully in News.md
