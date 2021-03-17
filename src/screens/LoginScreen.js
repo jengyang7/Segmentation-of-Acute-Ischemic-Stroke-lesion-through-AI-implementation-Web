@@ -5,21 +5,21 @@ import { Context } from '../context/WebContext';
 
 
 const LoginScreen = ({ navigation }) => {
-    const {state, setUserName, onSubmit, setPassword} = useContext(Context); 
+    const { state, setUserName, setPassword } = useContext(Context);
 
-    // const onSubmit = async () => {
-    //     const reqOption = {
-    //         method: 'POST',
-    //         headers: { 'Content-Type': 'application/json' },
-    //         body: JSON.stringify({ username: state.username, password: state.password })
-    //     };
-    //     try {
-    //         let resp = await fetch('/login', reqOption).then(data => data.json());
-    //         return resp.success;
-    //     } catch (error) {
-    //         console.log(`Error: ${error}`)
-    //     }
-    // };
+    const onSubmit = async () => {
+        const reqOption = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username: state.username, password: state.password })
+        };
+        try {
+            let resp = await fetch('/login', reqOption).then(data => data.json());
+            return resp.success ? navigation.navigate('Home') : () => { };
+        } catch (error) {
+            console.log(`Error: ${error}`)
+        }
+    };
 
     return (
         <View>
@@ -27,9 +27,9 @@ const LoginScreen = ({ navigation }) => {
             <TextInput placeholder="Enter username" autoCapitalize="none" autoCorrect={false} value={state.username} onChangeText={setUserName}></TextInput>
             <Text>Password</Text>
             <TextInput secureTextEntry={state.password} placeholder="Enter password" autoCapitalize="none" autoCorrect={false} value={state.password} onChangeText={setPassword}></TextInput>
-            <Button color='green' title='Login' onPress={() => onSubmit(true, () => state.success ? navigation.navigate('Home') : () => {} ) } />
+            <Button color='green' title='Login' onPress={() => onSubmit()} />
             <label>
-                <input type="checkbox" name="remember" onChange={() => {}} /> Remember me
+                <input type="checkbox" name="remember" onChange={() => { }} /> Remember me
             </label>
         </View>
     );
