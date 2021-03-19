@@ -4,7 +4,19 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 Figure out how to redirect to another page
 
 ## To run our project
-Open two terminal and run the following command on two seperate terminal
+1) activate the backend environment (for first time launching the application. Once you have activated the environment, you do need to run this step anymore.)
+    - locate to the project directory
+    - cd api
+    - if your operating system is Unix-based, run the following command:
+        - python3 -m venv venv
+        - source venv/bin/activate
+    - if your operating system is Windows, run the following command:
+        - python -m venv venv
+        - venv\Scripts\activate
+    - run the following command:
+        - pip install flask python-dotenv
+
+2) Open two terminal and run the following command on two seperate terminal
 ### `npm start`
 This will serve as the frontend
 

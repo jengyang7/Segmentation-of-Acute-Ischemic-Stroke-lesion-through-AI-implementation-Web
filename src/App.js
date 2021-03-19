@@ -1,13 +1,19 @@
-import { createAppContainer} from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator, HeaderBackButton } from 'react-navigation-stack';
 import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
+import DatabaseScreen from './screens/DatabaseScreen';
+import UploadScreen from './screens/UploadScreen';
+import logo from './logo.svg';
+import { Provider } from './context/WebContext';
+import React from 'react';
 
-
-const navigator =  createStackNavigator(
+const navigator = createStackNavigator(
   {
     Main: LoginScreen,
-    Home: HomeScreen
+    Home: HomeScreen,
+    Database: DatabaseScreen,
+    Upload: UploadScreen
   },
   {
     initialRouteName: 'Main',
@@ -18,4 +24,13 @@ const navigator =  createStackNavigator(
 );
 
 // export default App;
-export default createAppContainer(navigator);
+const App = createAppContainer(navigator);
+
+export default () => {
+  return (
+    // Wrap into WebContext's Provider
+    <Provider>
+      <App />
+    </Provider>
+  )
+}
