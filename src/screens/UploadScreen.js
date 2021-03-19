@@ -1,25 +1,19 @@
-import React from 'react';
-import { Button, View, Text, StyleSheet } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { Context } from '../context/WebContext';
+import ImageUploader from 'react-images-upload';
 
-const HomeScreen = () => {
+
+const UploadScreen = ({ navigation }) => {
+    const { state } = useContext(Context);
+
     return (
-        <View>
-            <Text style={styles.text}>Upload</Text>
-        </View>);
+        <ImageUploader
+            withIcon={true}
+            buttonText='Choose images'
+            imgExtension={['.jpg', '.gif', '.png', '.gif']}
+            maxFileSize={5242880}
+        />
+    );
 };
 
-const styles = StyleSheet.create({
-    text: {
-        fontSize: 30
-    },
-    padding: {
-        paddingTop: 20
-    },
-    style1: {
-        position: 'absolute',
-        right: 0,
-        bottom: 50,
-    }
-});
-
-export default HomeScreen;
+export default UploadScreen;

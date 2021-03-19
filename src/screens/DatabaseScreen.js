@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, View, Text, StyleSheet } from 'react-native';
 
-const HomeScreen = () => {
+const DatabaseScreen = () => {
     return (
         <View>
             <Text style={styles.text}>Your Data</Text>
@@ -22,4 +22,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default HomeScreen;
+export default DatabaseScreen;

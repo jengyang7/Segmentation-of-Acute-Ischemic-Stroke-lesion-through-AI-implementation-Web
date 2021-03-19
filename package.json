@@ -10,6 +10,7 @@
     "expo": "^40.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-images-upload": "^1.2.8",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^2.18.1",
@@ -17,6 +18,9 @@
     "react-navigation": "^4.4.4",
     "react-navigation-stack": "^2.10.4",
     "react-scripts": "^3.4.3"
+  },
+  "babel": {
+    "plugins": [ "@babel/plugin-transform-react-jsx" ]
   },
   "scripts": {
     "start": "react-scripts start",
@@ -43,6 +47,13 @@
   },
   "proxy": "http://localhost:5000",
   "devDependencies": {
-    "@babel/core": "~7.9.0"
+    "@babel/cli": "^7.13.10",
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-transform-arrow-functions": "^7.13.0",
+    "@babel/plugin-transform-react-jsx": "^7.12.17",
+    "@babel/preset-env": "^7.13.10",
+    "@babel/preset-flow": "^7.12.13",
+    "@babel/preset-react": "^7.12.13",
+    "@babel/preset-typescript": "^7.9.0"
   }
 }
