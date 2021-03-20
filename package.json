@@ -4,13 +4,14 @@
   "private": true,
   "dependencies": {
     "@expo/vector-icons": "^12.0.3",
+    "@rpldy/upload-button": "^0.11.3",
+    "@rpldy/uploady": "^0.11.3",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "expo": "^40.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-images-upload": "^1.2.8",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^2.18.1",
@@ -20,7 +21,9 @@
     "react-scripts": "^3.4.3"
   },
   "babel": {
-    "plugins": [ "@babel/plugin-transform-react-jsx" ]
+    "plugins": [
+      "@babel/plugin-transform-react-jsx"
+    ]
   },
   "scripts": {
     "start": "react-scripts start",

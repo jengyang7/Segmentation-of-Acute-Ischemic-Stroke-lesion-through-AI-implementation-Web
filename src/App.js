@@ -4,19 +4,22 @@ import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
 import DatabaseScreen from './screens/DatabaseScreen';
 import UploadScreen from './screens/UploadScreen';
+import RegisterScreen from './screens/RegisterScreen';
 import logo from './logo.svg';
 import { Provider } from './context/WebContext';
 import React from 'react';
 
+
 const navigator = createStackNavigator(
   {
-    Main: LoginScreen,
+    Login: LoginScreen,
+    Register : RegisterScreen,
     Home: HomeScreen,
     Database: DatabaseScreen,
     Upload: UploadScreen
   },
   {
-    initialRouteName: 'Main',
+    initialRouteName: 'Login',
     defaultNavigationOptions: {
       title: 'Welcome to React'
     }

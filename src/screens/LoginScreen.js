@@ -13,6 +13,8 @@ const LoginScreen = ({ navigation }) => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username: state.username, password: state.password })
         };
+        state.username = ''
+        state.password = ''
         try {
             let resp = await fetch('/login', reqOption).then(data => data.json());
             return resp.success ? navigation.navigate('Home') : () => { };
@@ -28,6 +30,7 @@ const LoginScreen = ({ navigation }) => {
             <Text>Password</Text>
             <TextInput secureTextEntry={state.password} placeholder="Enter password" autoCapitalize="none" autoCorrect={false} value={state.password} onChangeText={setPassword}></TextInput>
             <Button color='green' title='Login' onPress={() => onSubmit()} />
+            <Button color='blue' title='register now' onPress={() => navigation.navigate('Register')} />
             <label>
                 <input type="checkbox" name="remember" onChange={() => { }} /> Remember me
             </label>
