@@ -12,3 +12,4 @@ Added required steps to launch the application successfully in News.md
 ## Update V0.3
 Added RegisterScreen
 Added file uploading function in Upload Screen
+Added simple authentication for register and login

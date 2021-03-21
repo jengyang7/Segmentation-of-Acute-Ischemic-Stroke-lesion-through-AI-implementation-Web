@@ -1,7 +1,9 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## TODO
-Figure out how to redirect to another page
+Uploading image and view on backend
+create a database 
+make it online
 
 ## To run our project
 1) activate the backend environment (for first time launching the application. Once you have activated the environment, you do need to run this step anymore.)

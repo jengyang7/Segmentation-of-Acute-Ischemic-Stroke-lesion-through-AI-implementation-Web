@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Text, View, TextInput, StyleSheet, Button } from 'react-native';
 import { Context } from '../context/WebContext';
+import bcrypt from "bcryptjs";
 // import { Extypo } from '@expo/vector-icons';
 
 
@@ -11,7 +12,7 @@ const RegisterScreen = ({ navigation }) => {
         const reqOption = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username: state.registerUsername, password: state.registerPassword })
+            body: JSON.stringify({ username: state.registerUsername, password: bcrypt.hashSync(state.registerPassword, 8)})
         };
         state.registerPassword = ''
         state.registerUsername = ''
@@ -21,7 +22,6 @@ const RegisterScreen = ({ navigation }) => {
         } catch (error) {
             console.log(`Error: ${error}`)
         }
-        
     };
 
     return (

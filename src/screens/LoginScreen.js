@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Text, View, TextInput, StyleSheet, Button } from 'react-native';
 import { Context } from '../context/WebContext';
+import bcrypt from "bcryptjs";
 // import { Extypo } from '@expo/vector-icons';
 
 
@@ -11,7 +12,7 @@ const LoginScreen = ({ navigation }) => {
         const reqOption = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username: state.username, password: state.password })
+            body: JSON.stringify({ username: state.username, password: state.password})
         };
         state.username = ''
         state.password = ''
