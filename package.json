@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@expo/vector-icons": "^12.0.3",
+    "@react-navigation/web": "^1.0.0-alpha.9",
     "@rpldy/upload-button": "^0.11.3",
     "@rpldy/uploady": "^0.11.3",
     "@testing-library/jest-dom": "^4.2.4",
@@ -11,9 +12,13 @@
     "@testing-library/user-event": "^7.2.1",
     "bcryptjs": "^2.4.3",
     "expo": "^40.0.1",
+    "feather-icons-react": "^0.4.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-icons": "^4.2.0",
     "react-native-gesture-handler": "^1.10.3",
+    "react-native-image-pan-zoom": "^2.1.12",
+    "react-native-modal": "^11.7.0",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^2.18.1",
     "react-native-web": "^0.15.0",
@@ -24,6 +29,9 @@
   "babel": {
     "plugins": [
       "@babel/plugin-transform-react-jsx"
+    ],
+    "presets": [
+      "@babel/preset-react"
     ]
   },
   "scripts": {
@@ -52,12 +60,13 @@
   "proxy": "http://localhost:5000",
   "devDependencies": {
     "@babel/cli": "^7.13.10",
-    "@babel/core": "^7.9.0",
+    "@babel/core": "^7.13.10",
+    "@babel/plugin-syntax-jsx": "^7.12.13",
     "@babel/plugin-transform-arrow-functions": "^7.13.0",
     "@babel/plugin-transform-react-jsx": "^7.12.17",
     "@babel/preset-env": "^7.13.10",
     "@babel/preset-flow": "^7.12.13",
     "@babel/preset-react": "^7.12.13",
-    "@babel/preset-typescript": "^7.9.0"
+    "@babel/preset-typescript": "^7.13.0"
   }
 }
