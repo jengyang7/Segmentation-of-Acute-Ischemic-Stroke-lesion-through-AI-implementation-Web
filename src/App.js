@@ -13,7 +13,7 @@ import React from 'react';
 const navigator = createStackNavigator(
   {
     Login: LoginScreen,
-    Register : RegisterScreen,
+    Register: RegisterScreen,
     Home: HomeScreen,
     Database: DatabaseScreen,
     Upload: UploadScreen
@@ -21,7 +21,7 @@ const navigator = createStackNavigator(
   {
     initialRouteName: 'Login',
     defaultNavigationOptions: {
-      title: 'Welcome to React'
+      title: 'Segmentation'
     }
   }
 );

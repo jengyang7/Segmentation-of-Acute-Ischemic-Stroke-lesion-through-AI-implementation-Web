@@ -1,36 +1,61 @@
 import React from 'react';
-import { Button, View, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, Dimensions, View, Text, StyleSheet } from 'react-native';
 
 const HomeScreen = ({ navigation }) => {
     return (
-        <View>
-            <Text style={styles.text}>Welcome User!</Text>
-            <Text style={styles.padding}>How to use?</Text>
-            <View style={styles.style1}>
-                <Button onPress={() => navigation.navigate('Database')} color='green' title='Access Database' />
-                <Button onPress={() => navigation.navigate('Upload')} color='green' title='Upload DICOM' /></View>
-
-            <Text style={styles.padding}>1) ...</Text>
-            <Text style={styles.padding}>2) ...</Text>
-            <Text style={styles.padding}>3) ...</Text>
-
-        </View>);
+        <View style={styles.body}>
+            <View>
+                <Text style={styles.text}>
+                    Welcome User!
+                </Text>
+                <Text style={styles.padding}>
+                    How to use?
+                </Text>
+                <Text style={styles.padding}>
+                    1) ...
+                </Text>
+                <Text style={styles.padding}>
+                    2) ...
+                </Text>
+                <Text style={styles.padding}>
+                    3) ...
+                </Text>
+            </View>
+            <View style={styles.viewButton}>
+                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Database')} >
+                    Access Database
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Upload')} >
+                    Upload Image
+                </TouchableOpacity>
+            </View>
+        </View>)
 };
 
+const { height, width } = Dimensions.get('window');
+
 const styles = StyleSheet.create({
+    body: {
+        padding: height * 0.03,
+        flexDirection: 'row',
+        justifyContent: 'space-around'
+    },
     text: {
-        fontSize: 30
+        fontSize: 40
     },
     padding: {
-        paddingTop: 20
+        paddingTop: 20,
+        fontSize: 20
     },
-    style1: {
-        position: 'absolute',
-        right: 0,
-        bottom: 50
+    viewButton: {
+        justifyContent: 'space-around',
     },
-    style2: {
-        margin: 20
+    button: {
+        alignItems: 'center',
+        backgroundColor: 'black',
+        color: 'white',
+        padding: 8,
+        borderRadius: 4
     }
 });
 

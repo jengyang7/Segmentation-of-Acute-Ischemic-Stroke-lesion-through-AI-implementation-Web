@@ -14,11 +14,11 @@ const LogProgress = () => {
 const UploadScreen = ({ navigation }) => {
     const { state } = useContext(Context);
 
-    return (<Uploady
-        destination={{ url: "/upload" }}>
-        <LogProgress/>   
-        <UploadButton/>
-    </Uploady>);
+    return (
+        <Uploady destination={{ url: "/upload" }}>
+            <LogProgress />
+            <UploadButton />
+        </Uploady>);
 };
 
 export default UploadScreen;
