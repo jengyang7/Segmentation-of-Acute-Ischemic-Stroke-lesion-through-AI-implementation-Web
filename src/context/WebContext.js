@@ -10,6 +10,8 @@ const webReducer = (state, action) => {
       return { ...state, registerUsername: action.registerUsername };
     case 'set_register_password':
       return { ...state, registerPassword: action.registerPassword };
+    case 'set_comfirm_password':
+      return { ...state, comfirmPassword: action.comfirmPassword };
     default:
       return state;
   }
@@ -23,6 +25,12 @@ const setRegisterUserName = dispatch => {
 const setRegisterPassword = dispatch => {
   return (registerPassword) => {
     dispatch({ type: 'set_register_password', registerPassword: registerPassword });
+  };
+};
+
+const setComfirmPassword = dispatch => {
+  return (comfirmPassword) => {
+    dispatch({ type: 'set_comfirm_password', comfirmPassword: comfirmPassword });
   };
 };
 
@@ -40,6 +48,6 @@ const setPassword = dispatch => {
 
 export const { Context, Provider } = createWebContext(
   webReducer,
-  { setUserName, setPassword , setRegisterUserName, setRegisterPassword},
-  { username: '', password: '', registerUsername:'', registerPassword:'' }
-)
+  { setUserName, setPassword, setRegisterUserName, setRegisterPassword, setComfirmPassword },
+  { username: '', password: '', registerUsername: '', registerPassword: '', comfirmPassword: '' }
+);

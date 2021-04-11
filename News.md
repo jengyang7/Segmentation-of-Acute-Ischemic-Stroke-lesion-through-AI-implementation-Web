@@ -13,3 +13,10 @@ Added required steps to launch the application successfully in News.md
 Added RegisterScreen
 Added file uploading function in Upload Screen
 Added simple authentication for register and login
+
+## Update V0.4
+Added stylings to all screens (except UploadScreen)
+Added alert features (text input validations) to LoginScreen and RegisterScreen
+Restructured interface
+Added info icon and download icon for DatabaseScreen
+Changed all buttons to touchableopacity
