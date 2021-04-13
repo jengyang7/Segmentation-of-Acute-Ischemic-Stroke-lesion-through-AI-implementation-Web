@@ -21,14 +21,6 @@ const HomeScreen = ({ navigation }) => {
                     3) ...
                 </Text>
             </View>
-            <View style={styles.viewButton}>
-                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Database')} >
-                    Access Database
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Upload')} >
-                    Upload Image
-                </TouchableOpacity>
-            </View>
         </View>)
 };
 

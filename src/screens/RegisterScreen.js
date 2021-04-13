@@ -60,7 +60,17 @@ const RegisterScreen = ({ navigation }) => {
                         *
                     </Text>
                 </View>
-                <TextInput style={styles.viewInput} placeholder="Enter username" autoCapitalize="none" autoCorrect={false} value={state.registerUsername} onChangeText={setRegisterUserName} />
+                <TextInput
+                    style={styles.viewInput}
+                    accessible={true}
+                    accessibilityLabel='Click to enter your username'
+                    accessibilityHint='The username field is required to fill in to create an account.'
+                    placeholder="Enter username"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    value={state.registerUsername}
+                    onChangeText={setRegisterUserName}
+                />
                 <View style={{ flexDirection: 'row' }}>
                     <Text>
                         Password
@@ -69,7 +79,18 @@ const RegisterScreen = ({ navigation }) => {
                         *
                     </Text>
                 </View>
-                <TextInput style={styles.viewInput} secureTextEntry={true} placeholder="Enter password" autoCapitalize="none" autoCorrect={false} value={state.registerPassword} onChangeText={setRegisterPassword} />
+                <TextInput
+                    style={styles.viewInput}
+                    accessible={true}
+                    accessibilityLabel='Click to enter your password'
+                    accessibilityHint='The password field is required to fill in to create an account.'
+                    secureTextEntry={true}
+                    placeholder="Enter password"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    value={state.registerPassword}
+                    onChangeText={setRegisterPassword}
+                />
                 <View style={{ flexDirection: 'row' }}>
                     <Text>
                         Comfirm Password
@@ -78,13 +99,38 @@ const RegisterScreen = ({ navigation }) => {
                         *
                     </Text>
                 </View>
-                <TextInput style={styles.viewInput} secureTextEntry={true} placeholder="Enter password" autoCapitalize="none" autoCorrect={false} value={state.comfirmPassword} onChangeText={setComfirmPassword} />
-                <TouchableOpacity style={styles.button} onPress={() => checkInput() ? onSubmit() : () => { }} >Create Account</TouchableOpacity>
+                <TextInput
+                    style={styles.viewInput}
+                    accessible={true}
+                    accessibilityLabel='Click to retype your password'
+                    accessibilityHint='This field is required to fill in to ensure you are aware of your password and to avoid from typing wrongly.'
+                    secureTextEntry={true}
+                    placeholder="Enter password"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    value={state.comfirmPassword}
+                    onChangeText={setComfirmPassword}
+                />
+                <TouchableOpacity
+                    style={styles.button}
+                    accessible={true}
+                    accessibilityLabel='Click to sign up'
+                    accessibilityHint='By clicking on this button, you will be able to be prompted back to the Login Screen, if the account is created successfully.'
+                    onPress={() => checkInput() ? onSubmit() : () => { }}
+                >
+                    Create Account
+                </TouchableOpacity>
                 <View style={styles.bottomText}>
                     <Text>
                         Already signed up?
                     </Text>
-                    <TouchableOpacity style={styles.underlineNavi} onPress={() => navigation.navigate('Login')} >
+                    <TouchableOpacity
+                        style={styles.underlineNavi}
+                        accessible={true}
+                        accessibilityLabel='Click to sign in'
+                        accessibilityHint='By clicking on this button, you will be be prompted to the Login Screen.'
+                        onPress={() => navigation.navigate('Login')}
+                    >
                         Sign In
                     </TouchableOpacity>
                 </View>

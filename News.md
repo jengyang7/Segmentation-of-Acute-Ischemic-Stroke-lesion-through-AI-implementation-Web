@@ -20,3 +20,7 @@ Added alert features (text input validations) to LoginScreen and RegisterScreen
 Restructured interface
 Added info icon and download icon for DatabaseScreen
 Changed all buttons to touchableopacity
+
+## Update V0.5
+Added accessibility for features such as buttons, icons, images
+Added navigation bar for each screen
