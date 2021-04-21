@@ -24,10 +24,30 @@ const DatabaseScreen = () => {
                 renderItem={({ item }) => {
                     return (
                         <View style={styles.body}>
-                            <Image style={styles.databaseImage} source={require('../images/Capture2.JPG')} />
+                            <Image
+                                style={styles.databaseImage}
+                                accessible={true}
+                                accessibilityLabel='A stroke image'
+                                accessibilityHint='Click to zoom in the image.'
+                                source={require('../images/Capture2.JPG')}
+                            />
                             <View style={{ justifyContent: 'space-between' }}>
-                                <FeatherIcon style={{ color: 'white', position: 'absolute', right: width * 0.005, top: height * 0.005 }} icon='info' onClick={() => { }} />
-                                <FeatherIcon style={{ color: 'white', position: 'absolute', right: width * 0.005, bottom: height * 0.005 }} icon='download' onClick={() => { }} />
+                                <FeatherIcon
+                                    style={{ color: 'white', position: 'absolute', right: width * 0.005, top: height * 0.005 }}
+                                    accessible={true}
+                                    accessibilityLabel='An info icon'
+                                    accessibilityHint='Click to display the information of the image.'
+                                    icon='info'
+                                    onClick={() => { }}
+                                />
+                                <FeatherIcon
+                                    style={{ color: 'white', position: 'absolute', right: width * 0.005, bottom: height * 0.005 }}
+                                    accessible={true}
+                                    accessibilityLabel='A download icon'
+                                    accessibilityHint='Click to download the image.'
+                                    icon='download'
+                                    onClick={() => { }}
+                                />
                             </View>
                         </View>)
                 }}

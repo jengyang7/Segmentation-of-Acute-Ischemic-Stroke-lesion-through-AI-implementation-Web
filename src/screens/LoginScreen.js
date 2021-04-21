@@ -44,19 +44,57 @@ const LoginScreen = ({ navigation }) => {
                         <Text>
                             Username
                         </Text>
-                        <TextInput style={styles.viewInput} placeholder="Enter username" autoCapitalize="none" autoCorrect={false} value={state.username} onChangeText={setUserName} />
+                        <TextInput
+                            style={styles.viewInput}
+                            accessible={true}
+                            accessibilityLabel='Click to enter your username'
+                            accessibilityHint='The username field is required to fill in to login.'
+                            placeholder="Enter username"
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            value={state.username}
+                            onChangeText={setUserName}
+                        />
                         <Text>
                             Password
                         </Text>
-                        <TextInput style={styles.viewInput} secureTextEntry={true} placeholder="Enter password" autoCapitalize="none" autoCorrect={false} value={state.password} onChangeText={setPassword} />
+                        <TextInput
+                            style={styles.viewInput}
+                            accessible={true}
+                            accessibilityLabel='Click to enter your password'
+                            accessibilityHint='The password field is required to fill in to login.'
+                            secureTextEntry={true}
+                            placeholder="Enter password"
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            value={state.password}
+                            onChangeText={setPassword}
+                        />
                         <label style={{ marginBottom: 15 }}>
-                            <input type="checkbox" name="remember" onChange={() => { }} /> Remember me
+                            <input
+                                type="checkbox"
+                                name="remember"
+                                onChange={() => { }}
+                            />
+                            Remember me
                         </label>
                         <View style={styles.viewButton}>
-                            <TouchableOpacity style={styles.button} onPress={() => checkInput() ? onSubmit() : () => { }} >
+                            <TouchableOpacity
+                                style={styles.button}
+                                accessible={true}
+                                accessibilityLabel='Click to sign in'
+                                accessibilityHint='By clicking on this button, you will be able to login to the homescreen where you can learn the instructions of using the application, if the details of your account is correct.'
+                                onPress={() => checkInput() ? onSubmit() : () => { }}
+                            >
                                 Sign In
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Register')} >
+                            <TouchableOpacity
+                                style={styles.button}
+                                accessible={true}
+                                accessibilityLabel='Click to sign up'
+                                accessibilityHint='By clicking on this button, you will be prompted to a new interface, where you will be able to create a new account.'
+                                onPress={() => navigation.navigate('Register')}
+                            >
                                 Sign Up
                             </TouchableOpacity>
                         </View>
@@ -66,9 +104,15 @@ const LoginScreen = ({ navigation }) => {
                             About Us
                         </Text>
                         <Text style={{ fontSize: 16, paddingVertical: 20 }}>
-                            Free Acute Ischemic Stroke segmentation service. The result is inaccurate so beware of using it. Scammer website alert.
+                            {/* Free Acute Ischemic Stroke segmentation service. The result is inaccurate so beware of using it. Scammer website alert. */}
+                            ...
                         </Text>
-                        <Image style={styles.image} source={require('../images/Capture2.JPG')} />
+                        <Image
+                            style={styles.image}
+                            accessible={true}
+                            accessibilityLabel='An image of brain stroke'
+                            source={require('../images/Capture2.JPG')}
+                        />
                     </View>
                 </View>
             </View>
