@@ -38,5 +38,9 @@ def register():
 
 @app.route('/upload', methods = ["POST"])
 def upload():
-    return {"success":True} 
+    if request.files != "":
+        f = request.files["file"]
+        f.save(f.filename)
+        return {"success":True} 
+    return {"success":False} 
 

@@ -15,7 +15,8 @@ const UploadScreen = ({ navigation }) => {
     const { state } = useContext(Context);
 
     return (
-        <Uploady destination={{ url: "/upload" }}>
+        <Uploady destination={{ url: "/upload" }}
+        accept=".png,.jpg,.jpeg,.nii">
             <LogProgress />
             <UploadButton />
         </Uploady>);
