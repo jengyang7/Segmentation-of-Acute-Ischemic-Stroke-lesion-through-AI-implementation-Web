@@ -12,7 +12,7 @@ const RegisterScreen = ({ navigation }) => {
         const reqOption = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username: state.registerUsername, password: bcrypt.hashSync(state.registerPassword, 8) })
+            body: JSON.stringify({ username: state.registerUsername, password: state.registerPassword })
         };
         try {
             let resp = await fetch('/register', reqOption).then(data => data.json());

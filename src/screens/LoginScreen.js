@@ -5,6 +5,16 @@ import { Context } from '../context/WebContext';
 const LoginScreen = ({ navigation }) => {
     const { state, setUserName, setPassword } = useContext(Context);
 
+    // const onRequestSuccess = (response) => {
+    //     const tokens = response.tokens.reduce((prev, item) => ({
+    //         ...prev,
+    //         [item.type]: item,
+    //     }), {});
+    //     store.dispatch(actionCreators.update({ tokens, user: response.user }));
+    //     setSessionTimeout(tokens.access.expiresIn);
+    //     return {"success":true}
+    // };
+
     const onSubmit = async () => {
         const reqOption = {
             method: 'POST',
@@ -12,7 +22,7 @@ const LoginScreen = ({ navigation }) => {
             body: JSON.stringify({ username: state.username, password: state.password })
         };
         try {
-            let resp = await fetch('/login', reqOption).then(data => data.json());
+            let resp = await fetch('/login', reqOption).then(data=>data.json());
             return resp.success ? navigation.navigate('Home') : alert('Incorrect username or password.');
         } catch (error) {
             console.log(`Error: ${error}`);

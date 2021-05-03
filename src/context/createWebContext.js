@@ -5,7 +5,6 @@ export default (reducer, actions, initialState) => {
 
   const Provider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
-
     //functions 
     const boundActions = {};
     for (let key in actions) {
