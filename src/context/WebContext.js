@@ -12,6 +12,14 @@ const webReducer = (state, action) => {
       return { ...state, registerPassword: action.registerPassword };
     case 'set_comfirm_password':
       return { ...state, comfirmPassword: action.comfirmPassword };
+    case 'login_submit':
+      localStorage.setItem("token", JSON.stringify(action.token));
+      localStorage.setItem("refresh", JSON.stringify(action.refresh));
+      return {...state, 
+        success: action.success,
+        token: action.token,
+        refresh: action.refresh
+      };
     default:
       return state;
   }
@@ -46,8 +54,25 @@ const setPassword = dispatch => {
   };
 };
 
+const loginSubmit = dispatch => {
+  return async (username, password) => {
+    const reqOption = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: username, password: password })
+    };
+    try {
+      let resp = await fetch('/login', reqOption).then(data => data.json());
+      dispatch({ type: 'login_submit', success: resp.success, token: resp.data.token, refresh: resp.data.refresh})
+      return resp.success
+    } catch (error) {
+      console.log(`Error: ${error}`);
+    }
+  }
+}
+
 export const { Context, Provider } = createWebContext(
   webReducer,
-  { setUserName, setPassword, setRegisterUserName, setRegisterPassword, setComfirmPassword },
-  { username: '', password: '', registerUsername: '', registerPassword: '', comfirmPassword: '' }
+  { setUserName, setPassword, setRegisterUserName, setRegisterPassword, setComfirmPassword, loginSubmit },
+  { username: '', password: '', registerUsername: '', registerPassword: '', comfirmPassword: '', success: false,token:'',refresh:'' }
 );

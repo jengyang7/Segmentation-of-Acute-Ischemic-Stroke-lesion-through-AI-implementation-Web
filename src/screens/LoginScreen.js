@@ -3,7 +3,7 @@ import { Alert, TouchableOpacity, Dimensions, Image, Text, View, TextInput, Styl
 import { Context } from '../context/WebContext';
 
 const LoginScreen = ({ navigation }) => {
-    const { state, setUserName, setPassword } = useContext(Context);
+    const { state, setUserName, setPassword, loginSubmit } = useContext(Context);
 
     // const onRequestSuccess = (response) => {
     //     const tokens = response.tokens.reduce((prev, item) => ({
@@ -16,17 +16,9 @@ const LoginScreen = ({ navigation }) => {
     // };
 
     const onSubmit = async () => {
-        const reqOption = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username: state.username, password: state.password })
-        };
-        try {
-            let resp = await fetch('/login', reqOption).then(data=>data.json());
-            return resp.success ? navigation.navigate('Home') : alert('Incorrect username or password.');
-        } catch (error) {
-            console.log(`Error: ${error}`);
-        }
+        
+        const loginSuccess = async () => loginSubmit(state.username, state.password)
+        return loginSuccess() ? navigation.navigate('Home') : alert('Incorrect username or password.');
     };
 
     const checkInput = () => {
@@ -167,8 +159,3 @@ const styles = StyleSheet.create({
 });
 
 export default LoginScreen;
-
-
-
-
-
