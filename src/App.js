@@ -10,6 +10,9 @@ import { Provider } from './context/WebContext';
 import React from 'react';
 import { Dimensions, View, TouchableOpacity, StyleSheet } from 'react-native';
 import FeatherIcon from 'feather-icons-react';
+import { setNavigator } from './navigationRef';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { navigate } from './navigationRef';
 
 
 const navigator = createStackNavigator(
@@ -50,7 +53,7 @@ const navigator = createStackNavigator(
   },
   {
     initialRouteName: 'Login',
-    defaultNavigationOptions: ({ navigation }) => ({
+    defaultNavigationOptions: () => ({
       headerStyle: {
         backgroundColor: 'black'
       },
@@ -65,14 +68,14 @@ const navigator = createStackNavigator(
               accessiblityLabel='A home icon'
               accessibilityHint='Click to navigate to Home Screen where you can learn about the instructions to use the website.'
               icon='home'
-              onClick={() => navigation.navigate('Home')}
+              onClick={() => navigate('Home')}
             />
             <TouchableOpacity
               style={styles.textWithIcon}
               accessible={true}
               accessibilityLabel='Click me'
               accessibilityHint='Click to navigate to Home Screen where you can learn about the instructions to use the website.'
-              onPress={() => navigation.navigate('Home')}
+              onPress={() => navigate('Home')}
             >
               Home
             </TouchableOpacity>
@@ -82,7 +85,7 @@ const navigator = createStackNavigator(
             accessible={true}
             accessiblityLabel='Click me'
             accessibilityHint='Click to navigate to Database Screen where you can download or see the details of the image.'
-            onPress={() => navigation.navigate('Database')}
+            onPress={() => navigate('Database')}
           >
             Access Database
           </TouchableOpacity>
@@ -91,7 +94,7 @@ const navigator = createStackNavigator(
             accessible={true}
             accessibilityLabel='Click me'
             accessibilityHint='Click to navigate to Upload Screen where you can upload your image to be segmented.'
-            onPress={() => navigation.navigate('Upload')}
+            onPress={() => navigate('Upload')}
           >
             Upload Image
           </TouchableOpacity>
@@ -100,8 +103,11 @@ const navigator = createStackNavigator(
               style={styles.textWithIcon}
               accessible={true}
               accessibilityLabel='Click me'
-              accessibilityHint='Click logout your current account and navigate you back to the Login Screen.'
-              onPress={() => { }}
+              accessibilityHint='Click to logout your current account and navigate you back to the Login Screen.'
+              onPress={async () => {
+                await AsyncStorage.removeItem('token')
+                navigate('Login')
+              }}
             >
               Logout
             </TouchableOpacity>
@@ -111,13 +117,17 @@ const navigator = createStackNavigator(
               accessibilityLabel='A logout icon'
               accessibilityHint='Click to logout your current account and navigate you back to the Login Screen.'
               icon='log-out'
-              onClick={() => { }}
+              onClick={async () => {
+                await AsyncStorage.removeItem('token')
+                navigate('Login')
+              }}
             />
           </View>
         </View>)
     }),
   }
 );
+
 
 // export default App;
 const App = createAppContainer(navigator);
@@ -151,7 +161,7 @@ export default () => {
   return (
     // Wrap into WebContext's Provider
     <Provider>
-      <App />
+      <App ref={(navigator) => { setNavigator(navigator) }} />
     </Provider>
   )
 }

@@ -2,10 +2,10 @@ import React, { useContext, useState } from 'react';
 import { TouchableOpacity, Dimensions, Text, View, TextInput, StyleSheet } from 'react-native';
 import { Context } from '../context/WebContext';
 import bcrypt from "bcryptjs";
-// import { Extypo } from '@expo/vector-icons';
+import { navigate } from '../navigationRef';
 
 
-const RegisterScreen = ({ navigation }) => {
+const RegisterScreen = () => {
     const { state, setRegisterUserName, setRegisterPassword, setComfirmPassword } = useContext(Context);
 
     const onSubmit = async () => {
@@ -16,7 +16,7 @@ const RegisterScreen = ({ navigation }) => {
         };
         try {
             let resp = await fetch('/register', reqOption).then(data => data.json());
-            return resp.success ? navigation.navigate('Login') : () => { };
+            return resp.success ? navigate('Login') : () => { };
         } catch (error) {
             console.log(`Error: ${error}`)
         }
@@ -129,7 +129,7 @@ const RegisterScreen = ({ navigation }) => {
                         accessible={true}
                         accessibilityLabel='Click to sign in'
                         accessibilityHint='By clicking on this button, you will be be prompted to the Login Screen.'
-                        onPress={() => navigation.navigate('Login')}
+                        onPress={() => navigate('Login')}
                     >
                         Sign In
                     </TouchableOpacity>

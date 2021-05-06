@@ -24,3 +24,7 @@ Changed all buttons to touchableopacity
 ## Update V0.5
 Added accessibility for features such as buttons, icons, images
 Added navigation bar for each screen
+
+## Update V0.6
+Stored token into asyncstorage for logout and remember me
+State management for navigation (available to be used at all files, even outside React)
