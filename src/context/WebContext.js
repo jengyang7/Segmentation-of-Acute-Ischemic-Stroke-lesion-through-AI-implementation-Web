@@ -1,4 +1,6 @@
 import createWebContext from './createWebContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { navigate } from '../navigationRef';
 
 const webReducer = (state, action) => {
   switch (action.type) {
@@ -12,14 +14,14 @@ const webReducer = (state, action) => {
       return { ...state, registerPassword: action.registerPassword };
     case 'set_comfirm_password':
       return { ...state, comfirmPassword: action.comfirmPassword };
-    case 'login_submit':
-      localStorage.setItem("token", JSON.stringify(action.token));
-      localStorage.setItem("refresh", JSON.stringify(action.refresh));
-      return {...state, 
-        success: action.success,
-        token: action.token,
-        refresh: action.refresh
-      };
+    case 'login':
+      return { ...state, token: action.token };
+    case 'get_token':
+      return { ...state, username: action.username, token: action.token, rememberMe: action.rememberMe };
+    case 'logout':
+      return { ...state, token: null, rememberMe: action.rememberMe, username: action.username };
+    case 'toggle_remember':
+      return { ...state, rememberMe: action.rememberMe };
     default:
       return state;
   }
@@ -43,9 +45,10 @@ const setComfirmPassword = dispatch => {
 };
 
 const setUserName = dispatch => {
-  return (username) => {
+  return async (username) => {
     dispatch({ type: 'set_username', username: username });
   };
+
 };
 
 const setPassword = dispatch => {
@@ -54,25 +57,65 @@ const setPassword = dispatch => {
   };
 };
 
-const loginSubmit = dispatch => {
-  return async (username, password) => {
+const login = dispatch => {
+  return async (username, password, rememberMe) => {
     const reqOption = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username: username, password: password })
     };
     try {
+      await AsyncStorage.clear();
       let resp = await fetch('/login', reqOption).then(data => data.json());
-      dispatch({ type: 'login_submit', success: resp.success, token: resp.data.token, refresh: resp.data.refresh})
-      return resp.success
+      if (rememberMe) {
+        await AsyncStorage.setItem('token', resp.data.token)
+        await AsyncStorage.setItem('remember', rememberMe)
+        await AsyncStorage.setItem('username', resp.data.username)
+      }
+
+      dispatch({ type: 'login', token: resp.data.token })
+      return resp.success ? navigate('Home') : alert('Incorrect username or password.');
+    } catch (error) {
+      console.log(`Error: ${error}`);
+    }
+  };
+};
+
+const getToken = dispatch => {
+  return async () => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const remember = await AsyncStorage.getItem('remember');
+      const username = await AsyncStorage.getItem('username');
+
+      if (token) {
+        dispatch({ type: 'get_token', token: token, username: username, rememberMe: remember })
+        navigate('Home')
+      } else {
+        if (remember === "true") {
+          dispatch({ type: 'logout', rememberMe: true, username: username })
+        } else {
+          await AsyncStorage.removeItem('remember')
+          await AsyncStorage.removeItem('username')
+          dispatch({ type: 'logout', rememberMe: false, username: '' })
+        }
+
+      }
     } catch (error) {
       console.log(`Error: ${error}`);
     }
   }
 }
 
+const toggleRememberMe = dispatch => {
+  return (remember) => {
+    const opposite = !remember;
+    dispatch({ type: 'toggle_remember', rememberMe: opposite })
+  }
+}
+
 export const { Context, Provider } = createWebContext(
   webReducer,
-  { setUserName, setPassword, setRegisterUserName, setRegisterPassword, setComfirmPassword, loginSubmit },
-  { username: '', password: '', registerUsername: '', registerPassword: '', comfirmPassword: '', success: false,token:'',refresh:'' }
+  { setUserName, setPassword, setRegisterUserName, setRegisterPassword, setComfirmPassword, login, getToken, toggleRememberMe },
+  { username: '', password: '', registerUsername: '', registerPassword: '', comfirmPassword: '', rememberMe: false, token: null }
 );

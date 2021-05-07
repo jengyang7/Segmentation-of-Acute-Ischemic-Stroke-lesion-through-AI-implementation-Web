@@ -68,9 +68,24 @@ def refresh():
 @app.route('/upload', methods = ["POST"])
 @jwt_required
 def upload():
+    current_user = get_jwt_identity()
+    print(current_user)
     if request.files != "":
         f = request.files["file"]
-        f.save(f.filename)
+        print(f.filename)
+        mongo.save_file(f.filename, f,username=current_user["username"])
         return {"success":True} 
     return {"success":False} 
+
+@app.route('/retrieve/<filename>', methods = ["GET"])
+@jwt_required
+def retrieve(filename):
+    print(filename)
+    return mongo.send_file(filename)
+
+@app.route('/retrieve_filename', methods = ["GET"])
+@jwt_required
+def retrieve_filename():
+    current_user = get_jwt_identity()
+    return {"success":True,"data":list(mongo.db.fs.files.find({"username":current_user["username"]}))}
 

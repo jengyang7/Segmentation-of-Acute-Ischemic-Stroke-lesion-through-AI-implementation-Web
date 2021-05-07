@@ -1,9 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Alert, TouchableOpacity, Dimensions, Image, Text, View, TextInput, StyleSheet } from 'react-native';
 import { Context } from '../context/WebContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { navigate } from '../navigationRef';
 
-const LoginScreen = ({ navigation }) => {
-    const { state, setUserName, setPassword, loginSubmit } = useContext(Context);
+
+const LoginScreen = () => {
+    const { state, setUserName, setPassword, login, getToken, toggleRememberMe } = useContext(Context);
+
+    useEffect(() => {
+        getToken();
+    }, []);
 
     // const onRequestSuccess = (response) => {
     //     const tokens = response.tokens.reduce((prev, item) => ({
@@ -14,12 +21,6 @@ const LoginScreen = ({ navigation }) => {
     //     setSessionTimeout(tokens.access.expiresIn);
     //     return {"success":true}
     // };
-
-    const onSubmit = async () => {
-        
-        const loginSuccess = async () => loginSubmit(state.username, state.password)
-        return loginSuccess() ? navigation.navigate('Home') : alert('Incorrect username or password.');
-    };
 
     const checkInput = () => {
         if (state.username == '') {
@@ -76,7 +77,8 @@ const LoginScreen = ({ navigation }) => {
                             <input
                                 type="checkbox"
                                 name="remember"
-                                onChange={() => { }}
+                                checked={state.rememberMe}
+                                onChange={() => toggleRememberMe(state.rememberMe)}
                             />
                             Remember me
                         </label>
@@ -86,7 +88,7 @@ const LoginScreen = ({ navigation }) => {
                                 accessible={true}
                                 accessibilityLabel='Click to sign in'
                                 accessibilityHint='By clicking on this button, you will be able to login to the homescreen where you can learn the instructions of using the application, if the details of your account is correct.'
-                                onPress={() => checkInput() ? onSubmit() : () => { }}
+                                onPress={() => checkInput() ? login(state.username, state.password, state.rememberMe) : () => { }}
                             >
                                 Sign In
                             </TouchableOpacity>
@@ -95,7 +97,7 @@ const LoginScreen = ({ navigation }) => {
                                 accessible={true}
                                 accessibilityLabel='Click to sign up'
                                 accessibilityHint='By clicking on this button, you will be prompted to a new interface, where you will be able to create a new account.'
-                                onPress={() => navigation.navigate('Register')}
+                                onPress={() => navigate('Register')}
                             >
                                 Sign Up
                             </TouchableOpacity>

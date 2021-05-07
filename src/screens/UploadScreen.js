@@ -1,7 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState ,useEffect} from 'react';
 import { Context } from '../context/WebContext';
 import Uploady, { useItemProgressListener } from "@rpldy/uploady";
 import UploadButton from "@rpldy/upload-button";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LogProgress = () => {
     useItemProgressListener((item) => {
@@ -13,9 +14,9 @@ const LogProgress = () => {
 
 const UploadScreen = ({ navigation }) => {
     const { state } = useContext(Context);
-
+    
     return (
-        <Uploady destination={{ url: "/upload" }}
+        <Uploady destination={{ url: "/upload" ,headers:{"Authorization": `Bearer ${state.token}`}}}
         accept=".png,.jpg,.jpeg,.nii">
             <LogProgress />
             <UploadButton />
