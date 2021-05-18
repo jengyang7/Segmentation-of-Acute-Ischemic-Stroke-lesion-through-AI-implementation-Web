@@ -24,7 +24,7 @@ class JSONEncoder(json.JSONEncoder):
 
 # create the flask object
 app = Flask(__name__)
-app.config['MONGO_URI'] = "mongodb://fyp2:1290qwop@34.72.59.27:27017/web"
+app.config['MONGO_URI'] = "mongodb://fyp2:1290qwop@34.70.6.252:27017/web"
 app.config['JWT_SECRET_KEY'] = "1290qwop"
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(days=1)
 mongo = PyMongo(app)

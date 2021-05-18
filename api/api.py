@@ -5,6 +5,8 @@ from flask_jwt_extended import (create_access_token, create_refresh_token,
                                 jwt_required, jwt_refresh_token_required, get_jwt_identity)
 from app import app, mongo, flask_bcrypt, jwt
 from schema import validate_user
+from werkzeug.utils import secure_filename
+
 
 @jwt.unauthorized_loader
 def unauthorized_response(callback):
@@ -72,8 +74,8 @@ def upload():
     print(current_user)
     if request.files != "":
         f = request.files["file"]
-        print(f.filename)
-        mongo.save_file(f.filename, f,username=current_user["username"])
+        filename = secure_filename(f.filename)
+        mongo.save_file(filename, f,username=current_user["username"])
         return {"success":True} 
     return {"success":False} 
 

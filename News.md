@@ -31,3 +31,6 @@ State management for navigation (available to be used at all files, even outside
 
 ## Update V0.7
 Backend now support database query and saving to database.
+
+## Update V0.8
+Support image prediction via server
