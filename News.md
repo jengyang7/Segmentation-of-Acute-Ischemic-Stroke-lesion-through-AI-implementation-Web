@@ -34,3 +34,10 @@ Backend now support database query and saving to database.
 
 ## Update V0.8
 Support image prediction via server
+
+## Update V0.9
+Added files for result screen, forget password screen, and global styling
+Applied stylings
+Fixed warnings
+Database screen able to retrieve image
+User able to upload image
