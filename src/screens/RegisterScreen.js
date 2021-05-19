@@ -6,7 +6,7 @@ import { globalStyle } from '../styles/global';
 
 
 const RegisterScreen = () => {
-    const { state, setRegisterUserName, setRegisterPassword, setComfirmPassword } = useContext(Context);
+    const { state, setRegisterUserName, setRegisterPassword, setComfirmPassword, setEmail } = useContext(Context);
 
     const onSubmit = async () => {
         const reqOption = {
@@ -44,13 +44,31 @@ const RegisterScreen = () => {
         }
         return true;
     }
-
     return (
         <View style={styles.mainView}>
             <Text style={globalStyle.titleText}>
                 Create your account
             </Text>
             <View style={{ margin: height * 0.03, width: width * 0.3 }}>
+                <View style={{ flexDirection: 'row' }}>
+                    <Text style={[globalStyle.subTitleText, { fontSize: 14 }]}>
+                        Email address
+                    </Text>
+                    <Text style={[styles.asterisk, globalStyle.subTitleText, { fontSize: 14 }]}>
+                        *
+                    </Text>
+                </View>
+                <TextInput
+                    style={[globalStyle.infoText, styles.viewInput]}
+                    accessible={true}
+                    accessibilityLabel='Click to enter your email address'
+                    accessibilityHint='The email address field is required to fill in to create an account.'
+                    placeholder="Enter email address"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    value={state.email}
+                    onChangeText={setEmail}
+                />
                 <View style={{ flexDirection: 'row' }}>
                     <Text style={[globalStyle.subTitleText, { fontSize: 14 }]}>
                         Username
