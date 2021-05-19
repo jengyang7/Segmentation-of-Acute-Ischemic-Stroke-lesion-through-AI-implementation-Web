@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from 'react';
-import { Alert, TouchableOpacity, Dimensions, Image, Text, View, TextInput, StyleSheet } from 'react-native';
+import { TouchableOpacity, Dimensions, Image, Text, View, TextInput, StyleSheet } from 'react-native';
 import { Context } from '../context/WebContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { navigate } from '../navigationRef';
+import { globalStyle } from '../styles/global';
 
 
 const LoginScreen = () => {
@@ -12,43 +12,32 @@ const LoginScreen = () => {
         getToken();
     }, []);
 
-    // const onRequestSuccess = (response) => {
-    //     const tokens = response.tokens.reduce((prev, item) => ({
-    //         ...prev,
-    //         [item.type]: item,
-    //     }), {});
-    //     store.dispatch(actionCreators.update({ tokens, user: response.user }));
-    //     setSessionTimeout(tokens.access.expiresIn);
-    //     return {"success":true}
-    // };
-
     const checkInput = () => {
-        if (state.username == '') {
+        if (state.username === '') {
             alert('Please enter your username.')
             return false;
         }
 
-        else if (state.password == '') {
+        else if (state.password === '') {
             alert('Please enter your password.');
             return false;
         }
-
         return true;
     }
 
     return (
         <View>
             <View style={{ padding: height * 0.03 }}>
-                <Text style={styles.welcomeText}>
+                <Text style={globalStyle.titleText}>
                     Welcome to Segmentation
                 </Text>
                 <View style={styles.body}>
                     <View style={{ width: width * 0.3 }}>
-                        <Text>
+                        <Text style={[globalStyle.subTitleText, {fontSize: 15}]}>
                             Username
                         </Text>
                         <TextInput
-                            style={styles.viewInput}
+                            style={[globalStyle.infoText, styles.viewInput]}
                             accessible={true}
                             accessibilityLabel='Click to enter your username'
                             accessibilityHint='The username field is required to fill in to login.'
@@ -58,11 +47,24 @@ const LoginScreen = () => {
                             value={state.username}
                             onChangeText={setUserName}
                         />
-                        <Text>
-                            Password
-                        </Text>
+                        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                            <Text style={[globalStyle.subTitleText, {fontSize: 15}]}>
+                                Password
+                            </Text>
+                            <TouchableOpacity 
+                                style={{color: 'blue'}}
+                                accessible={true}
+                                accessibilityLabel='Click if you forgot your password.'
+                                accessibilityHint='By clicking on this button, you will be prompt to another screen where you can reset your password by following the steps.'
+                                onPress={() => navigate('ForgetPassword')}
+                            >
+                                <Text style={[globalStyle.subTitleText, {fontSize: 13, color: 'blue'}]}>
+                                    Forgot password?
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
                         <TextInput
-                            style={styles.viewInput}
+                            style={[globalStyle.infoText, styles.viewInput]}
                             accessible={true}
                             accessibilityLabel='Click to enter your password'
                             accessibilityHint='The password field is required to fill in to login.'
@@ -80,7 +82,9 @@ const LoginScreen = () => {
                                 checked={state.rememberMe}
                                 onChange={() => toggleRememberMe(state.rememberMe)}
                             />
-                            Remember me
+                            <Text style={[globalStyle.infoText, {fontSize: 15}]}>
+                                Remember me
+                            </Text>
                         </label>
                         <View style={styles.viewButton}>
                             <TouchableOpacity
@@ -90,7 +94,9 @@ const LoginScreen = () => {
                                 accessibilityHint='By clicking on this button, you will be able to login to the homescreen where you can learn the instructions of using the application, if the details of your account is correct.'
                                 onPress={() => checkInput() ? login(state.username, state.password, state.rememberMe) : () => { }}
                             >
-                                Sign In
+                                <Text style={globalStyle.buttonText}>
+                                    Sign In
+                                </Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 style={styles.button}
@@ -99,17 +105,25 @@ const LoginScreen = () => {
                                 accessibilityHint='By clicking on this button, you will be prompted to a new interface, where you will be able to create a new account.'
                                 onPress={() => navigate('Register')}
                             >
-                                Sign Up
+                                <Text style={globalStyle.buttonText}>
+                                    Sign Up
+                                </Text>
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <View style={{ width: width * 0.4 }}>
-                        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
+                    <View style={{ width: width * 0.45 }}>
+                        <Text style={[globalStyle.subTitleText, {fontWeight: 'bold'}]}>
                             About Us
                         </Text>
-                        <Text style={{ fontSize: 16, paddingVertical: 20 }}>
-                            {/* Free Acute Ischemic Stroke segmentation service. The result is inaccurate so beware of using it. Scammer website alert. */}
-                            ...
+                        <Text style={[globalStyle.infoText, { paddingVertical: 20 }]}>
+                            An application developed by team MA_B_5. This application enables users to upload medical brain images 
+                            and perform image segmentation. This will segment out any possible stroke lesion of the brain. 
+                            Users will be able to view the segmented result and have a better understanding through the result. 
+                            
+                        </Text>
+                        <Text style={[globalStyle.infoText, { paddingVertical: 20 }]}>
+                            This application is easy to use and it has been tested our by the team and others. 
+                            We hope you enjoy browsing through and using the application!
                         </Text>
                         <Image
                             style={styles.image}
@@ -127,10 +141,6 @@ const LoginScreen = () => {
 const { height, width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
-    welcomeText: {
-        fontSize: 40,
-        alignSelf: 'center'
-    },
     viewButton: {
         justifyContent: 'space-between',
         flexDirection: 'row',
@@ -143,7 +153,6 @@ const styles = StyleSheet.create({
     button: {
         alignItems: 'center',
         backgroundColor: 'black',
-        color: 'white',
         padding: 8,
         borderRadius: 4
     },
@@ -151,7 +160,8 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         paddingHorizontal: height * 0.013,
         paddingVertical: height * 0.018,
-        marginBottom: height * 0.019
+        marginBottom: height * 0.019,
+        fontSize: 15
     },
     body: {
         margin: height * 0.05,

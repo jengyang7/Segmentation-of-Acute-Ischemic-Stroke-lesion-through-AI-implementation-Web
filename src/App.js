@@ -1,18 +1,20 @@
-import { createAppContainer, createSwitchNavigator } from 'react-navigation';
-import { createStackNavigator, HeaderBackButton } from 'react-navigation-stack';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
 import DatabaseScreen from './screens/DatabaseScreen';
 import UploadScreen from './screens/UploadScreen';
 import RegisterScreen from './screens/RegisterScreen';
-import logo from './logo.svg';
 import { Provider } from './context/WebContext';
 import React from 'react';
-import { Dimensions, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, Dimensions, View, TouchableOpacity, StyleSheet } from 'react-native';
 import FeatherIcon from 'feather-icons-react';
 import { setNavigator } from './navigationRef';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { navigate } from './navigationRef';
+import ResultScreen from './screens/ResultScreen';
+import { globalStyle } from './styles/global';
+import ForgotPassScreen from './screens/ForgotPassScreen';
 
 
 const navigator = createStackNavigator(
@@ -20,22 +22,22 @@ const navigator = createStackNavigator(
     Login: {
       screen: LoginScreen,
       navigationOptions: () => ({
-        headerRight: null
+        headerRight: () => null
       })
     },
     Register: {
       screen: RegisterScreen,
       navigationOptions: () => ({
         title: 'Create account',
-        headerRight: null,
-        headerLeft: null
+        headerRight: () => null,
+        headerLeft: () => null
       })
     },
     Home: {
       screen: HomeScreen,
       navigationOptions: () => ({
         title: 'Instructions',
-        headerLeft: null
+        headerLeft: () => null
       })
     },
     Database: {
@@ -50,6 +52,19 @@ const navigator = createStackNavigator(
         title: 'Upload'
       })
     },
+    Result: {
+      screen: ResultScreen,
+      navigationOptions: () => ({
+        title: 'Results'
+      })
+    },
+    ForgetPassword: {
+      screen: ForgotPassScreen,
+      navigationOptions: () => ({
+        title: 'Reset password',
+        headerRight: () => null
+      })
+    }
   },
   {
     initialRouteName: 'Login',
@@ -64,20 +79,19 @@ const navigator = createStackNavigator(
           <View style={styles.viewIconText}>
             <FeatherIcon
               style={{ color: 'white', height: height * 0.025 }}
-              accessible={true}
-              accessiblityLabel='A home icon'
-              accessibilityHint='Click to navigate to Home Screen where you can learn about the instructions to use the website.'
               icon='home'
               onClick={() => navigate('Home')}
             />
             <TouchableOpacity
-              style={styles.textWithIcon}
+              style={{ marginHorizontal: 7 }}
               accessible={true}
               accessibilityLabel='Click me'
               accessibilityHint='Click to navigate to Home Screen where you can learn about the instructions to use the website.'
               onPress={() => navigate('Home')}
             >
-              Home
+              <Text style={globalStyle.buttonText}>
+                Home
+              </Text>
             </TouchableOpacity>
           </View>
           <TouchableOpacity
@@ -87,7 +101,9 @@ const navigator = createStackNavigator(
             accessibilityHint='Click to navigate to Database Screen where you can download or see the details of the image.'
             onPress={() => navigate('Database')}
           >
-            Access Database
+            <Text style={globalStyle.buttonText}>
+              Database
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.navigationText}
@@ -96,11 +112,13 @@ const navigator = createStackNavigator(
             accessibilityHint='Click to navigate to Upload Screen where you can upload your image to be segmented.'
             onPress={() => navigate('Upload')}
           >
-            Upload Image
+            <Text style={globalStyle.buttonText}>
+              Upload Image
+            </Text>
           </TouchableOpacity>
           <View style={styles.viewIconText}>
             <TouchableOpacity
-              style={styles.textWithIcon}
+              style={{ marginHorizontal: 7 }}
               accessible={true}
               accessibilityLabel='Click me'
               accessibilityHint='Click to logout your current account and navigate you back to the Login Screen.'
@@ -109,13 +127,12 @@ const navigator = createStackNavigator(
                 navigate('Login')
               }}
             >
-              Logout
+              <Text style={globalStyle.buttonText}>
+                Logout
+              </Text>
             </TouchableOpacity>
             <FeatherIcon
               style={{ color: 'white', height: height * 0.025 }}
-              accessible={true}
-              accessibilityLabel='A logout icon'
-              accessibilityHint='Click to logout your current account and navigate you back to the Login Screen.'
               icon='log-out'
               onClick={async () => {
                 await AsyncStorage.removeItem('token')
@@ -142,12 +159,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'white'
   },
-  textWithIcon: {
-    color: 'white',
-    marginHorizontal: 7
-  },
   navigationText: {
-    color: 'white',
     marginHorizontal: 15,
     padding: 8,
     borderWidth: 1,

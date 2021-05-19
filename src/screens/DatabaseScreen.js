@@ -1,25 +1,48 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Dimensions, FlatList, Image, View, Text, StyleSheet } from 'react-native';
 import FeatherIcon from "feather-icons-react"
+import { Context } from '../context/WebContext';
+import { globalStyle } from '../styles/global';
+
 
 const DatabaseScreen = () => {
-    const images = [
-        { 'name': 'Image1' },
-        { 'name': 'Image2' },
-        { 'name': 'Image3' },
-        { 'name': 'Image4' },
-        { 'name': 'Image5' },
-        { 'name': 'Image6' }
-    ]
+    const { state, getImages } = useContext(Context);
+
+    useEffect(() => {
+        // getFile(state.token, (images) => getImages(images));
+        getFile();
+    });
+
+    const getFile = async () => {
+        let images = [];
+        const reqOption1 = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${state.token}` }
+        };
+        const reqOption2 = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${state.token}` }
+        };
+        try {
+            let resp1 = await fetch('/retrieve_filename', reqOption1).then(data => data.json());
+            for (let i = 0; i < resp1.data.length; i++) {
+                let resp2 = await fetch('/retrieve/' + resp1.data[i].filename, reqOption2).then(data => data);
+                images = [...images, { 'name': resp2.url }];
+            }
+            getImages(images);
+        } catch (error) {
+            console.log(`Error: ${error}`);
+        }
+    };
 
     return (
         <View>
-            <Text style={styles.text}>
+            <Text style={globalStyle.titleText}>
                 Your Data
             </Text>
             <FlatList
                 keyExtractor={image => image.name}
-                data={images}
+                data={state.images}
                 numColumns={2}
                 renderItem={({ item }) => {
                     return (
@@ -29,22 +52,16 @@ const DatabaseScreen = () => {
                                 accessible={true}
                                 accessibilityLabel='A stroke image'
                                 accessibilityHint='Click to zoom in the image.'
-                                source={require('../images/Capture2.JPG')}
+                                source={{ uri: item.name }}
                             />
                             <View style={{ justifyContent: 'space-between' }}>
                                 <FeatherIcon
                                     style={{ color: 'white', position: 'absolute', right: width * 0.005, top: height * 0.005 }}
-                                    accessible={true}
-                                    accessibilityLabel='An info icon'
-                                    accessibilityHint='Click to display the information of the image.'
                                     icon='info'
                                     onClick={() => { }}
                                 />
                                 <FeatherIcon
                                     style={{ color: 'white', position: 'absolute', right: width * 0.005, bottom: height * 0.005 }}
-                                    accessible={true}
-                                    accessibilityLabel='A download icon'
-                                    accessibilityHint='Click to download the image.'
                                     icon='download'
                                     onClick={() => { }}
                                 />
@@ -58,11 +75,6 @@ const DatabaseScreen = () => {
 const { height, width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
-    text: {
-        fontSize: 40,
-        alignSelf: 'center',
-        marginBottom: 30
-    },
     databaseImage: {
         width: width * 0.25,
         height: height * 0.3,

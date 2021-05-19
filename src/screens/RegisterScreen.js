@@ -1,8 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { TouchableOpacity, Dimensions, Text, View, TextInput, StyleSheet } from 'react-native';
 import { Context } from '../context/WebContext';
-import bcrypt from "bcryptjs";
 import { navigate } from '../navigationRef';
+import { globalStyle } from '../styles/global';
 
 
 const RegisterScreen = () => {
@@ -23,40 +23,39 @@ const RegisterScreen = () => {
     };
 
     const checkInput = () => {
-        if (state.registerUsername == '') {
+        if (state.registerUsername === '') {
             alert('Please enter your username.')
             return false;
         }
 
-        else if (state.registerPassword == '') {
+        else if (state.registerPassword === '') {
             alert('Please enter your password.');
             return false;
         }
 
-        else if (state.comfirmPassword == '') {
+        else if (state.comfirmPassword === '') {
             alert('Please comfirm your password.');
             return false;
         }
 
-        else if (state.comfirmPassword != state.registerPassword) {
+        else if (state.comfirmPassword !== state.registerPassword) {
             alert('Please make sure your comfirm password is the same as your password.');
             return false;
         }
-
         return true;
     }
 
     return (
         <View style={styles.mainView}>
-            <Text style={{ fontSize: 40 }}>
+            <Text style={globalStyle.titleText}>
                 Create your account
             </Text>
             <View style={{ margin: height * 0.03, width: width * 0.3 }}>
                 <View style={{ flexDirection: 'row' }}>
-                    <Text>
+                    <Text style={[globalStyle.subTitleText, { fontSize: 14 }]}>
                         Username
                     </Text>
-                    <Text style={styles.asterisk}>
+                    <Text style={[styles.asterisk, globalStyle.subTitleText, { fontSize: 14 }]}>
                         *
                     </Text>
                 </View>
@@ -72,15 +71,15 @@ const RegisterScreen = () => {
                     onChangeText={setRegisterUserName}
                 />
                 <View style={{ flexDirection: 'row' }}>
-                    <Text>
+                    <Text style={[globalStyle.subTitleText, { fontSize: 14 }]}>
                         Password
                     </Text>
-                    <Text style={styles.asterisk}>
+                    <Text style={[styles.asterisk, globalStyle.subTitleText, { fontSize: 14 }]}>
                         *
                     </Text>
                 </View>
                 <TextInput
-                    style={styles.viewInput}
+                    style={[globalStyle.infoText, styles.viewInput]}
                     accessible={true}
                     accessibilityLabel='Click to enter your password'
                     accessibilityHint='The password field is required to fill in to create an account.'
@@ -92,15 +91,15 @@ const RegisterScreen = () => {
                     onChangeText={setRegisterPassword}
                 />
                 <View style={{ flexDirection: 'row' }}>
-                    <Text>
+                    <Text style={[globalStyle.subTitleText, { fontSize: 14 }]}>
                         Comfirm Password
                     </Text>
-                    <Text style={styles.asterisk}>
+                    <Text style={[styles.asterisk, globalStyle.subTitleText, { fontSize: 14 }]}>
                         *
                     </Text>
                 </View>
                 <TextInput
-                    style={styles.viewInput}
+                    style={[globalStyle.infoText, styles.viewInput]}
                     accessible={true}
                     accessibilityLabel='Click to retype your password'
                     accessibilityHint='This field is required to fill in to ensure you are aware of your password and to avoid from typing wrongly.'
@@ -118,10 +117,12 @@ const RegisterScreen = () => {
                     accessibilityHint='By clicking on this button, you will be able to be prompted back to the Login Screen, if the account is created successfully.'
                     onPress={() => checkInput() ? onSubmit() : () => { }}
                 >
-                    Create Account
+                    <Text style={globalStyle.buttonText}>
+                        Create Account
+                    </Text>
                 </TouchableOpacity>
                 <View style={styles.bottomText}>
-                    <Text>
+                    <Text style={[globalStyle.subTitleText, { fontSize: 14 }]}>
                         Already signed up?
                     </Text>
                     <TouchableOpacity
@@ -131,7 +132,9 @@ const RegisterScreen = () => {
                         accessibilityHint='By clicking on this button, you will be be prompted to the Login Screen.'
                         onPress={() => navigate('Login')}
                     >
-                        Sign In
+                        <Text style={[globalStyle.subTitleText, { fontSize: 14, color: 'blue' }]}>
+                            Sign In
+                        </Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -154,7 +157,8 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         paddingHorizontal: height * 0.013,
         paddingVertical: height * 0.018,
-        marginBottom: height * 0.019
+        marginBottom: height * 0.019,
+        fontSize: 14
     },
     button: {
         alignItems: 'center',
@@ -164,9 +168,9 @@ const styles = StyleSheet.create({
         borderRadius: 4
     },
     underlineNavi: {
-        color: 'blue',
         marginLeft: 8,
-        borderBottomWidth: 1
+        borderBottomWidth: 1,
+        borderColor: 'blue'
     },
     bottomText: {
         flexDirection: 'row',

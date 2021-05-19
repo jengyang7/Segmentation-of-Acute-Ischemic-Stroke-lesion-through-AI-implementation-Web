@@ -22,6 +22,10 @@ const webReducer = (state, action) => {
       return { ...state, token: null, rememberMe: action.rememberMe, username: action.username };
     case 'toggle_remember':
       return { ...state, rememberMe: action.rememberMe };
+    case 'chooseFile':
+      return { ...state, uploadFile: [...state.uploadFile, action.uploadFile] };
+    case 'get_images':
+      return { ...state, images: action.images }
     default:
       return state;
   }
@@ -67,15 +71,18 @@ const login = dispatch => {
     try {
       await AsyncStorage.clear();
       let resp = await fetch('/login', reqOption).then(data => data.json());
-      if (rememberMe) {
-        await AsyncStorage.setItem('token', resp.data.token)
-        await AsyncStorage.setItem('remember', rememberMe)
-        await AsyncStorage.setItem('username', resp.data.username)
+      if (resp.success) {
+        if (rememberMe) {
+          await AsyncStorage.setItem('token', resp.data.token)
+          await AsyncStorage.setItem('remember', rememberMe)
+          await AsyncStorage.setItem('username', resp.data.username)
+        }
       }
 
       dispatch({ type: 'login', token: resp.data.token })
       return resp.success ? navigate('Home') : alert('Incorrect username or password.');
     } catch (error) {
+      alert('Incorrect username or password.')
       console.log(`Error: ${error}`);
     }
   };
@@ -89,7 +96,7 @@ const getToken = dispatch => {
       const username = await AsyncStorage.getItem('username');
 
       if (token) {
-        dispatch({ type: 'get_token', token: token, username: username, rememberMe: remember })
+        dispatch({ type: 'get_token', token: token, username: username, rememberMe: true })
         navigate('Home')
       } else {
         if (remember === "true") {
@@ -114,8 +121,20 @@ const toggleRememberMe = dispatch => {
   }
 }
 
+const chooseFile = dispatch => {
+  return (name) => {
+    dispatch({ type: 'chooseFile', uploadFile: name })
+  }
+}
+
+const getImages = dispatch => {
+  return (images) => {
+    dispatch({ type: 'get_images', images: images })
+  }
+}
+
 export const { Context, Provider } = createWebContext(
   webReducer,
-  { setUserName, setPassword, setRegisterUserName, setRegisterPassword, setComfirmPassword, login, getToken, toggleRememberMe },
-  { username: '', password: '', registerUsername: '', registerPassword: '', comfirmPassword: '', rememberMe: false, token: null }
+  { setUserName, setPassword, setRegisterUserName, setRegisterPassword, setComfirmPassword, login, getToken, toggleRememberMe, chooseFile, getImages },
+  { username: '', password: '', registerUsername: '', registerPassword: '', comfirmPassword: '', rememberMe: false, token: null, uploadFile: [], images: [] }
 );
