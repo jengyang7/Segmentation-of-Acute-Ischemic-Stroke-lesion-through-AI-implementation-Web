@@ -31,6 +31,8 @@ app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(days=1)
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_USERNAME'] = 'kongman998@gmail.com'
+app.config['MAIL_PASSWORD'] = 'tengkongman'
 
 mail = Mail(app)
 mongo = PyMongo(app)

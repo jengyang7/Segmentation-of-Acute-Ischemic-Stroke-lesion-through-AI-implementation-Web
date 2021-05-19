@@ -16,6 +16,31 @@ user_schema = {
     "additionalProperties": False
 }
 
+register_user_schema = {
+    "type": "object",
+    "properties": {
+        "username": {
+            "type": "string",
+        },
+        "password": {
+            "type": "string",
+        },
+        "email": {
+            "type": "string",
+        }
+    },
+    "required": ["username", "password","email"],
+    "additionalProperties": False
+}
+
+def validate_register(data):
+    try:
+        validate(data, register_user_schema)
+    except ValidationError as e:
+        return {'success': False, 'message': e}
+    except SchemaError as e:
+        return {'success': False, 'message': e}
+    return {'success': True, 'data': data}
 
 def validate_user(data):
     try:

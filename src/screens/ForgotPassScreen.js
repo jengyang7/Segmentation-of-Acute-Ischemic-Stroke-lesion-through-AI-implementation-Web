@@ -7,6 +7,20 @@ import { globalStyle } from '../styles/global';
 
 const ForgotPassScreen = () => {
     const [email, setEmail] = useState('');
+    const onSubmit = async () => {
+        const reqOption = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email:email})
+        };
+        try {
+            let resp = await fetch('/forget', reqOption).then(data => data.json());
+            return navigate('Login')
+        } catch (error) {
+            console.log(`Error: ${error}`)
+        }
+    };
+
     return (
         <View style={{ padding: height * 0.03 }}>
             <Text style={globalStyle.titleText}>
@@ -32,7 +46,7 @@ const ForgotPassScreen = () => {
                     accessible={true}
                     accessibilityLabel='Click to send password reset email'
                     accessibilityHint='By clicking on this button, a password reset link will be sent to your email.'
-                    onPress={() => { }}
+                    onPress={() => onSubmit() }
                 >
                     <Text style={globalStyle.buttonText}>
                         Send password reset email
