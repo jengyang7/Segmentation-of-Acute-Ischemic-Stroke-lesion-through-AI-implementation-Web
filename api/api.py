@@ -7,7 +7,7 @@ from app import app, mongo, flask_bcrypt, jwt,mail
 from flask_mail import  Message
 from schema import validate_user,validate_register
 from werkzeug.utils import secure_filename
-from datetime import timedelta
+from datetime import timedelta,datetime
 from mail_service import send_email
 
 @jwt.unauthorized_loader
@@ -82,6 +82,22 @@ def upload():
         mongo.save_file(filename, f,username=current_user["username"])
         return {"success":True} 
     return {"success":False} 
+
+@app.route('/delete/<filename>', methods = ["POST"])
+@jwt_required
+def delete(filename):
+    current_user = get_jwt_identity()
+    f = mongo.db.fs.files.find_one({"filename":filename,"username":current_user["username"]})
+    if f["_id"]:
+        deleted = mongo.db.fs.files.delete_one({"filename":filename,"username":current_user["username"]})
+        print(deleted)
+        if "_id" in deleted:
+            return {"success":True,"data":"File Deleted"}
+        else:
+            return {"success":False,"data":"File Delete Unsuccessful"}
+    return {"success":False,"data":"File not found"}
+
+
 
 @app.route('/retrieve/<filename>', methods = ["GET"])
 @jwt_required
