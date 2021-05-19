@@ -5,3 +5,4 @@ flask_pymongo==2.3.0
 Flask_JWT_Extended==3.25.0
 Flask_Bcrypt==0.7.1
 jsonschema==2.5.1
+Flask-Mail

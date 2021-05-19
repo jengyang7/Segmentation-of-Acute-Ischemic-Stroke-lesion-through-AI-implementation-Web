@@ -3,9 +3,11 @@ import json
 from flask import Flask, request,jsonify
 from flask_jwt_extended import (create_access_token, create_refresh_token,
                                 jwt_required, jwt_refresh_token_required, get_jwt_identity)
-from app import app, mongo, flask_bcrypt, jwt
-from schema import validate_user
+from app import app, mongo, flask_bcrypt, jwt,mail
+from flask_mail import  Message
+from schema import validate_user,validate_register
 from werkzeug.utils import secure_filename
+from datetime import datetime
 
 
 @jwt.unauthorized_loader
@@ -42,13 +44,13 @@ def login():
 
 @app.route('/register', methods = ["POST"])
 def register():
-    data = validate_user(request.get_json())
+    data = validate_register(request.get_json())
     if data['success']:
         data = data['data']
         data['password'] = flask_bcrypt.generate_password_hash(
             data['password'])
         user = mongo.db.user.find_one({"username":data["username"]})
-        print(user)
+        mail = mongo.db.user.find_one({"email":data["email"]})
         if user:
             return jsonify({'success': False, 'message': 'User already exist '}), 400
         else:
@@ -91,3 +93,19 @@ def retrieve_filename():
     current_user = get_jwt_identity()
     return {"success":True,"data":list(mongo.db.fs.files.find({"username":current_user["username"]}))}
 
+@app.route('/forget', methods = ["GET"])
+def forget():
+    email=request.get("email")
+    print(email)
+    user = mongo.db.user.find_one({"email":email})
+    if user:
+        expires = datetime.timedelta(hours=24)
+        reset_token = create_access_token(str(user.id), expires_delta=expires)
+
+        msg = Message('Hello', sender = app.config['MAIL_USERNAME'], recipients = [email])
+        msg.body = "This is the email body"
+        mail.send(msg)
+
+    return {"success":False,"data":"Email doesnt exist"}
+
+    
