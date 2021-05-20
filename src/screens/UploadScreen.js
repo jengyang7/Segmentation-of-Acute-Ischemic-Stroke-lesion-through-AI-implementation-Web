@@ -1,39 +1,46 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useCallback } from 'react';
 import { FlatList, StyleSheet, Dimensions, View, Text } from 'react-native';
 import { Context } from '../context/WebContext';
-import Uploady, { useItemProgressListener } from "@rpldy/uploady";
+import Uploady, { useItemProgressListener, UploadyContext, useUploady } from "@rpldy/uploady";
 import UploadButton from "@rpldy/upload-button";
 import FeatherIcon from 'feather-icons-react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { navigate } from '../navigationRef';
 import { globalStyle } from '../styles/global';
-
+import {Ubutton} from '../UploadButton';
 
 
 const UploadScreen = () => {
-    const { state, chooseFile } = useContext(Context);
+    const { state, chooseFile, deleteImg } = useContext(Context);
 
     const LogProgress = () => {
         useItemProgressListener((item) => {
+            console.log(item)
             console.log(`File ${item.file.name} completed: ${item.completed}`);
-            chooseFile(item.file.name)
+            chooseFile(item)
         });
 
         if (state.uploadFile.length > 0) {
             return (
                 <FlatList
+                    keyExtractor={uploadFile => uploadFile.file.id}
                     data={state.uploadFile}
                     renderItem={({ item }) => {
                         return (
-                            <View style={{ padding: 10, borderWidth: 1, borderRadius: 4, borderColor: 'grey' }}>
+                            <View style={{ alignSelf: 'center', padding: 10, borderWidth: 1, borderRadius: 4, borderColor: 'grey', width: width * 0.5 }}>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                     <View style={{ flexDirection: 'row' }}>
                                         <FeatherIcon style={{ height: height * 0.025, paddingRight: 3 }} icon='file' />
                                         <Text style={[globalStyle.infoText, { fontSize: 14 }]}>
-                                            {item}
+                                            {item.file.name}
                                         </Text>
                                     </View>
-                                    <FeatherIcon style={{ height: height * 0.025 }} icon='x' />
+                                    <FeatherIcon 
+                                        cursor='pointer'
+                                        style={{ height: height * 0.025 }} 
+                                        icon='x' 
+                                        onClick={()=>deleteImages(item.file.name)} 
+                                    />
                                 </View>
                             </View>
                         )
@@ -44,21 +51,64 @@ const UploadScreen = () => {
             return null
         }
     }
+
+    const deleteImages = async(...args) => {
+        var file;
+        if (args.length == 0) {
+            file = state.uploadFile
+        } else if (args.length == 1) {
+            file = [args]
+        }
+        const reqOption = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json', "Authorization": `Bearer ${state.token}`}
+        }
+        try {
+            for (let i = 0; i < file.length; i++) {
+                let resp = await fetch('/delete/' + file[i], reqOption).then(data => data.json());
+                console.log(resp)
+                deleteImg(file[i], state.uploadFile);
+            }
+            
+            
+        } catch (error) {
+            console.log(`Error: ${error}`);
+        }
+    }
+
+    const predict = async() => {
+        for (let i = 0; i < state.uploadFile.length; i++) {
+            const formData = new FormData();
+            formData.append('file', state.uploadFile[i].file);
+            console.log(state.uploadFile[i])
+            const reqOption = {
+                method: 'POST',
+                headers: {'enctype': 'multipart/form-data', },
+                body: formData
+            }
+            try {
+                let resp = await fetch('https://616a7d194733.ngrok.io/predict', reqOption).then(data => data.blob());
+                console.log(resp);
+            } catch (error) {
+                console.log(`Error: ${error}`);
+            }
+        }   
+    }
+
+    console.log(state)
     return (
         <View style={{ padding: height * 0.03}}>
             <Uploady destination={{ url: "/upload", headers: { "Authorization": `Bearer ${state.token}` } }}
-                accept=".png,.jpg,.jpeg,.nii">
+                accept=".nii">
                 <View>
                     <View style={{ paddingBottom: 10 }}>
                         <View style={styles.drag}>
-                            {/* <Text style={{marginTop: height * 0.12}}>Choose your files</Text> */}
                             <View style={{ marginTop: height * 0.11 }}>
-                                <UploadButton text='Upload your files' />
+                                <Ubutton />
                             </View>
                         </View>
                     </View>
                     <LogProgress />
-                    {/* <UploadButton color='blue' text='Upload your files'/> */}
                 </View>
             </Uploady>
             <View style={{flexDirection: 'row', alignSelf: 'center'}}>
@@ -67,7 +117,7 @@ const UploadScreen = () => {
                     accessible={true}
                     accessibilityLabel='Click to get the segmented result.'
                     accessibilityHint='By clicking on this button, you will be able to view your segmented result.'
-                    onPress={() => navigate('Result')}
+                    onPress={() => predict()}
                 >
                     <Text style={globalStyle.buttonText}>
                         Get segmented result
