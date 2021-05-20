@@ -3,7 +3,7 @@ import { Dimensions, FlatList, Image, View, Text, StyleSheet } from 'react-nativ
 import FeatherIcon from "feather-icons-react"
 import { Context } from '../context/WebContext';
 import { globalStyle } from '../styles/global';
-
+import DwvComponent from '../DwvComponent';
 
 const DatabaseScreen = () => {
     const { state, getImages } = useContext(Context);
@@ -47,13 +47,14 @@ const DatabaseScreen = () => {
                 renderItem={({ item }) => {
                     return (
                         <View style={styles.body}>
-                            <Image
+                            <DwvComponent />
+                            {/* <Image
                                 style={styles.databaseImage}
                                 accessible={true}
                                 accessibilityLabel='A stroke image'
                                 accessibilityHint='Click to zoom in the image.'
                                 source={{ uri: item.name }}
-                            />
+                            /> */}
                             <View style={{ justifyContent: 'space-between' }}>
                                 <FeatherIcon
                                     style={{ color: 'white', position: 'absolute', right: width * 0.005, top: height * 0.005 }}
@@ -66,6 +67,7 @@ const DatabaseScreen = () => {
                                     onClick={() => { }}
                                 />
                             </View>
+                            
                         </View>)
                 }}
             />
