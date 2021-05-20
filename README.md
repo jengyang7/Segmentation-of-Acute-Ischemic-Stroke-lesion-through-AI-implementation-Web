@@ -9,6 +9,7 @@ make it online
 1) activate the backend environment (for first time launching the application. Once you have activated the environment, you do need to run this step anymore.)
     - locate to the project directory
     - cd api
+    - download and install nodejs from https://nodejs.org/en/download/
     - if your operating system is Unix-based, run the following command:
         - python3 -m venv venv
         - source venv/bin/activate
@@ -16,7 +17,12 @@ make it online
         - python -m venv venv
         - venv\Scripts\activate
     - run the following command:
+        - npm install
+        - sudo npm install --global yarn
         - pip install flask python-dotenv
+        - npm i @react-native-community/async-storage
+        - npm i @rpldy/uploady
+        - npm i @rpldy/upload-button
 
 2) Open two terminal and run the following command on two seperate terminal
 ### `npm start`
