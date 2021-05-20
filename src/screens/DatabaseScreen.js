@@ -3,13 +3,13 @@ import { Dimensions, FlatList, Image, View, Text, StyleSheet } from 'react-nativ
 import FeatherIcon from "feather-icons-react"
 import { Context } from '../context/WebContext';
 import { globalStyle } from '../styles/global';
+import FileSaver, { saveAs } from 'file-saver';
 
 
 const DatabaseScreen = () => {
     const { state, getImages } = useContext(Context);
 
     useEffect(() => {
-        // getFile(state.token, (images) => getImages(images));
         getFile();
     });
 
@@ -27,13 +27,27 @@ const DatabaseScreen = () => {
             let resp1 = await fetch('/retrieve_filename', reqOption1).then(data => data.json());
             for (let i = 0; i < resp1.data.length; i++) {
                 let resp2 = await fetch('/retrieve/' + resp1.data[i].filename, reqOption2).then(data => data);
-                images = [...images, { 'name': resp2.url }];
+                images = [...images, { 'url': resp2.url, 'name': resp1.data[i].filename }];
             }
             getImages(images);
         } catch (error) {
             console.log(`Error: ${error}`);
         }
     };
+
+    const downloadFile = async(name) => {
+        const reqOption = {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json', "Authorization": `Bearer ${state.token}`}
+        }
+        try {
+            let resp = await fetch('/retrieve/' + name, reqOption).then(data => data.blob());
+            console.log(resp)
+            FileSaver.saveAs(resp, "database_image.nii");
+        } catch (error) {
+            console.log(`Error: ${error}`);
+        }
+    }
 
     return (
         <View>
@@ -52,18 +66,21 @@ const DatabaseScreen = () => {
                                 accessible={true}
                                 accessibilityLabel='A stroke image'
                                 accessibilityHint='Click to zoom in the image.'
-                                source={{ uri: item.name }}
+                                source={{ uri: item.url }}
+                                onClick={() => {}}
                             />
                             <View style={{ justifyContent: 'space-between' }}>
                                 <FeatherIcon
+                                    cursor='pointer'
                                     style={{ color: 'white', position: 'absolute', right: width * 0.005, top: height * 0.005 }}
                                     icon='info'
                                     onClick={() => { }}
                                 />
                                 <FeatherIcon
+                                    cursor='pointer'
                                     style={{ color: 'white', position: 'absolute', right: width * 0.005, bottom: height * 0.005 }}
                                     icon='download'
-                                    onClick={() => { }}
+                                    onClick={() => downloadFile(item.name)}
                                 />
                             </View>
                         </View>)
