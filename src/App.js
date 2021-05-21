@@ -78,6 +78,7 @@ const navigator = createStackNavigator(
         <View style={{ flexDirection: 'row' }}>
           <View style={styles.viewIconText}>
             <FeatherIcon
+              cursor='pointer'
               style={{ color: 'white', height: height * 0.025 }}
               icon='home'
               onClick={() => navigate('Home')}
@@ -132,6 +133,7 @@ const navigator = createStackNavigator(
               </Text>
             </TouchableOpacity>
             <FeatherIcon
+              cursor='pointer'
               style={{ color: 'white', height: height * 0.025 }}
               icon='log-out'
               onClick={async () => {

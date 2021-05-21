@@ -2,22 +2,24 @@ import React, { useContext, useEffect, useCallback } from 'react';
 import { FlatList, StyleSheet, Dimensions, View, Text } from 'react-native';
 import { Context } from '../context/WebContext';
 import Uploady, { useItemProgressListener, UploadyContext, useUploady } from "@rpldy/uploady";
-import UploadButton from "@rpldy/upload-button";
 import FeatherIcon from 'feather-icons-react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { navigate } from '../navigationRef';
 import { globalStyle } from '../styles/global';
-import {Ubutton} from '../UploadButton';
+import { Ubutton } from '../customs/UploadButton';
 
 
 const UploadScreen = () => {
     const { state, chooseFile, deleteImg } = useContext(Context);
 
     const LogProgress = () => {
+
         useItemProgressListener((item) => {
             console.log(item)
             console.log(`File ${item.file.name} completed: ${item.completed}`);
-            chooseFile(item)
+            if (item.completed === 100) {
+                chooseFile(item)
+            }
         });
 
         if (state.uploadFile.length > 0) {
@@ -35,11 +37,11 @@ const UploadScreen = () => {
                                             {item.file.name}
                                         </Text>
                                     </View>
-                                    <FeatherIcon 
+                                    <FeatherIcon
                                         cursor='pointer'
-                                        style={{ height: height * 0.025 }} 
-                                        icon='x' 
-                                        onClick={()=>deleteImages(item.file.name)} 
+                                        style={{ height: height * 0.025 }}
+                                        icon='x'
+                                        onClick={() => deleteImages(item.file.name)}
                                     />
                                 </View>
                             </View>
@@ -52,16 +54,20 @@ const UploadScreen = () => {
         }
     }
 
-    const deleteImages = async(...args) => {
-        var file;
+    const deleteImages = async (...args) => {
+        var file = [];
+        var uFiles;
         if (args.length == 0) {
-            file = state.uploadFile
+            uFiles = state.uploadFile
+            for (let i = 0; i < uFiles.length; i++) {
+                file = [...file, uFiles[i].file.name]
+            }
         } else if (args.length == 1) {
-            file = [args]
+            file = args
         }
         const reqOption = {
             method: 'POST',
-            headers: {'Content-Type': 'application/json', "Authorization": `Bearer ${state.token}`}
+            headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${state.token}` }
         }
         try {
             for (let i = 0; i < file.length; i++) {
@@ -69,21 +75,20 @@ const UploadScreen = () => {
                 console.log(resp)
                 deleteImg(file[i], state.uploadFile);
             }
-            
-            
+
         } catch (error) {
             console.log(`Error: ${error}`);
         }
     }
 
-    const predict = async() => {
+    const predict = async () => {
         for (let i = 0; i < state.uploadFile.length; i++) {
             const formData = new FormData();
             formData.append('file', state.uploadFile[i].file);
             console.log(state.uploadFile[i])
             const reqOption = {
                 method: 'POST',
-                headers: {'enctype': 'multipart/form-data', },
+                headers: { 'enctype': 'multipart/form-data', },
                 body: formData
             }
             try {
@@ -92,12 +97,12 @@ const UploadScreen = () => {
             } catch (error) {
                 console.log(`Error: ${error}`);
             }
-        }   
+        }
     }
 
     console.log(state)
     return (
-        <View style={{ padding: height * 0.03}}>
+        <View style={{ padding: height * 0.03 }}>
             <Uploady destination={{ url: "/upload", headers: { "Authorization": `Bearer ${state.token}` } }}
                 accept=".nii">
                 <View>
@@ -111,26 +116,27 @@ const UploadScreen = () => {
                     <LogProgress />
                 </View>
             </Uploady>
-            <View style={{flexDirection: 'row', alignSelf: 'center'}}>
-                <TouchableOpacity 
-                    style={[styles.button, {backgroundColor: 'black', marginHorizontal: 5}]} 
+            <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+                <TouchableOpacity
+                    style={[styles.button, { backgroundColor: 'black', marginHorizontal: 5 }]}
                     accessible={true}
                     accessibilityLabel='Click to get the segmented result.'
                     accessibilityHint='By clicking on this button, you will be able to view your segmented result.'
-                    onPress={() => predict()}
+                    onPress={() => navigate('Register')}
                 >
                     <Text style={globalStyle.buttonText}>
                         Get segmented result
                     </Text>
                 </TouchableOpacity>
-                <TouchableOpacity 
-                    style={[styles.button, {backgroundColor: 'white', width: width * 0.06, marginHorizontal: 5}]} 
+                <TouchableOpacity
+                    style={[styles.button, { backgroundColor: 'white', width: width * 0.06, marginHorizontal: 5 }]}
                     onPress={() => navigate('Home')}
                     accessible={true}
                     accessibilityLabel='Click to cancel the uploads.'
                     accessibilityHint='By clicking on this button, you will cancel all your uploads and return to the home screen.'
+                    onPress={async () => { await deleteImages(); navigate('Home') }}
                 >
-                    <Text style={globalStyle.buttonText, {color: 'red'}}>
+                    <Text style={globalStyle.buttonText, { color: 'red' }}>
                         Cancel
                     </Text>
                 </TouchableOpacity>
@@ -153,15 +159,15 @@ const styles = StyleSheet.create({
     text: {
         marginTop: height * 0.12
     },
-    button: { 
-        marginVertical: 20, 
-        alignSelf: 'center', 
-        width: width * 0.12, 
-        alignItems: 'center', 
+    button: {
+        marginVertical: 20,
+        alignSelf: 'center',
+        width: width * 0.12,
+        alignItems: 'center',
         borderWidth: 1,
         borderRadius: 4,
         borderColor: 'grey',
-        padding: 8 
+        padding: 8
     }
 
 });

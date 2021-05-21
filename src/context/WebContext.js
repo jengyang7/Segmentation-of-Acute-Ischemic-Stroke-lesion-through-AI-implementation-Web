@@ -28,6 +28,8 @@ const webReducer = (state, action) => {
       return { ...state, uploadFile: [...state.uploadFile, action.uploadFile] };
     case 'get_images':
       return { ...state, images: action.images }
+    case 'delete_images':
+      return {...state, uploadFile: action.uploadFile}
     default:
       return state;
   }
@@ -51,7 +53,7 @@ const setComfirmPassword = dispatch => {
 };
 
 const setUserName = dispatch => {
-  return async (username) => {
+  return (username) => {
     dispatch({ type: 'set_username', username: username });
   };
 };
@@ -140,8 +142,17 @@ const getImages = dispatch => {
   }
 }
 
+const deleteImg = dispatch => {
+  return (name, files) => {
+    console.log(name)
+    files = files.filter(item => item.file.name !== name)
+    console.log(files)
+    dispatch({ type: 'delete_images', uploadFile: files})
+  }
+}
+
 export const { Context, Provider } = createWebContext(
   webReducer,
-  { setUserName, setPassword, setRegisterUserName, setRegisterPassword, setComfirmPassword, setEmail, login, getToken, toggleRememberMe, chooseFile, getImages },
+  { setUserName, setPassword, setRegisterUserName, setRegisterPassword, setComfirmPassword, setEmail, login, getToken, toggleRememberMe, chooseFile, getImages, deleteImg },
   { username: '', password: '', registerEmail: '', registerUsername: '', registerPassword: '', comfirmPassword: '', rememberMe: false, token: null, uploadFile: [], images: [] }
 );

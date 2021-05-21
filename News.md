@@ -41,3 +41,9 @@ Applied stylings
 Fixed warnings
 Database screen able to retrieve image
 User able to upload image
+
+## Update V1.0
+Able to show information at database screen
+Able to delete image
+Fixed upload screen bug
+Displayed details at result screen

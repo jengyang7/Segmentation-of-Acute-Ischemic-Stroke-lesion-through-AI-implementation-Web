@@ -41,10 +41,28 @@ const ResultScreen = () => {
                     </TouchableOpacity>
                 </View>
 
-                <View style={{ borderWidth: 1 }}>
-                    <Text style={globalStyle.subTitleText}>
-                        Diagnosis details
-                    </Text>
+                <View style={{ borderWidth: 1, width: width * 0.23 }}>
+                    <View style={{ padding: 15 }}>
+                        <Text style={[globalStyle.subTitleText, { alignSelf: 'center', fontWeight: 'bold' }]}>
+                            Details
+                        </Text>
+                        <View style={{ flexDirection: 'row', marginVertical: 20 }}>
+                            <Text style={[globalStyle.infoText, { fontWeight: 'bold' }]}>
+                                White Area:
+                            </Text>
+                            <Text style={[globalStyle.infoText, { marginHorizontal: 5 }]}>
+                                is a stroke lesion
+                            </Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', marginVertical: 20 }}>
+                            <Text style={[globalStyle.infoText, { fontWeight: 'bold' }]}>
+                                Black Area:
+                            </Text>
+                            <Text style={[globalStyle.infoText, { marginHorizontal: 5 }]}>
+                                is not a stroke lesion
+                            </Text>
+                        </View>
+                    </View>
                 </View>
             </View>
         </View>

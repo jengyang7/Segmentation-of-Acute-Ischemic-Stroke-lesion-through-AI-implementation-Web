@@ -4,15 +4,16 @@ import FeatherIcon from "feather-icons-react"
 import { Context } from '../context/WebContext';
 import { globalStyle } from '../styles/global';
 import DwvComponent from '../DwvComponent';
-import FileSaver, { saveAs } from 'file-saver';
+import FileSaver from 'file-saver';
+import { Infotip } from '@trendmicro/react-tooltip';
+import '@trendmicro/react-tooltip/dist/react-tooltip.css';
 
 
 const DatabaseScreen = () => {
     const { state, getImages } = useContext(Context);
-
     useEffect(() => {
         getFile();
-    });
+    }, []);
 
     const getFile = async () => {
         let images = [];
@@ -28,7 +29,7 @@ const DatabaseScreen = () => {
             let resp1 = await fetch('/retrieve_filename', reqOption1).then(data => data.json());
             for (let i = 0; i < resp1.data.length; i++) {
                 let resp2 = await fetch('/retrieve/' + resp1.data[i].filename, reqOption2).then(data => data);
-                images = [...images, { 'url': resp2.url, 'name': resp1.data[i].filename }];
+                images = [...images, { 'url': resp2.url, 'file': resp1.data[i] }];
             }
             getImages(images);
         } catch (error) {
@@ -36,10 +37,10 @@ const DatabaseScreen = () => {
         }
     };
 
-    const downloadFile = async(name) => {
+    const downloadFile = async (name) => {
         const reqOption = {
             method: 'GET',
-            headers: {'Content-Type': 'application/json', "Authorization": `Bearer ${state.token}`}
+            headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${state.token}` }
         }
         try {
             let resp = await fetch('/retrieve/' + name, reqOption).then(data => data.blob());
@@ -52,32 +53,48 @@ const DatabaseScreen = () => {
 
     return (
         <View>
-            <Text style={globalStyle.titleText}>
+            <Text style={[globalStyle.titleText]}>
                 Your Data
             </Text>
+            <FeatherIcon
+                style={{ alignSelf: 'flex-end', marginRight: 100 }}
+                cursor='pointer'
+                icon='refresh-ccw'
+                onClick={() => getFile()}
+            />
             <FlatList
-                keyExtractor={image => image.name}
+                keyExtractor={image => image.file.filename}
                 data={state.images}
                 numColumns={2}
                 renderItem={({ item }) => {
                     return (
                         <View style={styles.body}>
-                            <DwvComponent />
-                            {/* <Image
+                            {/* <DwvComponent /> */}
+                            <Image
                                 style={styles.databaseImage}
                                 accessible={true}
                                 accessibilityLabel='A stroke image'
                                 accessibilityHint='Click to zoom in the image.'
                                 source={{ uri: item.url }}
-                                onClick={() => {}}
-                            />*/}
+                                onClick={() => { }}
+                            />
                             <View style={{ justifyContent: 'space-between' }}>
-                                <FeatherIcon
-                                    cursor='pointer'
-                                    style={{ color: 'white', position: 'absolute', right: width * 0.005, top: height * 0.005 }}
-                                    icon='info'
-                                    onClick={() => { }}
-                                />
+                                <Infotip
+                                    tooltipStyle={{ whiteSpace: 'nowrap' }}
+                                    data-html={true}
+                                    content={() => {
+                                        return (
+                                            <Text>
+                                                {`Name: ${item.file.filename}\nType: NIFTI\nSize: \nDate uploaded: ${item.file.uploadDate}`}
+                                            </Text>);
+                                    }}
+                                >
+                                    <FeatherIcon
+                                        cursor='pointer'
+                                        style={{ color: 'white', position: 'absolute', right: width * 0.005, top: height * 0.005 }}
+                                        icon='info'
+                                    />
+                                </Infotip>
                                 <FeatherIcon
                                     cursor='pointer'
                                     style={{ color: 'white', position: 'absolute', right: width * 0.005, bottom: height * 0.005 }}
@@ -85,7 +102,6 @@ const DatabaseScreen = () => {
                                     onClick={() => downloadFile(item.name)}
                                 />
                             </View>
-                            
                         </View>)
                 }}
             />
