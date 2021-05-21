@@ -87,14 +87,13 @@ def upload():
 @jwt_required
 def delete(filename):
     current_user = get_jwt_identity()
-    f = mongo.db.fs.files.find({"filename":filename,"username":current_user["username"]})
-    
-    deleted = mongo.db.fs.files.delete_many({"filename":filename,"username":current_user["username"]})
-
-    if deleted.deleted_count>0:
-        return {"success":True,"data":"File Deleted"}
-    else:
-        return {"success":False,"data":"File Delete Unsuccessful"}
+    f = mongo.db.fs.files.find_one({"filename":filename,"username":current_user["username"]})
+    if f["_id"]:
+        deleted = mongo.db.fs.files.delete_one({"filename":filename,"username":current_user["username"]})
+        if deleted.deleted_count == 1:
+            return {"success":True,"data":"File Deleted"}
+        else:
+            return {"success":False,"data":"File Delete Unsuccessful"}
     return {"success":False,"data":"File not found"}
 
 
