@@ -30,6 +30,9 @@ const webReducer = (state, action) => {
       return { ...state, images: action.images }
     case 'delete_images':
       return {...state, uploadFile: action.uploadFile}
+    case 'toggle_loading':
+      console.log(action.isLoading)
+      return {...state, isLoading: action.isLoading}
     default:
       return state;
   }
@@ -149,8 +152,15 @@ const deleteImg = dispatch => {
   }
 }
 
+const loading = dispatch => {
+  return (isLoading) => {
+    const opposite = !isLoading;
+    dispatch({ type: 'toggle_loading', isLoading: opposite})
+  }
+}
+
 export const { Context, Provider } = createWebContext(
   webReducer,
-  { setUserName, setPassword, setRegisterUserName, setRegisterPassword, setComfirmPassword, setEmail, login, getToken, toggleRememberMe, chooseFile, getImages, deleteImg },
-  { username: '', password: '', registerEmail: '', registerUsername: '', registerPassword: '', comfirmPassword: '', rememberMe: false, token: null, uploadFile: [], images: [] }
+  { setUserName, setPassword, setRegisterUserName, setRegisterPassword, setComfirmPassword, setEmail, login, getToken, toggleRememberMe, chooseFile, getImages, deleteImg, loading },
+  { username: '', password: '', registerEmail: '', registerUsername: '', registerPassword: '', comfirmPassword: '', rememberMe: false, token: null, uploadFile: [], images: [], isLoading: false }
 );

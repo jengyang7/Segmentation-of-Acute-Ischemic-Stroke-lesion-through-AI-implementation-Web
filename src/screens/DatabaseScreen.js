@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { Dimensions, FlatList, Image, View, Text, StyleSheet } from 'react-native';
+import { ActivityIndicator, Dimensions, FlatList, Image, View, Text, StyleSheet } from 'react-native';
 import FeatherIcon from "feather-icons-react"
 import { Context } from '../context/WebContext';
 import { globalStyle } from '../styles/global';
@@ -10,12 +10,13 @@ import '@trendmicro/react-tooltip/dist/react-tooltip.css';
 
 
 const DatabaseScreen = () => {
-    const { state, getImages } = useContext(Context);
+    const { state, getImages, loading } = useContext(Context);
     useEffect(() => {
         getFile();
     }, []);
 
     const getFile = async () => {
+        loading(false)
         let images = [];
         const reqOption1 = {
             method: 'GET',
@@ -26,12 +27,15 @@ const DatabaseScreen = () => {
             headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${state.token}` }
         };
         try {
+            console.log(state)
             let resp1 = await fetch('/retrieve_filename', reqOption1).then(data => data.json());
             for (let i = 0; i < resp1.data.length; i++) {
                 let resp2 = await fetch('/retrieve/' + resp1.data[i].filename, reqOption2).then(data => data);
+                console.log(resp2)
                 images = [...images, { 'url': resp2.url, 'file': resp1.data[i] }];
             }
             getImages(images);
+            loading(state.isLoading)
         } catch (error) {
             console.log(`Error: ${error}`);
         }
@@ -44,14 +48,18 @@ const DatabaseScreen = () => {
         }
         try {
             let resp = await fetch('/retrieve/' + name, reqOption).then(data => data.blob());
-            console.log(resp)
+            // console.log(resp)
             FileSaver.saveAs(resp, "database_image.nii");
         } catch (error) {
             console.log(`Error: ${error}`);
         }
     }
-
-    return (
+    return state.isLoading ? (
+        <View style={{justifyContent: "center", position: 'absolute', right: 0, left: 0, top: height * 0.5}}>
+            <ActivityIndicator size="large" color="#0000ff"/>
+        </View>
+    ) : 
+    (
         <View>
             <Text style={[globalStyle.titleText]}>
                 Your Data

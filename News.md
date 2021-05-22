@@ -47,3 +47,7 @@ Able to show information at database screen
 Able to delete image
 Fixed upload screen bug
 Displayed details at result screen
+
+## Update V1.1
+Applied stylings
+Added loading indicator for database screen

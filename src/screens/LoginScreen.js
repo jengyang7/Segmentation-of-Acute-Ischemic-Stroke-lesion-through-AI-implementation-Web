@@ -27,10 +27,8 @@ const LoginScreen = () => {
 
     return (
         <View>
-            
                 <View style={{ padding: height * 0.03 }}>
-                <ImageBackground  style={styles.background} source={require('../images/login_1.jpg')}>
-                    </ImageBackground>
+                <ImageBackground  style={styles.background} source={require('../images/login_1.jpg')} />
                     <Text style={globalStyle.titleText}>
                         Stroke.AI
                     </Text>

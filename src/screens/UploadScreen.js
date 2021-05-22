@@ -13,7 +13,7 @@ const UploadScreen = () => {
     const { state, chooseFile, deleteImg } = useContext(Context);
 
     const LogProgress = () => {
-
+        
         useItemProgressListener((item) => {
             console.log(item)
             console.log(`File ${item.file.name} completed: ${item.completed}`);
@@ -24,30 +24,30 @@ const UploadScreen = () => {
 
         if (state.uploadFile.length > 0) {
             return (
-                <FlatList
-                    keyExtractor={uploadFile => uploadFile.file.id}
-                    data={state.uploadFile}
-                    renderItem={({ item }) => {
-                        return (
-                            <View style={{ alignSelf: 'center', padding: 10, borderWidth: 1, borderRadius: 4, borderColor: 'grey', width: width * 0.5 }}>
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                    <View style={{ flexDirection: 'row' }}>
-                                        <FeatherIcon style={{ height: height * 0.025, paddingRight: 3 }} icon='file' />
-                                        <Text style={[globalStyle.infoText, { fontSize: 14 }]}>
-                                            {item.file.name}
-                                        </Text>
+                    <FlatList
+                        keyExtractor={uploadFile => uploadFile.file.id}
+                        data={state.uploadFile}
+                        renderItem={({ item }) => {
+                            return (
+                                <View style={{ alignSelf: 'center', padding: 10, borderWidth: 1, borderRadius: 4, borderColor: 'grey', width: width * 0.5 }}>
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                        <View style={{ flexDirection: 'row' }}>
+                                            <FeatherIcon style={{ height: height * 0.025, paddingRight: 3 }} icon='file' />
+                                            <Text style={[globalStyle.infoText, { fontSize: 14 }]}>
+                                                {item.file.name}
+                                            </Text>
+                                        </View>
+                                        <FeatherIcon
+                                            cursor='pointer'
+                                            style={{ height: height * 0.025 }}
+                                            icon='x'
+                                            onClick={() => deleteImages(item)}
+                                        />
                                     </View>
-                                    <FeatherIcon
-                                        cursor='pointer'
-                                        style={{ height: height * 0.025 }}
-                                        icon='x'
-                                        onClick={() => deleteImages(item.file.name)}
-                                    />
                                 </View>
-                            </View>
-                        )
-                    }}
-                />
+                            )
+                        }}
+                    />
             );
         } else {
             return null
@@ -58,10 +58,8 @@ const UploadScreen = () => {
         var file = [];
         var uFiles;
         if (args.length == 0) {
-            uFiles = state.uploadFile
-            for (let i = 0; i < uFiles.length; i++) {
-                file = [...file, uFiles[i].file.name]
-            }
+            file = state.uploadFile
+            
         } else if (args.length == 1) {
             file = args
         }
@@ -71,8 +69,7 @@ const UploadScreen = () => {
         }
         try {
             for (let i = 0; i < file.length; i++) {
-                let resp = await fetch('/delete/' + file[i], reqOption).then(data => data.json());
-                console.log(resp)
+                let resp = await fetch('/delete/' + file[i].file.name, reqOption).then(data => data.json());
                 deleteImg(file[i], state.uploadFile);
             }
 
@@ -122,7 +119,7 @@ const UploadScreen = () => {
                     accessible={true}
                     accessibilityLabel='Click to get the segmented result.'
                     accessibilityHint='By clicking on this button, you will be able to view your segmented result.'
-                    onPress={() => navigate('Register')}
+                    onPress={() => navigate('Result')}
                 >
                     <Text style={globalStyle.buttonText}>
                         Get segmented result
