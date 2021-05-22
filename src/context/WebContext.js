@@ -143,10 +143,8 @@ const getImages = dispatch => {
 }
 
 const deleteImg = dispatch => {
-  return (name, files) => {
-    console.log(name)
-    files = files.filter(item => item.file.name !== name)
-    console.log(files)
+  return (file, files) => {
+    files = files.filter(item => item.id !== file.id)
     dispatch({ type: 'delete_images', uploadFile: files})
   }
 }

@@ -85,7 +85,7 @@ const DatabaseScreen = () => {
                                     content={() => {
                                         return (
                                             <Text>
-                                                {`Name: ${item.file.filename}\nType: NIFTI\nSize: \nDate uploaded: ${item.file.uploadDate}`}
+                                                {`Name: ${item.file.filename}\nType: NIFTI\nSize: ${(item.file.length / 1000000).toFixed(2)}MB\nDate uploaded: ${item.file.uploadDate.slice(0,11)} ${'' + (parseInt(item.file.uploadDate.slice(11,13), 10) + 8 ) < 24 ? (parseInt(item.file.uploadDate.slice(11,13), 10) + 8) : (parseInt(item.file.uploadDate.slice(11,13), 10) + 8 - 24)}${item.file.uploadDate.slice(13,19)}`}
                                             </Text>);
                                     }}
                                 >
