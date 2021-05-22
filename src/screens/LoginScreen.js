@@ -27,14 +27,44 @@ const LoginScreen = () => {
 
     return (
         <View>
-            <ImageBackground source={require('../images/Capture2.JPG')}>
+            
                 <View style={{ padding: height * 0.03 }}>
+                <ImageBackground  style={styles.background} source={require('../images/login_1.jpg')}>
+                    </ImageBackground>
                     <Text style={globalStyle.titleText}>
-                        Welcome to Segmentation
+                        Stroke.AI
+                    </Text>
+                    <Text style={{fontFamily: 'Avenir Next',
+                                fontSize: 18,
+                                fontWeight: 'bold',
+                                alignSelf: 'center'}}>
+                        Identify the hidden stroke lesion
                     </Text>
                     <View style={styles.body}>
-                        <View style={{ width: width * 0.3 }}>
-                            <Text style={[globalStyle.subTitleText, {fontSize: 15}]}>
+                        
+                        <View style={{ width: width * 0.3, height: height*0.72 , background:'white', opacity: 0.9, padding: 10 , borderRadius: 20 }}>
+                            <View style={{paddingHorizontal: 40, paddingTop: 40}}>
+                                <Text style={[globalStyle.subTitleText, {fontWeight: 'bold'}]}>
+                                    About Us
+                                </Text>
+                                <Text style={[globalStyle.infoText, { paddingVertical: 20, lineHeight: 40}]}>
+                                    An application developed by team MA_B_5. This application enables users to upload medical brain images 
+                                    and perform image segmentation. This will segment out any possible stroke lesion of the brain. 
+                                    Users will be able to view the segmented result and have a better understanding through the result. 
+                                    
+                                </Text>
+                                <Text style={[globalStyle.infoText, { paddingVertical: 20 , lineHeight: 40}]}>
+                                    This application is easy to use and it has been tested our by the team and others. 
+                                    We hope you enjoy browsing through and using the application!
+                                </Text>
+                            </View>
+                            
+                        </View>
+                        <View>
+                            
+                            <View style={{ width: width * 0.3, height: height*0.45 ,background:'white', opacity: 0.9, padding: 10 , paddingVertical:20, borderRadius: 20 }}>
+                            <View style={{padding: 10}}>
+                            <Text style={[globalStyle.subTitleText, {fontSize: 25, paddingTop: 20}]}>
                                 Username
                             </Text>
                             <TextInput
@@ -48,8 +78,8 @@ const LoginScreen = () => {
                                 value={state.username}
                                 onChangeText={setUserName}
                             />
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <Text style={[globalStyle.subTitleText, {fontSize: 15}]}>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingTop: 20}}>
+                                <Text style={[globalStyle.subTitleText, {fontSize: 25}]}>
                                     Password
                                 </Text>
                                 <TouchableOpacity 
@@ -111,31 +141,27 @@ const LoginScreen = () => {
                                     </Text>
                                 </TouchableOpacity>
                             </View>
+                            
+                            </View>
+                            
                         </View>
-                        <View style={{ width: width * 0.45 }}>
-                            <Text style={[globalStyle.subTitleText, {fontWeight: 'bold'}]}>
-                                About Us
-                            </Text>
-                            <Text style={[globalStyle.infoText, { paddingVertical: 20 }]}>
-                                An application developed by team MA_B_5. This application enables users to upload medical brain images 
-                                and perform image segmentation. This will segment out any possible stroke lesion of the brain. 
-                                Users will be able to view the segmented result and have a better understanding through the result. 
-                                
-                            </Text>
-                            <Text style={[globalStyle.infoText, { paddingVertical: 20 }]}>
-                                This application is easy to use and it has been tested our by the team and others. 
-                                We hope you enjoy browsing through and using the application!
-                            </Text>
-                            <Image
-                                style={styles.image}
-                                accessible={true}
-                                accessibilityLabel='An image of brain stroke'
-                                source={require('../images/Capture2.JPG')}
-                            />
+                        <View style={{ width: width * 0.3, height: height*0.25 ,background:'white', opacity: 0.9, padding: 10 , marginTop: 30, borderRadius: 20 }}>
+                                <View style={{paddingHorizontal: 40, paddingTop: 40}}>
+                                    <Text style={[globalStyle.subTitleText, {fontWeight: 'bold'}]}>
+                                        Contributor
+                                    </Text>
+                                    <Text style={[globalStyle.infoText, { paddingVertical: 15, lineHeight: 40}]}>
+                                        Cheah Kin Shuen, Teng Kong Man, Jeng Yang Kong
+                                        Special Thanks to Dr. Sicily for guidance.
+                                    </Text>
+                                </View>
+                            </View>
                         </View>
+                        
+                        
                     </View>
                 </View>
-            </ImageBackground>
+                
             
         </View>
     );
@@ -147,17 +173,29 @@ const styles = StyleSheet.create({
     viewButton: {
         justifyContent: 'space-between',
         flexDirection: 'row',
-        marginBottom: 10
+        marginBottom: 10,
+        paddingTop: 20
     },
     image: {
         width: width * 0.4,
         height: height * 0.3
     },
+    background: {
+        width: width, height: height,
+        resizeMode: "cover",
+        backgroundColor: 'white',
+        opacity: 0.3,
+        position: "absolute",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
+    },
     button: {
         alignItems: 'center',
-        backgroundColor: 'black',
-        padding: 8,
-        borderRadius: 4
+        backgroundColor: 'cyan',
+        padding: 15,
+        borderRadius: 15
     },
     viewInput: {
         borderRadius: 4,
@@ -169,7 +207,7 @@ const styles = StyleSheet.create({
     body: {
         margin: height * 0.05,
         flexDirection: 'row',
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
     }
 });
 
