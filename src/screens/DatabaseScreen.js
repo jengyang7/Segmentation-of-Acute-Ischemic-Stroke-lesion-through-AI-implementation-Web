@@ -63,7 +63,7 @@ const DatabaseScreen = () => {
         </View>
     ) :
         (
-            <View>
+            <View style={{  background:'white', opacity: 0.9, padding: height * 0.01 , borderRadius: 20 }}>
                 <ImageBackground  style={styles.background} source={require('../images/stroke.jpg')} />
                 <View style={{  margin:50, background:'white', opacity: 0.9, padding: height * 0.01 , borderRadius: 20 }}>
                     <Text style={[globalStyle.titleText, {color: 'lightslategrey'}]}>

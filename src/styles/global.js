@@ -11,7 +11,8 @@ export const globalStyle = StyleSheet.create({
     },
     subTitleText: {
         fontFamily: 'Avenir Next',
-        fontSize: height*0.027778
+        fontSize: height*0.027778,
+        color: 'lightslategrey'
     },
     infoText: {
         fontFamily: 'Avenir Next',
@@ -21,6 +22,7 @@ export const globalStyle = StyleSheet.create({
         fontFamily: 'Avenir Next',
         fontSize: height*0.015556,
         color: 'white',
-        fontWeight: "bold"
+        fontWeight: 'bold',
+        fontSize: 20
     }
 });

@@ -69,7 +69,7 @@ const LoginScreen = () => {
                             
                             <View style={{ width: width * 0.3, height: height*0.45 ,background:'white', opacity: 0.9, padding: height * 0.02 , paddingVertical:20, borderRadius: 20 }}>
                             <View style={{padding: height * 0.03}}>
-                            <Text style={[globalStyle.subTitleText, {fontSize: height*0.0278, }]}>
+                            <Text style={[globalStyle.subTitleText, {fontSize: height*0.0278, color: 'lightslategrey'}]}>
                                 Username
                             </Text>
                             <TextInput
@@ -84,7 +84,7 @@ const LoginScreen = () => {
                                 onChangeText={setUserName}
                             />
                             <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingTop: 20}}>
-                                <Text style={[globalStyle.subTitleText, {fontSize: height*0.0278}]}>
+                                <Text style={[globalStyle.subTitleText, {fontSize: height*0.0278, color: 'lightslategrey'}]}>
                                     Password
                                 </Text>
                                 <TouchableOpacity 
@@ -130,7 +130,7 @@ const LoginScreen = () => {
                                     accessibilityHint='By clicking on this button, you will be able to login to the homescreen where you can learn the instructions of using the application, if the details of your account is correct.'
                                     onPress={() => checkInput() ? login(state.username, state.password, state.rememberMe) : () => { }}
                                 >
-                                    <Text style={globalStyle.buttonText}>
+                                    <Text style={[globalStyle.buttonText]}>
                                         Sign In
                                     </Text>
                                 </TouchableOpacity>
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     button: {
         alignItems: 'center',
         backgroundColor: 'lightsteelblue',
-        padding: height * 0.025,
+        padding: height * 0.020,
         borderRadius: height * 0.025
     },
     viewInput: {
@@ -213,12 +213,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
     },
-    backgroundVideo: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        bottom: 0,
-        right: 0,}
+   
 });
 
 export default LoginScreen;
