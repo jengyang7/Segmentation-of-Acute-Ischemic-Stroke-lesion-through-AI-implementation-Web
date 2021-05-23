@@ -54,12 +54,12 @@ const LoginScreen = () => {
                                     About Us
                                 </Text>
                                 <Text style={[globalStyle.infoText, { paddingVertical: width * 0.02, lineHeight: height * 0.05}]}>
-                                    An application developed by team MA_B_5. This application enables users to upload medical brain images 
+                                    An application developed by team MA_B_5. This application enables users to upload CT brain images 
                                     and perform image segmentation. This will segment out any possible stroke lesion of the brain. 
                                     Users will be able to view the segmented result and have a better understanding through the result. 
                                 </Text>
                                 <Text style={[globalStyle.infoText, { paddingVertical: width * 0.01,  lineHeight: height * 0.05}]}>
-                                    This application is easy to use and it has been tested our by the team and others. 
+                                    This application is easy to use and it has been tested out by the team and others. 
                                     We hope you enjoy browsing through and using the application!
                                 </Text>
                             </View>
