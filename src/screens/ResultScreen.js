@@ -7,6 +7,32 @@ import { globalStyle } from '../styles/global';
 
 
 const ResultScreen = () => {
+    const {state, loading} = useContext(Context);
+
+    useEffect(() => {
+        predict();
+    })
+
+    const predict = async () => {
+        loading(false);
+        for (let i = 0; i < state.uploadFile.length; i++) {
+            const formData = new FormData();
+            formData.append('file', state.uploadFile[i].file);
+            console.log(state.uploadFile[i])
+            const reqOption = {
+                method: 'POST',
+                headers: { 'enctype': 'multipart/form-data', },
+                body: formData
+            }
+            try {
+                let resp = await fetch('https://616a7d194733.ngrok.io/predict', reqOption).then(data => data.blob());
+                console.log(resp);
+                loading(state.isLoading)
+            } catch (error) {
+                console.log(`Error: ${error}`);
+            }
+        }
+    }
     return (
         <View style={{ padding: height * 0.03 }}>
             <Text style={globalStyle.titleText}>

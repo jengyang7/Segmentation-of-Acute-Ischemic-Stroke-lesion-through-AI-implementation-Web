@@ -31,7 +31,6 @@ const webReducer = (state, action) => {
     case 'delete_images':
       return {...state, uploadFile: action.uploadFile}
     case 'toggle_loading':
-      console.log(action.isLoading)
       return {...state, isLoading: action.isLoading}
     default:
       return state;
