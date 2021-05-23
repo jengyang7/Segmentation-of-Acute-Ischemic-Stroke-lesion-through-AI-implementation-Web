@@ -75,7 +75,7 @@ const UploadScreen = () => {
                 body: formData
             }
             try {
-                let resp = await fetch('https://2b4a0d453c33.ngrok.io/predict', reqOption).then(data => data.blob());
+                let resp = await fetch('https://1cc125de4819.ngrok.io/predict', reqOption).then(data => data.blob());
                 console.log(resp);
                 FileSaver.saveAs(resp, "segmented_result.nii");
                 loading(state.isLoading)

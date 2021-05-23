@@ -76,7 +76,7 @@ const navigator = createStackNavigator(
       },
       headerTintColor: 'Black',
       headerTitle: (props) => (
-            <Image style={{width: 200, height: 60 }} source={require('./images/logo.png')}></Image>
+            <Image style={{width: height * 0.222, height: height * 0.03 }} source={require('./images/logo.png')}></Image>
             ),
       headerRight: () => (
         <View style={{ flexDirection: 'row' }}>
@@ -163,11 +163,11 @@ const styles = StyleSheet.create({
   viewIconText: {
     flexDirection: 'row',
     marginHorizontal: height * 0.01667,
-    padding: height * 0.00888
+    padding: height * 0.02
   },
   navigationText: {
     marginHorizontal: height * 0.01667,
-    padding: height * 0.00888,
+    padding: height * 0.02,
     borderRadius: height * 0.004,
     alignItems: 'center'
   }
