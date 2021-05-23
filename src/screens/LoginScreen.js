@@ -67,7 +67,7 @@ const LoginScreen = () => {
                         </View>
                         <View>
                             
-                            <View style={{ width: width * 0.3, height: height*0.45 ,background:'white', opacity: 0.9, padding: height * 0.02 , paddingVertical:20, borderRadius: 20 }}>
+                        <View style={{ width: width * 0.3, height: height*0.45 ,background:'white', opacity: 0.9, padding: height * 0.02 , paddingVertical:height * 0.015, borderRadius: 20 }}>
                             <View style={{padding: height * 0.03}}>
                             <Text style={[globalStyle.subTitleText, {fontSize: height*0.0278, color: 'lightslategrey'}]}>
                                 Username
@@ -83,7 +83,7 @@ const LoginScreen = () => {
                                 value={state.username}
                                 onChangeText={setUserName}
                             />
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingTop: 20}}>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingTop: height * 0.029}}>
                                 <Text style={[globalStyle.subTitleText, {fontSize: height*0.0278, color: 'lightslategrey'}]}>
                                     Password
                                 </Text>

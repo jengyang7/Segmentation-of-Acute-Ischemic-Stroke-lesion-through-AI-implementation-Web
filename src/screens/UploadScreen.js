@@ -11,12 +11,11 @@ import { TramOutlined } from '@material-ui/icons';
 
 
 const UploadScreen = () => {
-    const { state, chooseFile, deleteImg, loading } = useContext(Context);
+    const { state, chooseFile, deleteUploadImg, loading } = useContext(Context);
     const LogProgress = () => {
         useItemProgressListener((item) => {            
             console.log(item)
             console.log(`File ${item.file.name} completed: ${item.completed}`);
-            
             
             if (item.completed === 100) {
                 chooseFile(item)
@@ -46,7 +45,7 @@ const UploadScreen = () => {
                                             cursor='pointer'
                                             style={{ height: height * 0.025 }}
                                             icon='x'
-                                            onClick={() => deleteImages(item)}
+                                            onClick={async() => await deleteImages(item)}
                                         />
                                     </View>
                                 </View>
@@ -77,7 +76,7 @@ const UploadScreen = () => {
         try {
             for (let i = 0; i < file.length; i++) {
                 let resp = await fetch('/delete/' + file[i].file.name, reqOption).then(data => data.json());
-                deleteImg(file[i], state.uploadFile);
+                await deleteUploadImg(file[i], state.uploadFile);
             }
 
         } catch (error) {
