@@ -33,9 +33,12 @@ const DatabaseScreen = () => {
                 let resp2 = await fetch('/retrieve/' + resp1.data[i].filename, reqOption2).then(data => data);
                 console.log(resp2)
                 images = [...images, { 'url': resp2.url, 'file': resp1.data[i] }];
+                getImages(images);
+                if (images.length === 4) {
+                    loading(true)
+                }
             }
-            getImages(images);
-            loading(state.isLoading)
+            loading(true)
         } catch (error) {
             console.log(`Error: ${error}`);
         }
@@ -55,65 +58,68 @@ const DatabaseScreen = () => {
         }
     }
     return state.isLoading ? (
-        <View style={{justifyContent: "center", position: 'absolute', right: 0, left: 0, top: height * 0.5}}>
-            <ActivityIndicator size="large" color="#0000ff"/>
+        <View style={{ justifyContent: "center", position: 'absolute', right: 0, left: 0, top: height * 0.5 }}>
+            <ActivityIndicator size="large" color="#0000ff" />
         </View>
-    ) : 
-    (
-        <View>
-            <Text style={[globalStyle.titleText]}>
-                Your Data
+    ) :
+        (
+            <View>
+                <Text style={[globalStyle.titleText]}>
+                    Your Data
             </Text>
-            <FeatherIcon
-                style={{ alignSelf: 'flex-end', marginRight: 100 }}
-                cursor='pointer'
-                icon='refresh-ccw'
-                onClick={() => getFile()}
-            />
-            <FlatList
-                keyExtractor={image => image.file.filename}
-                data={state.images}
-                numColumns={2}
-                renderItem={({ item }) => {
-                    return (
-                        <View style={styles.body}>
-                            {/* <DwvComponent /> */}
-                            <Image
-                                style={styles.databaseImage}
-                                accessible={true}
-                                accessibilityLabel='A stroke image'
-                                accessibilityHint='Click to zoom in the image.'
-                                source={{ uri: item.url }}
-                                onClick={() => { }}
-                            />
-                            <View style={{ justifyContent: 'space-between' }}>
-                                <Infotip
-                                    tooltipStyle={{ whiteSpace: 'nowrap' }}
-                                    data-html={true}
-                                    content={() => {
-                                        return (
-                                            <Text>
-                                                {`Name: ${item.file.filename}\nType: NIFTI\nSize: ${(item.file.length / 1000000).toFixed(2)}MB\nDate uploaded: ${item.file.uploadDate.slice(0,11)} ${'' + (parseInt(item.file.uploadDate.slice(11,13), 10) + 8 ) < 24 ? (parseInt(item.file.uploadDate.slice(11,13), 10) + 8) : (parseInt(item.file.uploadDate.slice(11,13), 10) + 8 - 24)}${item.file.uploadDate.slice(13,19)}`}
-                                            </Text>);
-                                    }}
-                                >
+                <FeatherIcon
+                    style={{ alignSelf: 'flex-end', marginRight: 100 }}
+                    cursor='pointer'
+                    icon='refresh-ccw'
+                    onClick={() => getFile()}
+                />
+                <FlatList
+                    keyExtractor={image => image.file.filename}
+                    data={state.images}
+                    numColumns={2}
+                    renderItem={({ item }) => {
+                        return (
+                            <View style={styles.body}>
+                                {/* <DwvComponent /> */}
+                                <Image
+                                    style={styles.databaseImage}
+                                    accessible={true}
+                                    accessibilityLabel='A stroke image'
+                                    accessibilityHint='Click to zoom in the image.'
+                                    source={{ uri: item.url }}
+                                    onClick={() => { }}
+                                />
+                                <View style={{ justifyContent: 'space-between' }}>
+                                    <Infotip
+                                        tooltipStyle={{ whiteSpace: 'nowrap' }}
+                                        data-html={true}
+                                        content={() => {
+                                            return (
+                                                <Text>
+                                                    {`Name: ${item.file.filename}\n`}
+                                                    {`Type: NIFTI\n`}
+                                                    {`Size: ${(item.file.length / 1000000).toFixed(2)}MB\n`}
+                                                    {`Date uploaded: ${item.file.uploadDate.slice(0, 11)} ${'' + (parseInt(item.file.uploadDate.slice(11, 13), 10) + 8) < 24 ? (parseInt(item.file.uploadDate.slice(11, 13), 10) + 8) : (parseInt(item.file.uploadDate.slice(11, 13), 10) + 8 - 24)}${item.file.uploadDate.slice(13, 19)}`}
+                                                </Text>);
+                                        }}
+                                    >
+                                        <FeatherIcon
+                                            cursor='pointer'
+                                            style={{ color: 'white', position: 'absolute', right: width * 0.005, top: height * 0.005 }}
+                                            icon='info'
+                                        />
+                                    </Infotip>
                                     <FeatherIcon
                                         cursor='pointer'
-                                        style={{ color: 'white', position: 'absolute', right: width * 0.005, top: height * 0.005 }}
-                                        icon='info'
+                                        style={{ color: 'white', position: 'absolute', right: width * 0.005, bottom: height * 0.005 }}
+                                        icon='download'
+                                        onClick={() => downloadFile(item.name)}
                                     />
-                                </Infotip>
-                                <FeatherIcon
-                                    cursor='pointer'
-                                    style={{ color: 'white', position: 'absolute', right: width * 0.005, bottom: height * 0.005 }}
-                                    icon='download'
-                                    onClick={() => downloadFile(item.name)}
-                                />
-                            </View>
-                        </View>)
-                }}
-            />
-        </View>);
+                                </View>
+                            </View>)
+                    }}
+                />
+            </View>);
 };
 
 const { height, width } = Dimensions.get('window');
