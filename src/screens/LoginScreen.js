@@ -87,7 +87,7 @@ const LoginScreen = () => {
                                 <Text style={[globalStyle.subTitleText, {fontSize: height*0.0278, color: 'lightslategrey'}]}>
                                     Password
                                 </Text>
-                                <TouchableOpacity 
+                                {/* <TouchableOpacity 
                                     style={{color: 'blue'}}
                                     accessible={true}
                                     accessibilityLabel='Click if you forgot your password.'
@@ -97,7 +97,7 @@ const LoginScreen = () => {
                                     <Text style={[globalStyle.subTitleText, {fontSize: height * 0.02, color: "lightslategrey"}]}>
                                         Forgot password?
                                     </Text>
-                                </TouchableOpacity>
+                                </TouchableOpacity> */}
                             </View>
                             <TextInput
                                 style={[globalStyle.infoText, styles.viewInput]}

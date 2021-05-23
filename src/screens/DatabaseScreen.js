@@ -33,7 +33,7 @@ const DatabaseScreen = () => {
                 let resp2 = await fetch('/retrieve/' + resp1.data[i].filename, reqOption2).then(data => data);
                 console.log(resp2)
                 images = [...images, { 'url': resp2.url, 'file': resp1.data[i] }];
-                getImages(images);
+                await getImages(images);
                 if (images.length === 4) {
                     loading(true)
                 }
@@ -75,11 +75,11 @@ const DatabaseScreen = () => {
                 for (let i = 0; i < file.length; i++) {
                     console.log(file[i].file.filename)
                     let resp = await fetch('/delete/' + file[i].file.filename, reqOption).then(data => data.json());
-                    deleteDBImgs(file[i].file._id, state.images);
+                    await deleteDBImgs(file[i].file._id, state.images);
                 }
             } else {
                 let resp = await fetch('/delete_all', reqOption).then(data => data.json());
-                deleteAllDBImgs()
+                await deleteAllDBImgs()
             }
             
         } catch (error) {
@@ -103,7 +103,7 @@ const DatabaseScreen = () => {
                         style={{ alignSelf: 'flex-end', marginRight: 100 }}
                         cursor='pointer'
                         icon='refresh-ccw'
-                        onClick={() => getFile()}
+                        onClick={async() => await getFile()}
                     />
                     <FeatherIcon
                         style={{ alignSelf: 'flex-end', marginRight: 100}}
@@ -111,7 +111,7 @@ const DatabaseScreen = () => {
                         icon='trash-2'
                         onClick={async() => {
                             await deleteImages();
-                            alert('You have deleted all images. Please click on the refresh icon to see your latest data.');
+                            alert('You have deleted all images.');
                         }}
                     />
                     <FlatList

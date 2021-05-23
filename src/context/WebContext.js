@@ -153,6 +153,12 @@ const deleteUploadImg = dispatch => {
   }
 }
 
+const deleteAllUploadImg = dispatch => {
+  return () => {
+    dispatch({type: 'delete_upload_images', uploadFile: []})
+  }
+}
+
 const deleteDBImgs = dispatch => {
   return (id, files) => {
     files = files.filter(item => item.file.id !== id)
@@ -175,6 +181,6 @@ const loading = dispatch => {
 
 export const { Context, Provider } = createWebContext(
   webReducer,
-  { setUserName, setPassword, setRegisterUserName, setRegisterPassword, setComfirmPassword, setEmail, login, getToken, toggleRememberMe, chooseFile, getImages, deleteUploadImg, loading, deleteDBImgs, deleteAllDBImgs },
+  { setUserName, setPassword, setRegisterUserName, setRegisterPassword, setComfirmPassword, setEmail, login, getToken, toggleRememberMe, chooseFile, getImages, deleteUploadImg, deleteAllUploadImg, loading, deleteDBImgs, deleteAllDBImgs },
   { username: '', password: '', registerEmail: '', registerUsername: '', registerPassword: '', comfirmPassword: '', rememberMe: false, token: null, uploadFile: [], images: [], isLoading: false }
 );
