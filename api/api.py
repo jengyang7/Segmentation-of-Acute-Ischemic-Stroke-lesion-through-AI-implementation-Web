@@ -3,12 +3,10 @@ import json
 from flask import Flask, request,jsonify ,render_template
 from flask_jwt_extended import (create_access_token, create_refresh_token,
                                 jwt_required, jwt_refresh_token_required, get_jwt_identity,decode_token)
-from app import app, mongo, flask_bcrypt, jwt,mail
-from flask_mail import  Message
+from app import app, mongo, flask_bcrypt, jwt
 from schema import validate_user,validate_register
 from werkzeug.utils import secure_filename
 from datetime import timedelta,datetime
-from mail_service import send_email
 
 @jwt.unauthorized_loader
 def unauthorized_response(callback):
@@ -122,46 +120,46 @@ def retrieve_filename():
     current_user = get_jwt_identity()
     return {"success":True,"data":list(mongo.db.fs.files.find({"username":current_user["username"]}))}
 
-@app.route('/forget', methods = ["POST"])
-def forget():
-    url = request.host_url + 'reset/'
-    body = request.get_json()
-    email = body.get('email')
+# @app.route('/forget', methods = ["POST"])
+# def forget():
+#     url = request.host_url + 'reset/'
+#     body = request.get_json()
+#     email = body.get('email')
 
-    mail = mongo.db.user.find_one({"email":email})
-    if not mail :
-        return {"success": False, "data":"Email not found"}
-    expires = timedelta(hours=24)
-    reset_token = create_access_token(identity=mail["email"], expires_delta=expires)
+#     mail = mongo.db.user.find_one({"email":email})
+#     if not mail :
+#         return {"success": False, "data":"Email not found"}
+#     expires = timedelta(hours=24)
+#     reset_token = create_access_token(identity=mail["email"], expires_delta=expires)
 
-    return {"success":True,"data":send_email('[Segmentation Model] Reset Your Password',
-                        sender=app.config["MAIL_USERNAME"],
-                        recipients=[email],
-                        text_body=render_template('reset_password.txt',
-                                                url=url + reset_token),
-                        html_body=render_template('reset_password.html',
-                                                url=url + reset_token))}
+#     return {"success":True,"data":send_email('[Segmentation Model] Reset Your Password',
+#                         sender=app.config["MAIL_USERNAME"],
+#                         recipients=[email],
+#                         text_body=render_template('reset_password.txt',
+#                                                 url=url + reset_token),
+#                         html_body=render_template('reset_password.html',
+#                                                 url=url + reset_token))}
 
-@app.route('/reset/<token>', methods = ["POST"])
-def reset(token):
-    body = request.get_json()
-    reset_token = token
-    password = body.get('password')
+# @app.route('/reset/<token>', methods = ["POST"])
+# def reset(token):
+#     body = request.get_json()
+#     reset_token = token
+#     password = body.get('password')
 
-    if not reset_token or not password:
-        return {"success": False}
+#     if not reset_token or not password:
+#         return {"success": False}
 
-    mail_id = decode_token(reset_token)['identity']
+#     mail_id = decode_token(reset_token)['identity']
 
-    user = mongo.db.user.find_one({"email":mail_id})
-    password = flask_bcrypt.generate_password_hash(
-            password)
-    mongo.db.user.update_one({"email":user["email"],"username":user["username"]},{"password":password})
+#     user = mongo.db.user.find_one({"email":mail_id})
+#     password = flask_bcrypt.generate_password_hash(
+#             password)
+#     mongo.db.user.update_one({"email":user["email"],"username":user["username"]},{"password":password})
     
-    return send_email('[Segmentation Model] Password Reset Successful',
-                        sender=app.config["MAIL_USERNAME"],
-                        recipients=[user["email"]],
-                        text_body='Password reset was successful',
-                        html_body='<p>Password reset was successful</p>')
+#     return send_email('[Segmentation Model] Password Reset Successful',
+#                         sender=app.config["MAIL_USERNAME"],
+#                         recipients=[user["email"]],
+#                         text_body='Password reset was successful',
+#                         html_body='<p>Password reset was successful</p>')
 
     

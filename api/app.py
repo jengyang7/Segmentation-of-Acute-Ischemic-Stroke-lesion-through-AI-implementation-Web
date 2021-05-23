@@ -6,7 +6,6 @@ from flask import Flask
 from flask_pymongo import PyMongo
 from flask_jwt_extended import JWTManager
 from flask_bcrypt import Bcrypt
-from flask_mail import Mail
 
 class JSONEncoder(json.JSONEncoder):
     ''' extend json-encoder class'''
@@ -28,13 +27,7 @@ app.config['MONGO_URI'] = "mongodb://fyp2:1290qwop@34.70.6.252:27017/web"
 app.config['JWT_SECRET_KEY'] = "1290qwop"
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(days=1)
 
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USE_SSL'] = True
-app.config['MAIL_USERNAME'] = 'kongman998@gmail.com'
-app.config['MAIL_PASSWORD'] = 'tengkongman'
 
-mail = Mail(app)
 mongo = PyMongo(app)
 flask_bcrypt = Bcrypt(app)
 jwt = JWTManager(app)
