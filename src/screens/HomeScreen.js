@@ -7,7 +7,7 @@ const HomeScreen = () => {
     return (
         <View style={styles.body}>
             <ImageBackground  style={styles.background} source={require('../images/stroke.jpg')} />
-            <View style={{ width: width * 0.6, height: height*0.7 ,background:'white', opacity: 0.9, padding: height * 0.07 , paddingVertical:20, borderRadius: 20 }}>
+            <View style={{ width: width * 0.6, height: height*0.8 ,background:'white', opacity: 0.9, padding: height * 0.07 , paddingVertical:20, borderRadius: 20 }}>
                 <Text style={[globalStyle.titleText, {color: "lightslategrey"}]}>
                     How to use?
                 </Text>
@@ -33,7 +33,7 @@ const HomeScreen = () => {
                         {`2. Here, you may choose to download the images or to view the details of the images.`}
                     </Text>
                 </View>
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={[styles.button, {margin: 20, marginTop: 25}]}>
                     <Text style={globalStyle.buttonText}>
                         Upload Image
                     </Text>

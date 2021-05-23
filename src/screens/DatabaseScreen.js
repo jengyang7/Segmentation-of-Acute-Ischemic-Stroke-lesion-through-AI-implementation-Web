@@ -106,7 +106,7 @@ const DatabaseScreen = () => {
                         onClick={() => getFile()}
                     />
                     <FeatherIcon
-                        style={{ alignSelf: 'flex-end', marginRight: 100}}
+                        style={{ alignSelf: 'flex-end', marginRight: 100, marginTop: 20}}
                         cursor='pointer'
                         icon='trash-2'
                         onClick={async() => {
@@ -134,7 +134,7 @@ const DatabaseScreen = () => {
                                 <FeatherIcon
                                     cursor='pointer'
                                     icon='trash-2'
-                                    style={{ color: 'white', position: 'absolute', left: 0 }}
+                                    style={{ color: 'white', position: 'absolute', left: width * 0.01, top: height * 0.0333 }}
                                     onClick={async() => {
                                         await deleteImages(item);
                                         alert('You have deleted an image. Please click on the refresh icon to see your latest data.')
