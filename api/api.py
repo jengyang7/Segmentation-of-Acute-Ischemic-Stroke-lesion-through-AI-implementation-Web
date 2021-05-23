@@ -96,6 +96,19 @@ def delete(filename):
             return {"success":False,"data":"File Delete Unsuccessful"}
     return {"success":False,"data":"File not found"}
 
+@app.route('/delete_all', methods = ["POST"])
+@jwt_required
+def delete_all_file():
+    current_user = get_jwt_identity()
+    f = mongo.db.fs.files.find_one({"username":current_user["username"]})
+    if f["_id"]:
+        deleted = mongo.db.fs.files.delete_many({"username":current_user["username"]})
+        if deleted.deleted_count >= 1:
+            return {"success":True,"data":"File Deleted"}
+        else:
+            return {"success":False,"data":"File Delete Unsuccessful"}
+    return {"success":False,"data":"File not found"}
+
 
 
 @app.route('/retrieve/<filename>', methods = ["GET"])
