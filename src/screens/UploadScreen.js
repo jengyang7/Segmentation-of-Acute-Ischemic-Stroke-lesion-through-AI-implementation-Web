@@ -180,12 +180,12 @@ const styles = StyleSheet.create({
         marginTop: height * 0.12
     },
     button: {
-        marginVertical: 20,
+        marginVertical: height * 0.0222,
         alignSelf: 'center',
         width: width * 0.12,
         alignItems: 'center',
         borderRadius: 10,
-        padding: 15
+        padding: height * 0.01667
     },
     background: {
         width: width, height: height,
