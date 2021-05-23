@@ -10,7 +10,7 @@ import '@trendmicro/react-tooltip/dist/react-tooltip.css';
 
 
 const DatabaseScreen = () => {
-    const { state, getImages, loading } = useContext(Context);
+    const { state, getImages, loading, deleteDBImgs, deleteAllDBImgs } = useContext(Context);
     useEffect(() => {
         getFile();
     }, []);
@@ -57,6 +57,36 @@ const DatabaseScreen = () => {
             console.log(`Error: ${error}`);
         }
     }
+
+    const deleteImages = async (...args) => {
+        var file = [];
+        if (args.length == 0) {
+            file = state.images
+
+        } else if (args.length == 1) {
+            file = args
+        }
+        const reqOption = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${state.token}` }
+        }
+        try {
+            if (args.length == 1){
+                for (let i = 0; i < file.length; i++) {
+                    console.log(file[i].file.filename)
+                    let resp = await fetch('/delete/' + file[i].file.filename, reqOption).then(data => data.json());
+                    deleteDBImgs(file[i].file._id, state.images);
+                }
+            } else {
+                let resp = await fetch('/delete_all', reqOption).then(data => data.json());
+                deleteAllDBImgs()
+            }
+            
+        } catch (error) {
+            console.log(`Error: ${error}`);
+        }
+    }
+
     return state.isLoading ? (
         <View style={{ justifyContent: "center", position: 'absolute', right: 0, left: 0, top: height * 0.5 }}>
             <ActivityIndicator size="large" color="#0000ff" />
@@ -75,6 +105,15 @@ const DatabaseScreen = () => {
                         icon='refresh-ccw'
                         onClick={() => getFile()}
                     />
+                    <FeatherIcon
+                        style={{ alignSelf: 'flex-end', marginRight: 100}}
+                        cursor='pointer'
+                        icon='trash-2'
+                        onClick={async() => {
+                            await deleteImages();
+                            alert('You have deleted all images. Please click on the refresh icon to see your latest data.');
+                        }}
+                    />
                     <FlatList
                     keyExtractor={image => image.file.filename}
                     data={state.images}
@@ -90,6 +129,16 @@ const DatabaseScreen = () => {
                                     accessibilityHint='Click to zoom in the image.'
                                     source={require('../images/CTscan.jpg')}
                                     onClick={() => { }}
+                                />
+                                
+                                <FeatherIcon
+                                    cursor='pointer'
+                                    icon='trash-2'
+                                    style={{ color: 'white', position: 'absolute', left: 0 }}
+                                    onClick={async() => {
+                                        await deleteImages(item);
+                                        alert('You have deleted an image. Please click on the refresh icon to see your latest data.')
+                                    }}
                                 />
                                 <View style={{ justifyContent: 'space-between' }}>
                                     <Infotip

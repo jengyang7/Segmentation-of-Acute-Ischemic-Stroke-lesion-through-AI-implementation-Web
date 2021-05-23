@@ -28,8 +28,10 @@ const webReducer = (state, action) => {
       return { ...state, uploadFile: [...state.uploadFile, action.uploadFile] };
     case 'get_images':
       return { ...state, images: action.images }
-    case 'delete_images':
+    case 'delete_upload_images':
       return {...state, uploadFile: action.uploadFile}
+    case 'delete_db_images':
+      return {...state, images: action.images}
     case 'toggle_loading':
       return {...state, isLoading: action.isLoading}
     default:
@@ -144,10 +146,23 @@ const getImages = dispatch => {
   }
 }
 
-const deleteImg = dispatch => {
+const deleteUploadImg = dispatch => {
   return (file, files) => {
     files = files.filter(item => item.id !== file.id)
-    dispatch({ type: 'delete_images', uploadFile: files})
+    dispatch({ type: 'delete_upload_images', uploadFile: files})
+  }
+}
+
+const deleteDBImgs = dispatch => {
+  return (id, files) => {
+    files = files.filter(item => item.file.id !== id)
+    dispatch({ type: 'delete_db_images', images: files})
+  }
+}
+
+const deleteAllDBImgs = dispatch => {
+  return () => {
+    dispatch({type: 'delete_db_images', images: []})
   }
 }
 
@@ -160,6 +175,6 @@ const loading = dispatch => {
 
 export const { Context, Provider } = createWebContext(
   webReducer,
-  { setUserName, setPassword, setRegisterUserName, setRegisterPassword, setComfirmPassword, setEmail, login, getToken, toggleRememberMe, chooseFile, getImages, deleteImg, loading },
+  { setUserName, setPassword, setRegisterUserName, setRegisterPassword, setComfirmPassword, setEmail, login, getToken, toggleRememberMe, chooseFile, getImages, deleteUploadImg, loading, deleteDBImgs, deleteAllDBImgs },
   { username: '', password: '', registerEmail: '', registerUsername: '', registerPassword: '', comfirmPassword: '', rememberMe: false, token: null, uploadFile: [], images: [], isLoading: false }
 );

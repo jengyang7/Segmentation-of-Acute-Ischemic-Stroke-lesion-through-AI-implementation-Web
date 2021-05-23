@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, View, Text, StyleSheet, ImageBackground } from 'react-native';
+import { TouchableOpacity, Dimensions, View, Text, StyleSheet, ImageBackground } from 'react-native';
 import { globalStyle } from '../styles/global';
 
 
@@ -33,6 +33,11 @@ const HomeScreen = () => {
                         {`2. Here, you may choose to download the images or to view the details of the images.`}
                     </Text>
                 </View>
+                <TouchableOpacity style={styles.button}>
+                    <Text style={globalStyle.buttonText}>
+                        Upload Image
+                    </Text>
+                </TouchableOpacity>
             </View>
         </View>)
 };
@@ -55,6 +60,12 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         bottom: 0
+    },
+    button: {
+        alignItems: 'center',
+        backgroundColor: 'lightsteelblue',
+        padding: height * 0.025,
+        borderRadius: height * 0.025
     },
 });
 
