@@ -71,7 +71,8 @@ const navigator = createStackNavigator(
     initialRouteName: 'Login',
     defaultNavigationOptions: () => ({
       headerStyle: {
-        backgroundColor: 'White'
+        backgroundColor: 'white',
+        opacity: 0.6
       },
       headerTintColor: 'Black',
       headerTitle: (props) => (
@@ -79,7 +80,7 @@ const navigator = createStackNavigator(
             ),
       headerRight: () => (
         <View style={{ flexDirection: 'row' }}>
-          <View style={styles.viewIconText}>
+          <View style={[styles.viewIconText,  {backgroundColor:'lightsteelblue', borderRadius: 15}]}>
           <Image style={styles.background} source={require('./images/logo.png')}></Image>
 
             <FeatherIcon
@@ -101,18 +102,18 @@ const navigator = createStackNavigator(
             </TouchableOpacity>
           </View>
           <TouchableOpacity
-            style={styles.navigationText}
+            style={[styles.navigationText,  {backgroundColor:'lightsteelblue', borderRadius: 15}]}
             accessible={true}
             accessiblityLabel='Click me'
             accessibilityHint='Click to navigate to Database Screen where you can download or see the details of the image.'
             onPress={() => navigate('Database')}
           >
             <Text style={globalStyle.buttonText}>
-              Database
+              Your Data
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.navigationText}
+            style={[styles.navigationText,  {backgroundColor:'lightsteelblue', borderRadius: 15}]}
             accessible={true}
             accessibilityLabel='Click me'
             accessibilityHint='Click to navigate to Upload Screen where you can upload your image to be segmented.'
@@ -122,7 +123,7 @@ const navigator = createStackNavigator(
               Upload Image
             </Text>
           </TouchableOpacity>
-          <View style={styles.viewIconText}>
+          <View style={[styles.viewIconText,  {backgroundColor:'lightsteelblue', borderRadius: 15}]}>
             <TouchableOpacity
               style={{ marginHorizontal: 7 }}
               accessible={true}
@@ -162,15 +163,11 @@ const styles = StyleSheet.create({
   viewIconText: {
     flexDirection: 'row',
     marginHorizontal: 15,
-    padding: 8,
-    borderWidth: 1,
-    borderColor: 'white'
+    padding: 8
   },
   navigationText: {
     marginHorizontal: 15,
     padding: 8,
-    borderWidth: 1,
-    borderColor: 'white',
     borderRadius: 4,
     alignItems: 'center'
   }
