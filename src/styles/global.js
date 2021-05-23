@@ -23,6 +23,6 @@ export const globalStyle = StyleSheet.create({
         fontSize: height*0.015556,
         color: 'white',
         fontWeight: 'bold',
-        fontSize: 20
+        fontSize: height * 0.0222
     }
 });

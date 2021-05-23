@@ -162,13 +162,13 @@ const { height, width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   viewIconText: {
     flexDirection: 'row',
-    marginHorizontal: 15,
-    padding: 8
+    marginHorizontal: height * 0.01667,
+    padding: height * 0.00888
   },
   navigationText: {
-    marginHorizontal: 15,
-    padding: 8,
-    borderRadius: 4,
+    marginHorizontal: height * 0.01667,
+    padding: height * 0.00888,
+    borderRadius: height * 0.004,
     alignItems: 'center'
   }
 })
