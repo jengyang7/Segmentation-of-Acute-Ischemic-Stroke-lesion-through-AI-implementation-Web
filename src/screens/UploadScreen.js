@@ -7,15 +7,18 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { navigate } from '../navigationRef';
 import { globalStyle } from '../styles/global';
 import { Ubutton } from '../customs/UploadButton';
+import { TramOutlined } from '@material-ui/icons';
 import FileSaver from 'file-saver';
 
 
+
 const UploadScreen = () => {
-    const { state, chooseFile, deleteUploadImg, deleteAllUploadImg, loading } = useContext(Context);
+    const { state, chooseFile, deleteImg, loading } = useContext(Context);
     const LogProgress = () => {
         useItemProgressListener((item) => {            
             console.log(item)
             console.log(`File ${item.file.name} completed: ${item.completed}`);
+            
             
             if (item.completed === 100) {
                 chooseFile(item)
@@ -25,25 +28,29 @@ const UploadScreen = () => {
 
         if (state.uploadFile.length > 0) {
             return (
-                <FlatList
-                    keyExtractor={uploadFile => uploadFile.file.id}
-                    data={state.uploadFile}
-                    renderItem={({ item }) => {
-                        return (
-                            <View style={{ alignSelf: 'center', padding: 10, borderWidth: 1, borderRadius: 4, borderColor: 'grey', width: width * 0.5 }}>
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                    <View style={{ flexDirection: 'row' }}>
-                                        <FeatherIcon style={{ height: height * 0.025, paddingRight: 3 }} icon='file' />
-                                        <Text style={[globalStyle.infoText, { fontSize: 14 }]}>
-                                            {item.file.name}
-                                        </Text>
+                    <FlatList
+                        keyExtractor={uploadFile => uploadFile.file.id}
+                        data={state.uploadFile}
+                        renderItem={({ item }) => {
+                            return (
+                                <View>
+                                    
+                                    <View style={{ alignSelf: 'center', padding: 10, borderWidth: 1, borderRadius: 4, borderColor: 'grey', width: width * 0.5 }}>
+                                    
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                        <View style={{ flexDirection: 'row' }}>
+                                            <FeatherIcon style={{ height: height * 0.025, paddingRight: 3 }} icon='file' />
+                                            <Text style={[globalStyle.infoText, { fontSize: 14 }]}>
+                                                {item.file.name}
+                                            </Text>
+                                        </View>
+                                        <FeatherIcon
+                                            cursor='pointer'
+                                            style={{ height: height * 0.025 }}
+                                            icon='x'
+                                            onClick={() => deleteImages(item)}
+                                        />
                                     </View>
-                                    <FeatherIcon
-                                        cursor='pointer'
-                                        style={{ height: height * 0.025 }}
-                                        icon='x'
-                                        onClick={async() => await deleteImages(item)}
-                                    />
                                 </View>
                                 </View>
                                 
@@ -54,41 +61,6 @@ const UploadScreen = () => {
         } else {
             return null
         }
-    }
-
-    const deleteImages = async (...args) => {
-        var file = [];
-        var uFiles;
-        if (args.length == 0) {
-            file = state.uploadFile
-            
-        } else if (args.length == 1) {
-            file = args
-        }
-        const reqOption = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${state.token}` }
-        }
-        try {
-            for (let i = 0; i < file.length; i++) {
-                let resp = await fetch('/delete/' + file[i].file.name, reqOption).then(data => data.json());
-                if (args.length === 1 ) {
-                    deleteUploadImg(file[i], state.uploadFile);
-                }
-            }
-            if (args.length === 0) {
-                deleteAllUploadImg();
-            } 
-        } catch (error) {
-            console.log(`Error: ${error}`);
-        }
-    }
-
-    const checkUpload = () => {
-        if (state.uploadFile.length > 0) {
-            return true;
-        }
-        return false;
     }
 
     const predict = async () => {
@@ -113,60 +85,44 @@ const UploadScreen = () => {
         }
     }
 
-    const UploadList = () => {
-        return (
-            <View style={{  background:'white', opacity: 0.9, padding: height * 0.01 , borderRadius: 20 }}>
-                <ImageBackground  style={styles.background} source={require('../images/stroke.jpg')} />
-                <Uploady destination={{ url: "/upload", headers: { "Authorization": `Bearer ${state.token}` } }}
-                    accept=".nii">
-                    <View style={{  background:'white', opacity: 0.9, paddingHorizontal: height * 0.05, paddingVertical: height * 0.1, margin: height * 0.1,marginHorizontal: height * 0.3,borderRadius: 20}}>
-                        <View style={{ paddingBottom: 10 }}>
-                            <View style={styles.drag}>
-                                <View style={{ marginTop: height * 0.11 }}>
-                                    <Ubutton />
-                                </View>
-                            </View>
-                        </View>
-                        <LogProgress />
-                    </View>
-                </Uploady>
-                <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-                    <View style={{  width: 1000,  background:'white', opacity: 0.9,borderRadius: 20, flexDirection: 'row', justifyContent: 'space-around'}}>
-                    <TouchableOpacity
-                        style={[styles.button, { backgroundColor: 'lightsteelblue', marginHorizontal: 5 ,textAlign: 'center'}]}
-                        accessible={true}
-                        accessibilityLabel='Click to get the segmented result.'
-                        accessibilityHint='By clicking on this button, you will be able to view your segmented result.'
-                        onPress={() => checkUpload() ? predict() : alert('You have not uploaded any files yet!')}
-                    >
-                        <Text style={globalStyle.buttonText, {color: 'white', fontWeight:'bold', fontSize: height* 0.0222, }}>
-                            Download segmented result
-                        </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={[styles.button, { backgroundColor: '#e95558', width: width * 0.06, marginHorizontal: 5 , textAlign: 'center', padding:height* 0.0222}]}
-                        onPress={() => navigate('Home')}
-                        accessible={true}
-                        accessibilityLabel='Click to cancel the uploads.'
-                        accessibilityHint='By clicking on this button, you will cancel all your uploads and return to the home screen.'
-                        onPress={async () => { await deleteImages(); navigate('Home') }}
-                    >
-                        <Text style={globalStyle.buttonText, { color: 'white' , fontWeight:'bold',  fontSize: height* 0.0222}}>
-                            Cancel
-                        </Text>
-                    </TouchableOpacity>
-                    </View>
-                    
-                </View>
-            </View>
-        )
+
+    const deleteImages = async (...args) => {
+        var file = [];
+        var uFiles;
+        if (args.length == 0) {
+            file = state.uploadFile
+            
+        } else if (args.length == 1) {
+            file = args
+        }
+        const reqOption = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${state.token}` }
+        }
+        try {
+            for (let i = 0; i < file.length; i++) {
+                let resp = await fetch('/delete/' + file[i].file.name, reqOption).then(data => data.json());
+                deleteImg(file[i], state.uploadFile);
+            }
+
+        } catch (error) {
+            console.log(`Error: ${error}`);
+        }
+    }
+
+    const checkUpload = () => {
+        if (state.uploadFile.length > 0) {
+            return true;
+        }
+        return false;
     }
 
     return (
-        <View>
+        <View style={{  background:'white', opacity: 0.9, padding: height * 0.01 , borderRadius: 20 }}>
+            <ImageBackground  style={styles.background} source={require('../images/stroke.jpg')} />
             <Uploady destination={{ url: "/upload", headers: { "Authorization": `Bearer ${state.token}` } }}
                 accept=".nii">
-                <View>
+                <View style={{  background:'white', opacity: 0.9, paddingHorizontal: height * 0.05, paddingVertical: height * 0.1, margin: height * 0.1,marginHorizontal: height * 0.3,borderRadius: 20}}>
                     <View style={{ paddingBottom: 10 }}>
                         <View style={styles.drag}>
                             <View style={{ marginTop: height * 0.11 }}>
@@ -178,32 +134,35 @@ const UploadScreen = () => {
                 </View>
             </Uploady>
             <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+                <View style={{  width: 1000,  background:'white', opacity: 0.9,borderRadius: 20, flexDirection: 'row', justifyContent: 'space-around'}}>
                 <TouchableOpacity
-                    style={[styles.button, { backgroundColor: 'black', marginHorizontal: 5 }]}
+                    style={[styles.button, { backgroundColor: 'lightsteelblue', marginHorizontal: 5 ,textAlign: 'center'}]}
                     accessible={true}
                     accessibilityLabel='Click to get the segmented result.'
                     accessibilityHint='By clicking on this button, you will be able to view your segmented result.'
                     onPress={() => checkUpload() ? predict() : alert('You have not uploaded any files yet!')}
                 >
-                    <Text style={globalStyle.buttonText}>
-                        Get segmented result
+                    <Text style={globalStyle.buttonText, {color: 'white', fontWeight:'bold', fontSize: height* 0.0222, }}>
+                        Download segmented result
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={[styles.button, { backgroundColor: 'white', width: width * 0.06, marginHorizontal: 5 }]}
+                    style={[styles.button, { backgroundColor: '#e95558', width: width * 0.06, marginHorizontal: 5 , textAlign: 'center', padding:height* 0.0222}]}
                     onPress={() => navigate('Home')}
                     accessible={true}
                     accessibilityLabel='Click to cancel the uploads.'
                     accessibilityHint='By clicking on this button, you will cancel all your uploads and return to the home screen.'
                     onPress={async () => { await deleteImages(); navigate('Home') }}
                 >
-                    <Text style={globalStyle.buttonText, { color: 'red' }}>
+                    <Text style={globalStyle.buttonText, { color: 'white' , fontWeight:'bold',  fontSize: height* 0.0222}}>
                         Cancel
                     </Text>
                 </TouchableOpacity>
+                </View>
+                
             </View>
         </View>
-    );
+    )
 };
 
 const { height, width } = Dimensions.get('window');
