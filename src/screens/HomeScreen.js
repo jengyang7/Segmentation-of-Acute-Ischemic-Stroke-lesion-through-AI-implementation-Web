@@ -19,10 +19,10 @@ const HomeScreen = () => {
                     <Text style={[globalStyle.infoText, {lineHeight: height * 0.05}]}>
                         {`1. To be able to get your segmented result, you need to upload your CT scan images first.\n`}
                         {`2. To do that, simply navigate to the "Upload Image" interface.\n`}
-                        {`3. Click "Choose your files" to upload image.`}
+                        {`3. Click "Choose your files" to upload image.\n`}
                         {`4. Once you have uploaded your images, click "Get segmented result" button.\n`}
                         {`5. Please note that this step requires some time for processing. Be patience!\n`}
-                        {`6. Finally, your segmented result is ready! The segmented result will be downloaded to your local device.\n`}
+                        {`6. Finally, your segmented result is ready! The segmented result will be downloaded to your local device.`}
                     </Text>
                 </View>
                 <View style={{ paddingVertical: 10 }}>
