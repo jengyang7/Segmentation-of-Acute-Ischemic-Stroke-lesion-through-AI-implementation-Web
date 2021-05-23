@@ -14,7 +14,7 @@ export const Ubutton = () => {
 
     return (
         <View style={{alignSelf: 'center'}}>
-            <Image source={require('../images/uploadlogo.png')} style={{width: height * 0.0555, height: height * 0.0555, marginBottom:20, alignSelf: 'center'}}/>
+            <Image source={require('../images/uploadlogo.png')} style={{width: height * 0.0555, height: height * 0.0555, marginBottom:height* 0.0222, alignSelf: 'center'}}/>
             <TouchableOpacity onPress={onClick}  style={[styles.button, { backgroundColor: 'lightsteelblue', marginHorizontal: 5 ,textAlign: 'center'}]}>
                 <Text style={[globalStyle.subTitleText, { fontSize: height * 0.01888, color: 'white', fontWeight:'bold' }]}>
                     Choose your files

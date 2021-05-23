@@ -125,7 +125,7 @@ const UploadScreen = () => {
                 <View style={{  background:'white', opacity: 0.9, paddingHorizontal: height * 0.05, paddingVertical: height * 0.1, margin: height * 0.1,marginHorizontal: height * 0.3,borderRadius: 20}}>
                     <View style={{ paddingBottom: height * 0.0111 }}>
                         <View style={styles.drag}>
-                            <View style={{ marginTop: height * 0.11 }}>
+                            <View style={{ marginTop: height * 0.08 }}>
                                 <Ubutton />
                             </View>
                         </View>
