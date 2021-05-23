@@ -40,7 +40,7 @@ const UploadScreen = () => {
                                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                         <View style={{ flexDirection: 'row' }}>
                                             <FeatherIcon style={{ height: height * 0.025, paddingRight: 3 }} icon='file' />
-                                            <Text style={[globalStyle.infoText, { fontSize: 14 }]}>
+                                            <Text style={[globalStyle.infoText, { fontSize: height * 0.01555 }]}>
                                                 {item.file.name}
                                             </Text>
                                         </View>
@@ -123,7 +123,7 @@ const UploadScreen = () => {
             <Uploady destination={{ url: "/upload", headers: { "Authorization": `Bearer ${state.token}` } }}
                 accept=".nii">
                 <View style={{  background:'white', opacity: 0.9, paddingHorizontal: height * 0.05, paddingVertical: height * 0.1, margin: height * 0.1,marginHorizontal: height * 0.3,borderRadius: 20}}>
-                    <View style={{ paddingBottom: 10 }}>
+                    <View style={{ paddingBottom: height * 0.0111 }}>
                         <View style={styles.drag}>
                             <View style={{ marginTop: height * 0.11 }}>
                                 <Ubutton />
@@ -134,7 +134,7 @@ const UploadScreen = () => {
                 </View>
             </Uploady>
             <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-                <View style={{  width: 1000,  background:'white', opacity: 0.9,borderRadius: 20, flexDirection: 'row', justifyContent: 'space-around'}}>
+                <View style={{  width: height * 1.111,  background:'white', opacity: 0.9,borderRadius: 20, flexDirection: 'row', justifyContent: 'space-around'}}>
                 <TouchableOpacity
                     style={[styles.button, { backgroundColor: 'lightsteelblue', marginHorizontal: 5 ,textAlign: 'center'}]}
                     accessible={true}
