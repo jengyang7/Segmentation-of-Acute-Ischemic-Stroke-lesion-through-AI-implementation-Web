@@ -1,23 +1,26 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+
+const { height, width } = Dimensions.get('window');
 
 export const globalStyle = StyleSheet.create({
     titleText: {
-        fontFamily: '-apple-system',
-        fontSize: 50,
+        fontFamily: 'Avenir Next',
+        fontSize: height*0.0556,
         fontWeight: 'bold',
         alignSelf: 'center'
     },
     subTitleText: {
-        fontFamily: '-apple-system',
-        fontSize: 25
+        fontFamily: 'Avenir Next',
+        fontSize: height*0.027778
     },
     infoText: {
-        fontFamily: '-apple-system',
-        fontSize: 20
+        fontFamily: 'Avenir Next',
+        fontSize: height*0.02222
     },
     buttonText: {
-        fontFamily: '-apple-system',
-        fontSize: 14,
-        color: 'white'
+        fontFamily: 'Avenir Next',
+        fontSize: height*0.015556,
+        color: 'white',
+        fontWeight: "bold"
     }
 });

@@ -7,7 +7,7 @@ import UploadScreen from './screens/UploadScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import { Provider } from './context/WebContext';
 import React from 'react';
-import { Text, Dimensions, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, Dimensions, View, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import FeatherIcon from 'feather-icons-react';
 import { setNavigator } from './navigationRef';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -17,12 +17,13 @@ import { globalStyle } from './styles/global';
 import ForgotPassScreen from './screens/ForgotPassScreen';
 
 
+
 const navigator = createStackNavigator(
   {
     Login: {
       screen: LoginScreen,
       navigationOptions: () => ({
-        headerRight: () => null
+        header: () => null
       })
     },
     Register: {
@@ -70,13 +71,18 @@ const navigator = createStackNavigator(
     initialRouteName: 'Login',
     defaultNavigationOptions: () => ({
       headerStyle: {
-        backgroundColor: 'black'
+        backgroundColor: 'white',
+        opacity: 0.6
       },
-      headerTintColor: 'white',
-      title: 'Segmentation',
+      headerTintColor: 'Black',
+      headerTitle: (props) => (
+            <Image style={{width: 200, height: 60 }} source={require('./images/logo.png')}></Image>
+            ),
       headerRight: () => (
         <View style={{ flexDirection: 'row' }}>
-          <View style={styles.viewIconText}>
+          <View style={[styles.viewIconText,  {backgroundColor:'lightsteelblue', borderRadius: 15}]}>
+          <Image style={styles.background} source={require('./images/logo.png')}></Image>
+
             <FeatherIcon
               cursor='pointer'
               style={{ color: 'white', height: height * 0.025 }}
@@ -96,18 +102,18 @@ const navigator = createStackNavigator(
             </TouchableOpacity>
           </View>
           <TouchableOpacity
-            style={styles.navigationText}
+            style={[styles.navigationText,  {backgroundColor:'lightsteelblue', borderRadius: 15}]}
             accessible={true}
             accessiblityLabel='Click me'
             accessibilityHint='Click to navigate to Database Screen where you can download or see the details of the image.'
             onPress={() => navigate('Database')}
           >
             <Text style={globalStyle.buttonText}>
-              Database
+              Your Data
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.navigationText}
+            style={[styles.navigationText,  {backgroundColor:'lightsteelblue', borderRadius: 15}]}
             accessible={true}
             accessibilityLabel='Click me'
             accessibilityHint='Click to navigate to Upload Screen where you can upload your image to be segmented.'
@@ -117,7 +123,7 @@ const navigator = createStackNavigator(
               Upload Image
             </Text>
           </TouchableOpacity>
-          <View style={styles.viewIconText}>
+          <View style={[styles.viewIconText,  {backgroundColor:'lightsteelblue', borderRadius: 15}]}>
             <TouchableOpacity
               style={{ marginHorizontal: 7 }}
               accessible={true}
@@ -157,15 +163,11 @@ const styles = StyleSheet.create({
   viewIconText: {
     flexDirection: 'row',
     marginHorizontal: 15,
-    padding: 8,
-    borderWidth: 1,
-    borderColor: 'white'
+    padding: 8
   },
   navigationText: {
     marginHorizontal: 15,
     padding: 8,
-    borderWidth: 1,
-    borderColor: 'white',
     borderRadius: 4,
     alignItems: 'center'
   }
