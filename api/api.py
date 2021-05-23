@@ -86,7 +86,7 @@ def upload():
 def delete(filename):
     current_user = get_jwt_identity()
     f = mongo.db.fs.files.find_one({"filename":filename,"username":current_user["username"]})
-    if f["_id"]:
+    if "_id" in f:
         deleted = mongo.db.fs.files.delete_one({"filename":filename,"username":current_user["username"]})
         if deleted.deleted_count == 1:
             return {"success":True,"data":"File Deleted"}
@@ -99,7 +99,7 @@ def delete(filename):
 def delete_all_file():
     current_user = get_jwt_identity()
     f = mongo.db.fs.files.find_one({"username":current_user["username"]})
-    if f["_id"]:
+    if "_id" in f :
         deleted = mongo.db.fs.files.delete_many({"username":current_user["username"]})
         if deleted.deleted_count >= 1:
             return {"success":True,"data":"File Deleted"}
