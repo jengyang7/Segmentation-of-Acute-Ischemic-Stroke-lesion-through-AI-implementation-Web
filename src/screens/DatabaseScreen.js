@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { ActivityIndicator, Dimensions, FlatList, Image, View, Text, StyleSheet } from 'react-native';
+import { ActivityIndicator, Dimensions, FlatList, Image, View, Text, StyleSheet, ImageBackground } from 'react-native';
 import FeatherIcon from "feather-icons-react"
 import { Context } from '../context/WebContext';
 import { globalStyle } from '../styles/global';
@@ -64,16 +64,18 @@ const DatabaseScreen = () => {
     ) :
         (
             <View>
-                <Text style={[globalStyle.titleText]}>
-                    Your Data
-            </Text>
-                <FeatherIcon
-                    style={{ alignSelf: 'flex-end', marginRight: 100 }}
-                    cursor='pointer'
-                    icon='refresh-ccw'
-                    onClick={() => getFile()}
-                />
-                <FlatList
+                <ImageBackground  style={styles.background} source={require('../images/stroke.jpg')} />
+                <View style={{  margin:50, background:'white', opacity: 0.9, padding: height * 0.01 , borderRadius: 20 }}>
+                    <Text style={[globalStyle.titleText, {color: 'lightslategrey'}]}>
+                        Your Data
+                    </Text>
+                    <FeatherIcon
+                        style={{ alignSelf: 'flex-end', marginRight: 100 }}
+                        cursor='pointer'
+                        icon='refresh-ccw'
+                        onClick={() => getFile()}
+                    />
+                    <FlatList
                     keyExtractor={image => image.file.filename}
                     data={state.images}
                     numColumns={2}
@@ -86,7 +88,7 @@ const DatabaseScreen = () => {
                                     accessible={true}
                                     accessibilityLabel='A stroke image'
                                     accessibilityHint='Click to zoom in the image.'
-                                    source={{ uri: item.url }}
+                                    source={require('../images/CTscan.jpg')}
                                     onClick={() => { }}
                                 />
                                 <View style={{ justifyContent: 'space-between' }}>
@@ -105,13 +107,13 @@ const DatabaseScreen = () => {
                                     >
                                         <FeatherIcon
                                             cursor='pointer'
-                                            style={{ color: 'white', position: 'absolute', right: width * 0.005, top: height * 0.005 }}
+                                            style={{ color: 'white', position: 'absolute', right: width * 0.01, top: height * 0.01 }}
                                             icon='info'
                                         />
                                     </Infotip>
                                     <FeatherIcon
                                         cursor='pointer'
-                                        style={{ color: 'white', position: 'absolute', right: width * 0.005, bottom: height * 0.005 }}
+                                        style={{ color: 'white', position: 'absolute', right: width * 0.01, bottom: height * 0.01 }}
                                         icon='download'
                                         onClick={() => downloadFile(item.name)}
                                     />
@@ -119,6 +121,9 @@ const DatabaseScreen = () => {
                             </View>)
                     }}
                 />
+                </View>
+                
+                
             </View>);
 };
 
@@ -128,6 +133,7 @@ const styles = StyleSheet.create({
     databaseImage: {
         width: width * 0.25,
         height: height * 0.3,
+        borderRadius: 20
     },
     body: {
         flexDirection: 'row',
@@ -135,7 +141,18 @@ const styles = StyleSheet.create({
         paddingTop: 20,
         marginLeft: width * 0.12,
         marginBottom: height * 0.15
-    }
+    },
+    background: {
+        width: width, height: height,
+        resizeMode: "cover",
+        backgroundColor: 'white',
+        opacity: 0.3,
+        position: "absolute",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
+    },
 });
 
 export default DatabaseScreen;

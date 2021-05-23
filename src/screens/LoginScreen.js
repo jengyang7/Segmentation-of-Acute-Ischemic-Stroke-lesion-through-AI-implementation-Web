@@ -2,7 +2,10 @@ import React, { useContext, useEffect } from 'react';
 import { ImageBackground, TouchableOpacity, Dimensions, Image, Text, View, TextInput, StyleSheet } from 'react-native';
 import { Context } from '../context/WebContext';
 import { navigate } from '../navigationRef';
+
 import { globalStyle } from '../styles/global';
+
+
 
 
 const LoginScreen = () => {
@@ -32,6 +35,8 @@ const LoginScreen = () => {
         <View>
                 <View style={{ padding: height * 0.03 }}>
                 <ImageBackground  style={styles.background} source={require('../images/login_1.jpg')} />
+                 
+                     
                     <Text style={globalStyle.titleText}>
                         Stroke.AI
                     </Text>
@@ -207,7 +212,13 @@ const styles = StyleSheet.create({
         margin: height * 0.05,
         flexDirection: 'row',
         justifyContent: 'space-around',
-    }
+    },
+    backgroundVideo: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,}
 });
 
 export default LoginScreen;
