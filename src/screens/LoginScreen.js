@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     viewButton: {
         justifyContent: 'space-between',
         flexDirection: 'row',
-        marginBottom: 20,
+        marginBottom: height * 0.0222,
     },
     image: {
         width: width * 0.4,

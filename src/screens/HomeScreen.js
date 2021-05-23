@@ -1,13 +1,13 @@
 import React from 'react';
-import { TouchableOpacity, Dimensions, View, Text, StyleSheet, ImageBackground } from 'react-native';
+import { TouchableOpacity, Dimensions, View, Text, StyleSheet, ImageBackground , Image} from 'react-native';
 import { globalStyle } from '../styles/global';
 
 
 const HomeScreen = () => {
     return (
         <View style={styles.body}>
-            <ImageBackground  style={styles.background} source={require('../images/stroke.jpg')} />
-            <View style={{ width: width * 0.6, height: height*0.8 ,background:'white', opacity: 0.9, padding: height * 0.07 , paddingVertical:20, borderRadius: 20 }}>
+            <ImageBackground imageStyle={{resizeMode: 'repeat'}} style={[styles.background, {resizeMode: 'repeat'}]} source={require('../images/stroke.jpg')} />
+            <View style={{ width: width * 0.6, height: height*1.8 ,background:'white', opacity: 0.9, padding: height * 0.07 , paddingVertical:20, borderRadius: 20 }}>
                 <Text style={[globalStyle.titleText, {color: "lightslategrey"}]}>
                     How to use?
                 </Text>
@@ -38,6 +38,8 @@ const HomeScreen = () => {
                         Upload Image
                     </Text>
                 </TouchableOpacity>
+                <Image source={require('../images/upload_tutorial.png')} style={{width: 800, height: 400, alignSelf:'center', margin: 30}} />
+                <Image source={require('../images/database_tutorial.png')} style={{width: 800, height: 400 , alignSelf:'center'}} />
             </View>
         </View>)
 };
@@ -59,7 +61,8 @@ const styles = StyleSheet.create({
         top: 0,
         left: 0,
         right: 0,
-        bottom: 0
+        bottom: 0,
+        resizeMode: 'repeat'
     },
     button: {
         alignItems: 'center',
