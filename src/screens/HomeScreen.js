@@ -1,11 +1,12 @@
 import React from 'react';
-import { Dimensions, View, Text, StyleSheet } from 'react-native';
+import { Dimensions, View, Text, StyleSheet, ImageBackground } from 'react-native';
 import { globalStyle } from '../styles/global';
 
 
 const HomeScreen = () => {
     return (
         <View style={styles.body}>
+            <ImageBackground  style={styles.background} source={require('../images/stroke.jpg')} />
             <View>
                 <Text style={globalStyle.titleText}>
                     How to use?
@@ -56,9 +57,20 @@ const { height, width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     body: {
-        padding: height * 0.03,
+        padding: height * 0.05,
         flexDirection: 'row',
         justifyContent: 'space-around'
+    },
+    background: {
+        width: width, height: height,
+        resizeMode: "cover",
+        backgroundColor: 'white',
+        opacity: 0.3,
+        position: "absolute",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
     },
 });
 

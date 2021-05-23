@@ -24,7 +24,10 @@ const LoginScreen = () => {
         }
         return true;
     }
+    console.log(width)
+    console.log(height)
 
+    console.log(height*0.04167)
     return (
         <View>
                 <View style={{ padding: height * 0.03 }}>
@@ -40,18 +43,17 @@ const LoginScreen = () => {
                     </Text>
                     <View style={styles.body}>
                         
-                        <View style={{ width: width * 0.3, height: height*0.72 , background:'white', opacity: 0.9, padding: 10 , borderRadius: 20 }}>
-                            <View style={{paddingHorizontal: 40, paddingTop: 40}}>
+                        <View style={{ width: width * 0.3, height: height*0.72 , background:'white', opacity: 0.9, padding: height * 0.01 , borderRadius: 20 }}>
+                            <View style={{padding: height * 0.03 }}>
                                 <Text style={[globalStyle.subTitleText, {fontWeight: 'bold'}]}>
                                     About Us
                                 </Text>
-                                <Text style={[globalStyle.infoText, { paddingVertical: 20, lineHeight: 40}]}>
+                                <Text style={[globalStyle.infoText, { paddingVertical: width * 0.02, lineHeight: height * 0.04}]}>
                                     An application developed by team MA_B_5. This application enables users to upload medical brain images 
                                     and perform image segmentation. This will segment out any possible stroke lesion of the brain. 
                                     Users will be able to view the segmented result and have a better understanding through the result. 
-                                    
                                 </Text>
-                                <Text style={[globalStyle.infoText, { paddingVertical: 20 , lineHeight: 40}]}>
+                                <Text style={[globalStyle.infoText, { paddingVertical: width * 0.01,  lineHeight: height * 0.04}]}>
                                     This application is easy to use and it has been tested our by the team and others. 
                                     We hope you enjoy browsing through and using the application!
                                 </Text>
@@ -60,9 +62,9 @@ const LoginScreen = () => {
                         </View>
                         <View>
                             
-                            <View style={{ width: width * 0.3, height: height*0.45 ,background:'white', opacity: 0.9, padding: 10 , paddingVertical:20, borderRadius: 20 }}>
-                            <View style={{padding: 10}}>
-                            <Text style={[globalStyle.subTitleText, {fontSize: 25, paddingTop: 20}]}>
+                            <View style={{ width: width * 0.3, height: height*0.45 ,background:'white', opacity: 0.9, padding: height * 0.02 , paddingVertical:20, borderRadius: 20 }}>
+                            <View style={{padding: height * 0.03}}>
+                            <Text style={[globalStyle.subTitleText, {fontSize: 25, }]}>
                                 Username
                             </Text>
                             <TextInput
@@ -77,7 +79,7 @@ const LoginScreen = () => {
                                 onChangeText={setUserName}
                             />
                             <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingTop: 20}}>
-                                <Text style={[globalStyle.subTitleText, {fontSize: 25}]}>
+                                <Text style={[globalStyle.subTitleText, {fontSize: height*0.0278}]}>
                                     Password
                                 </Text>
                                 <TouchableOpacity 
@@ -87,7 +89,7 @@ const LoginScreen = () => {
                                     accessibilityHint='By clicking on this button, you will be prompt to another screen where you can reset your password by following the steps.'
                                     onPress={() => navigate('ForgetPassword')}
                                 >
-                                    <Text style={[globalStyle.subTitleText, {fontSize: 13, color: 'blue'}]}>
+                                    <Text style={[globalStyle.subTitleText, {fontSize: height * 0.0167, color: 'blue'}]}>
                                         Forgot password?
                                     </Text>
                                 </TouchableOpacity>
@@ -104,14 +106,14 @@ const LoginScreen = () => {
                                 value={state.password}
                                 onChangeText={setPassword}
                             />
-                            <label style={{ marginBottom: 15 }}>
+                            <label style={{ marginBottom: height * 0.025 }}>
                                 <input
                                     type="checkbox"
                                     name="remember"
                                     checked={state.rememberMe}
                                     onChange={() => toggleRememberMe(state.rememberMe)}
                                 />
-                                <Text style={[globalStyle.infoText, {fontSize: 15}]}>
+                                <Text style={[globalStyle.infoText, {fontSize: height * 0.0167}]}>
                                     Remember me
                                 </Text>
                             </label>
@@ -144,11 +146,11 @@ const LoginScreen = () => {
                             
                         </View>
                         <View style={{ width: width * 0.3, height: height*0.25 ,background:'white', opacity: 0.9, padding: 10 , marginTop: 30, borderRadius: 20 }}>
-                                <View style={{paddingHorizontal: 40, paddingTop: 40}}>
+                                <View style={{padding: height * 0.03}}>
                                     <Text style={[globalStyle.subTitleText, {fontWeight: 'bold'}]}>
                                         Contributor
                                     </Text>
-                                    <Text style={[globalStyle.infoText, { paddingVertical: 15, lineHeight: 40}]}>
+                                    <Text style={[globalStyle.infoText, { paddingVertical: height * 0.025, lineHeight: height * 0.0667}]}>
                                         Cheah Kin Shuen, Teng Kong Man, Jeng Yang Kong
                                         Special Thanks to Dr. Sicily for guidance.
                                     </Text>
@@ -171,8 +173,7 @@ const styles = StyleSheet.create({
     viewButton: {
         justifyContent: 'space-between',
         flexDirection: 'row',
-        marginBottom: 10,
-        paddingTop: 20
+        marginBottom: 20,
     },
     image: {
         width: width * 0.4,
@@ -192,15 +193,15 @@ const styles = StyleSheet.create({
     button: {
         alignItems: 'center',
         backgroundColor: 'cyan',
-        padding: 15,
-        borderRadius: 15
+        padding: height * 0.025,
+        borderRadius: height * 0.025
     },
     viewInput: {
-        borderRadius: 4,
+        borderRadius: height * 0.006667,
         paddingHorizontal: height * 0.013,
         paddingVertical: height * 0.018,
         marginBottom: height * 0.019,
-        fontSize: 15
+        fontSize: height * 0.025
     },
     body: {
         margin: height * 0.05,
