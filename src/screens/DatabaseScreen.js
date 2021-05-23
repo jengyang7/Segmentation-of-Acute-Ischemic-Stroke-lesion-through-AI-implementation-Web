@@ -93,20 +93,20 @@ const DatabaseScreen = () => {
         </View>
     ) :
         (
-            <View style={{  background:'white', opacity: 0.9, padding: height * 0.01 , borderRadius: 20 }}>
+            <View style={{  background:'white', opacity: 0.9, padding: height * 0.01 , borderRadius: height * 0.0222 }}>
                 <ImageBackground  style={styles.background} source={require('../images/stroke.jpg')} />
-                <View style={{  margin:50, background:'white', opacity: 0.9, padding: height * 0.01 , borderRadius: 20 }}>
+                <View style={{  margin:50, background:'white', opacity: 0.9, padding: height * 0.01 , borderRadius: height * 0.0222 }}>
                     <Text style={[globalStyle.titleText, {color: 'lightslategrey'}]}>
                         Your Data
                     </Text>
                     <FeatherIcon
-                        style={{ alignSelf: 'flex-end', marginRight: 100 }}
+                        style={{ alignSelf: 'flex-end', marginRight: height * 0.1111, backgroundColor: "lightsteelblue", borderRadius: height * 0.0222, padding: height * 0.01667, color:'white'  }}
                         cursor='pointer'
                         icon='refresh-ccw'
                         onClick={async() => await getFile()}
                     />
                     <FeatherIcon
-                        style={{ alignSelf: 'flex-end', marginRight: 100, marginTop: 20}}
+                        style={{ alignSelf: 'flex-end', marginRight: height * 0.1111, marginTop: height * 0.0222, backgroundColor: "lightsteelblue", borderRadius: height * 0.0222  ,padding: height * 0.01667, color:'white' }}
                         cursor='pointer'
                         icon='trash-2'
                         onClick={async() => {
