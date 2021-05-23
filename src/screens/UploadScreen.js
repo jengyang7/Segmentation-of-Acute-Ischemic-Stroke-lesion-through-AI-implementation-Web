@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useCallback, useState } from 'react';
-import { ActivityIndicator, FlatList, StyleSheet, Dimensions, View, Text } from 'react-native';
+import { ActivityIndicator, FlatList, StyleSheet, Dimensions, View, Text ,ImageBackground} from 'react-native';
 import { Context } from '../context/WebContext';
 import Uploady, { useItemProgressListener, UploadyContext, useUploady } from "@rpldy/uploady";
 import FeatherIcon from 'feather-icons-react';
@@ -45,10 +45,11 @@ const UploadScreen = () => {
                                         onClick={async() => await deleteImages(item)}
                                     />
                                 </View>
-                            </View>
-                        )
-                    }}
-                />
+                                </View>
+                                
+                            )
+                        }}
+                    />
             );
         } else {
             return null
@@ -114,10 +115,11 @@ const UploadScreen = () => {
 
     const UploadList = () => {
         return (
-            <View>
+            <View style={{  background:'white', opacity: 0.9, padding: height * 0.01 , borderRadius: 20 }}>
+                <ImageBackground  style={styles.background} source={require('../images/stroke.jpg')} />
                 <Uploady destination={{ url: "/upload", headers: { "Authorization": `Bearer ${state.token}` } }}
                     accept=".nii">
-                    <View>
+                    <View style={{  background:'white', opacity: 0.9, paddingHorizontal: height * 0.05, paddingVertical: height * 0.1, margin: height * 0.1,marginHorizontal: height * 0.3,borderRadius: 20}}>
                         <View style={{ paddingBottom: 10 }}>
                             <View style={styles.drag}>
                                 <View style={{ marginTop: height * 0.11 }}>
@@ -129,29 +131,32 @@ const UploadScreen = () => {
                     </View>
                 </Uploady>
                 <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+                    <View style={{  width: 1000,  background:'white', opacity: 0.9,borderRadius: 20, flexDirection: 'row', justifyContent: 'space-around'}}>
                     <TouchableOpacity
-                        style={[styles.button, { backgroundColor: 'black', marginHorizontal: 5 }]}
+                        style={[styles.button, { backgroundColor: 'lightsteelblue', marginHorizontal: 5 ,textAlign: 'center'}]}
                         accessible={true}
                         accessibilityLabel='Click to get the segmented result.'
                         accessibilityHint='By clicking on this button, you will be able to view your segmented result.'
                         onPress={() => checkUpload() ? predict() : alert('You have not uploaded any files yet!')}
                     >
-                        <Text style={globalStyle.buttonText}>
-                            Get segmented result
+                        <Text style={globalStyle.buttonText, {color: 'white', fontWeight:'bold', fontSize: height* 0.0222, }}>
+                            Download segmented result
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={[styles.button, { backgroundColor: 'white', width: width * 0.06, marginHorizontal: 5 }]}
+                        style={[styles.button, { backgroundColor: '#e95558', width: width * 0.06, marginHorizontal: 5 , textAlign: 'center', padding:height* 0.0222}]}
                         onPress={() => navigate('Home')}
                         accessible={true}
                         accessibilityLabel='Click to cancel the uploads.'
                         accessibilityHint='By clicking on this button, you will cancel all your uploads and return to the home screen.'
                         onPress={async () => { await deleteImages(); navigate('Home') }}
                     >
-                        <Text style={globalStyle.buttonText, { color: 'red' }}>
+                        <Text style={globalStyle.buttonText, { color: 'white' , fontWeight:'bold',  fontSize: height* 0.0222}}>
                             Cancel
                         </Text>
                     </TouchableOpacity>
+                    </View>
+                    
                 </View>
             </View>
         )
@@ -220,11 +225,20 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         width: width * 0.12,
         alignItems: 'center',
-        borderWidth: 1,
-        borderRadius: 4,
-        borderColor: 'grey',
-        padding: 8
-    }
+        borderRadius: 10,
+        padding: 15
+    },
+    background: {
+        width: width, height: height,
+        resizeMode: "cover",
+        backgroundColor: 'white',
+        opacity: 0.3,
+        position: "absolute",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
+    },
 
 });
 

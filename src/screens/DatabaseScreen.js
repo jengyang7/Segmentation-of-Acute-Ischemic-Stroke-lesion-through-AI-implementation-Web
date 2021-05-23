@@ -93,7 +93,7 @@ const DatabaseScreen = () => {
         </View>
     ) :
         (
-            <View>
+            <View style={{  background:'white', opacity: 0.9, padding: height * 0.01 , borderRadius: 20 }}>
                 <ImageBackground  style={styles.background} source={require('../images/stroke.jpg')} />
                 <View style={{  margin:50, background:'white', opacity: 0.9, padding: height * 0.01 , borderRadius: 20 }}>
                     <Text style={[globalStyle.titleText, {color: 'lightslategrey'}]}>
@@ -106,7 +106,7 @@ const DatabaseScreen = () => {
                         onClick={async() => await getFile()}
                     />
                     <FeatherIcon
-                        style={{ alignSelf: 'flex-end', marginRight: 100}}
+                        style={{ alignSelf: 'flex-end', marginRight: 100, marginTop: 20}}
                         cursor='pointer'
                         icon='trash-2'
                         onClick={async() => {
@@ -134,7 +134,7 @@ const DatabaseScreen = () => {
                                 <FeatherIcon
                                     cursor='pointer'
                                     icon='trash-2'
-                                    style={{ color: 'white', position: 'absolute', left: 0 }}
+                                    style={{ color: 'white', position: 'absolute', left: width * 0.01, top: height * 0.0333 }}
                                     onClick={async() => {
                                         await deleteImages(item);
                                         alert('You have deleted an image. Please click on the refresh icon to see your latest data.')

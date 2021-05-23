@@ -80,7 +80,7 @@ const navigator = createStackNavigator(
             ),
       headerRight: () => (
         <View style={{ flexDirection: 'row' }}>
-          <View style={[styles.viewIconText,  {backgroundColor:'lightsteelblue', borderRadius: 15}]}>
+          <View style={[styles.viewIconText,  {backgroundColor:'steelblue', borderRadius: 15}]}>
           <Image style={styles.background} source={require('./images/logo.png')}></Image>
 
             <FeatherIcon
@@ -102,7 +102,7 @@ const navigator = createStackNavigator(
             </TouchableOpacity>
           </View>
           <TouchableOpacity
-            style={[styles.navigationText,  {backgroundColor:'lightsteelblue', borderRadius: 15}]}
+            style={[styles.navigationText,  {backgroundColor:'steelblue', borderRadius: 15}]}
             accessible={true}
             accessiblityLabel='Click me'
             accessibilityHint='Click to navigate to Database Screen where you can download or see the details of the image.'
@@ -113,7 +113,7 @@ const navigator = createStackNavigator(
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.navigationText,  {backgroundColor:'lightsteelblue', borderRadius: 15}]}
+            style={[styles.navigationText,  {backgroundColor:'steelblue', borderRadius: 15}]}
             accessible={true}
             accessibilityLabel='Click me'
             accessibilityHint='Click to navigate to Upload Screen where you can upload your image to be segmented.'
@@ -123,7 +123,7 @@ const navigator = createStackNavigator(
               Upload Image
             </Text>
           </TouchableOpacity>
-          <View style={[styles.viewIconText,  {backgroundColor:'lightsteelblue', borderRadius: 15}]}>
+          <View style={[styles.viewIconText,  {backgroundColor:'steelblue', borderRadius: 15}]}>
             <TouchableOpacity
               style={{ marginHorizontal: 7 }}
               accessible={true}

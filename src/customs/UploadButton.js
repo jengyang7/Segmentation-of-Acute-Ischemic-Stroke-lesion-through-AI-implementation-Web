@@ -1,8 +1,9 @@
 import React, { useContext, useCallback } from "react";
 import { UploadyContext } from "@rpldy/uploady";
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity,Image, Text, StyleSheet, View, Dimensions } from 'react-native';
 import { globalStyle } from '../styles/global';
 
+const { height, width } = Dimensions.get('window');
 
 export const Ubutton = () => {
     const uploady = useContext(UploadyContext);
@@ -12,19 +13,31 @@ export const Ubutton = () => {
     });
 
     return (
-        <TouchableOpacity onPress={onClick}>
-            <Text style={[globalStyle.subTitleText, { fontSize: 14, color: 'blue' }]}>
-                Choose your files
-        </Text>
-        </TouchableOpacity>
+        <View style={{alignSelf: 'center'}}>
+            <Image source={require('../images/uploadlogo.png')} style={{width: 50, height: 50, marginBottom:20, alignSelf: 'center'}}/>
+            <TouchableOpacity onPress={onClick}  style={[styles.button, { backgroundColor: 'lightsteelblue', marginHorizontal: 5 ,textAlign: 'center'}]}>
+                <Text style={[globalStyle.subTitleText, { fontSize: 17, color: 'white', fontWeight:'bold' }]}>
+                    Choose your files
+                </Text>
+                
+
+            </TouchableOpacity>
+        </View>
+        
     );
 }
 
 const styles = StyleSheet.create({
     button: {
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-        marginBottom: 10
+        // justifyContent: 'space-between',
+        // flexDirection: 'row',
+        // marginBottom: 10
+        marginVertical: 20,
+        alignSelf: 'center',
+        width: width * 0.12,
+        alignItems: 'center',
+        borderRadius: 10,
+        padding: 15
     },
     underlineNavi: {
         marginLeft: 8,

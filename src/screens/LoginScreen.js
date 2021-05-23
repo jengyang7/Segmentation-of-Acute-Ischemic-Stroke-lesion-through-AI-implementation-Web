@@ -130,7 +130,7 @@ const LoginScreen = () => {
                                     accessibilityHint='By clicking on this button, you will be able to login to the homescreen where you can learn the instructions of using the application, if the details of your account is correct.'
                                     onPress={() => checkInput() ? login(state.username, state.password, state.rememberMe) : () => { }}
                                 >
-                                    <Text style={globalStyle.buttonText}>
+                                    <Text style={[globalStyle.buttonText]}>
                                         Sign In
                                     </Text>
                                 </TouchableOpacity>
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     button: {
         alignItems: 'center',
         backgroundColor: 'lightsteelblue',
-        padding: height * 0.025,
+        padding: height * 0.020,
         borderRadius: height * 0.025
     },
     viewInput: {
@@ -213,12 +213,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
     },
-    backgroundVideo: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        bottom: 0,
-        right: 0,}
+   
 });
 
 export default LoginScreen;
