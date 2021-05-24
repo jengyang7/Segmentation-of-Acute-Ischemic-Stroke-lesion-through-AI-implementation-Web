@@ -73,7 +73,7 @@ def refresh():
 @jwt_required
 def upload():
     current_user = get_jwt_identity()
-    print(current_user)
+    print(request.files)
     if request.files != "":
         f = request.files["file"]
         filename = secure_filename(f.filename)
@@ -86,12 +86,13 @@ def upload():
 def delete(filename):
     current_user = get_jwt_identity()
     f = mongo.db.fs.files.find_one({"filename":filename,"username":current_user["username"]})
-    if "_id" in f:
-        deleted = mongo.db.fs.files.delete_one({"filename":filename,"username":current_user["username"]})
-        if deleted.deleted_count == 1:
-            return {"success":True,"data":"File Deleted"}
-        else:
-            return {"success":False,"data":"File Delete Unsuccessful"}
+    if f != None:
+        if "_id" in f:
+            deleted = mongo.db.fs.files.delete_one({"filename":filename,"username":current_user["username"]})
+            if deleted.deleted_count == 1:
+                return {"success":True,"data":"File Deleted"}
+            else:
+                return {"success":False,"data":"File Delete Unsuccessful"}
     return {"success":False,"data":"File not found"}
 
 @app.route('/delete_all', methods = ["POST"])
