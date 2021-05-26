@@ -1,11 +1,8 @@
 import React, { useContext, useEffect } from 'react';
-import { ImageBackground, TouchableOpacity, Dimensions, Image, Text, View, TextInput, StyleSheet } from 'react-native';
+import { ImageBackground, TouchableOpacity, Dimensions, Text, View, TextInput, StyleSheet } from 'react-native';
 import { Context } from '../context/WebContext';
 import { navigate } from '../navigationRef';
-
 import { globalStyle } from '../styles/global';
-
-
 
 
 const LoginScreen = () => {
@@ -13,7 +10,8 @@ const LoginScreen = () => {
 
     useEffect(() => {
         getToken();
-    }, []);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [state.token]);
 
     const checkInput = () => {
         if (state.username === '') {
@@ -27,147 +25,127 @@ const LoginScreen = () => {
         }
         return true;
     }
-    console.log(width)
-    console.log(height)
 
-    console.log(height*0.04167)
     return (
         <View>
-                <View style={{ padding: height * 0.03 }}>
-                <ImageBackground  style={styles.background} source={require('../images/login_1.jpg')} />
-                 
-                     
-                    <Text style={globalStyle.titleText}>
-                        Stroke.AI
+            <View style={{ padding: height * 0.03 }}>
+                <ImageBackground style={styles.background} source={require('../images/login_1.jpg')} />
+                <Text style={globalStyle.titleText}>
+                    Stroke.AI
                     </Text>
-                    <Text style={{fontFamily: 'Avenir Next',
-                                fontSize: 18,
-                                fontWeight: 'bold',
-                                alignSelf: 'center'}}>
-                        Identify the hidden stroke lesion
+                <Text style={{
+                    fontFamily: 'Avenir Next',
+                    fontSize: 18,
+                    fontWeight: 'bold',
+                    alignSelf: 'center'
+                }}>
+                    Identify the hidden stroke lesion
                     </Text>
-                    <View style={styles.body}>
-                        
-                        <View style={{ width: width * 0.3, height: height*0.72 , background:'white', opacity: 0.9, padding: height * 0.01 , borderRadius: 20 }}>
-                            <View style={{padding: height * 0.03 }}>
-                                <Text style={[globalStyle.subTitleText, {fontWeight: 'bold', color: "lightslategrey"}]}>
-                                    About Us
+                <View style={styles.body}>
+
+                    <View style={{ width: width * 0.3, height: height * 0.72, background: 'white', opacity: 0.9, padding: height * 0.01, borderRadius: 20 }}>
+                        <View style={{ padding: height * 0.03 }}>
+                            <Text style={[globalStyle.subTitleText, { fontWeight: 'bold', color: "lightslategrey" }]}>
+                                About Us
                                 </Text>
-                                <Text style={[globalStyle.infoText, { paddingVertical: width * 0.02, lineHeight: height * 0.05}]}>
-                                    An application developed by team MA_B_5. This application enables users to upload CT brain images 
-                                    and perform image segmentation. This will segment out any possible stroke lesion of the brain. 
-                                    Users will be able to view the segmented result and have a better understanding through the result. 
+                            <Text style={[globalStyle.infoText, { paddingVertical: width * 0.02, lineHeight: height * 0.05 }]}>
+                                An application developed by team MA_B_5. This application enables users to upload CT brain images
+                                and perform image segmentation. This will segment out any possible stroke lesion of the brain.
+                                Users will be able to view the segmented result and have a better understanding through the result.
                                 </Text>
-                                <Text style={[globalStyle.infoText, { paddingVertical: width * 0.01,  lineHeight: height * 0.05}]}>
-                                    This application is easy to use and it has been tested out by the team and others. 
-                                    We hope you enjoy browsing through and using the application!
+                            <Text style={[globalStyle.infoText, { paddingVertical: width * 0.01, lineHeight: height * 0.05 }]}>
+                                This application is easy to use and it has been tested out by the team and others.
+                                We hope you enjoy browsing through and using the application!
                                 </Text>
-                            </View>
-                            
                         </View>
-                        <View>
-                            
-                        <View style={{ width: width * 0.3, height: height*0.45 ,background:'white', opacity: 0.9, padding: height * 0.02 , paddingVertical:height * 0.015, borderRadius: 20 }}>
-                            <View style={{padding: height * 0.03}}>
-                            <Text style={[globalStyle.subTitleText, {fontSize: height*0.0278, color: 'lightslategrey'}]}>
-                                Username
+                    </View>
+                    <View>
+                        <View style={{ width: width * 0.3, height: height * 0.45, background: 'white', opacity: 0.9, padding: height * 0.02, paddingVertical: height * 0.015, borderRadius: 20 }}>
+                            <View style={{ padding: height * 0.03 }}>
+                                <Text style={[globalStyle.subTitleText, { fontSize: height * 0.0278, color: 'lightslategrey' }]}>
+                                    Username
                             </Text>
-                            <TextInput
-                                style={[globalStyle.infoText, styles.viewInput]}
-                                accessible={true}
-                                accessibilityLabel='Click to enter your username'
-                                accessibilityHint='The username field is required to fill in to login.'
-                                placeholder="Enter username"
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                                value={state.username}
-                                onChangeText={setUserName}
-                            />
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingTop: height * 0.029}}>
-                                <Text style={[globalStyle.subTitleText, {fontSize: height*0.0278, color: 'lightslategrey'}]}>
-                                    Password
-                                </Text>
-                                {/* <TouchableOpacity 
-                                    style={{color: 'blue'}}
+                                <TextInput
+                                    style={[globalStyle.infoText, styles.viewInput]}
                                     accessible={true}
-                                    accessibilityLabel='Click if you forgot your password.'
-                                    accessibilityHint='By clicking on this button, you will be prompt to another screen where you can reset your password by following the steps.'
-                                    onPress={() => navigate('ForgetPassword')}
-                                >
-                                    <Text style={[globalStyle.subTitleText, {fontSize: height * 0.02, color: "lightslategrey"}]}>
-                                        Forgot password?
-                                    </Text>
-                                </TouchableOpacity> */}
-                            </View>
-                            <TextInput
-                                style={[globalStyle.infoText, styles.viewInput]}
-                                accessible={true}
-                                accessibilityLabel='Click to enter your password'
-                                accessibilityHint='The password field is required to fill in to login.'
-                                secureTextEntry={true}
-                                placeholder="Enter password"
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                                value={state.password}
-                                onChangeText={setPassword}
-                            />
-                            <label style={{ marginBottom: height * 0.025 , color: "lightslategrey"}}>
-                                <input
-                                    type="checkbox"
-                                    name="remember"
-                                    checked={state.rememberMe}
-                                    onChange={() => toggleRememberMe(state.rememberMe)}
+                                    accessibilityLabel='Click to enter your username'
+                                    accessibilityHint='The username field is required to fill in to login.'
+                                    placeholder="Enter username"
+                                    autoCapitalize="none"
+                                    autoCorrect={false}
+                                    value={state.username}
+                                    onChangeText={setUserName}
                                 />
-                                <Text style={[globalStyle.infoText, {fontSize: height * 0.02, color: "lightslategrey"}]}>
-                                    Remember me
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: height * 0.029 }}>
+                                    <Text style={[globalStyle.subTitleText, { fontSize: height * 0.0278, color: 'lightslategrey' }]}>
+                                        Password
                                 </Text>
-                            </label>
-                            <View style={styles.viewButton}>
-                                <TouchableOpacity
-                                    style={styles.button}
-                                    accessible={true}
-                                    accessibilityLabel='Click to sign in'
-                                    accessibilityHint='By clicking on this button, you will be able to login to the homescreen where you can learn the instructions of using the application, if the details of your account is correct.'
-                                    onPress={() => checkInput() ? login(state.username, state.password, state.rememberMe) : () => { }}
-                                >
-                                    <Text style={[globalStyle.buttonText]}>
-                                        Sign In
-                                    </Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    style={styles.button}
-                                    accessible={true}
-                                    accessibilityLabel='Click to sign up'
-                                    accessibilityHint='By clicking on this button, you will be prompted to a new interface, where you will be able to create a new account.'
-                                    onPress={() => navigate('Register')}
-                                >
-                                    <Text style={globalStyle.buttonText}>
-                                        Sign Up
-                                    </Text>
-                                </TouchableOpacity>
-                            </View>
-                            
-                            </View>
-                            
-                        </View>
-                        <View style={{ width: width * 0.3, height: height*0.25 ,background:'white', opacity: 0.9, padding: 10 , marginTop: 30, borderRadius: 20 }}>
-                                <View style={{padding: height * 0.03}}>
-                                    <Text style={[globalStyle.subTitleText, {fontWeight: 'bold', color: "lightslategrey"}]}>
-                                        Contributor
-                                    </Text>
-                                    <Text style={[globalStyle.infoText, { paddingVertical: height * 0.025, lineHeight: height * 0.0667}]}>
-                                        Cheah Kin Shuen, Teng Kong Man, Jeng Yang Kong
-                                        Special Thanks to Dr. Sicily for guidance.
-                                    </Text>
                                 </View>
+                                <TextInput
+                                    style={[globalStyle.infoText, styles.viewInput]}
+                                    accessible={true}
+                                    accessibilityLabel='Click to enter your password'
+                                    accessibilityHint='The password field is required to fill in to login.'
+                                    secureTextEntry={true}
+                                    placeholder="Enter password"
+                                    autoCapitalize="none"
+                                    autoCorrect={false}
+                                    value={state.password}
+                                    onChangeText={setPassword}
+                                />
+                                <label style={{ marginBottom: height * 0.025, color: "lightslategrey" }}>
+                                    <input
+                                        type="checkbox"
+                                        name="remember"
+                                        checked={state.rememberMe}
+                                        onChange={() => toggleRememberMe(state.rememberMe)}
+                                    />
+                                    <Text style={[globalStyle.infoText, { fontSize: height * 0.02, color: "lightslategrey" }]}>
+                                        Remember me
+                                </Text>
+                                </label>
+                                <View style={styles.viewButton}>
+                                    <TouchableOpacity
+                                        style={styles.button}
+                                        accessible={true}
+                                        accessibilityLabel='Click to sign in'
+                                        accessibilityHint='By clicking on this button, you will be able to login to the homescreen where you can learn the instructions of using the application, if the details of your account is correct.'
+                                        onPress={() => checkInput() ? login(state.username, state.password, state.rememberMe) : () => { }}
+                                    >
+                                        <Text style={[globalStyle.buttonText]}>
+                                            Sign In
+                                    </Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        style={styles.button}
+                                        accessible={true}
+                                        accessibilityLabel='Click to sign up'
+                                        accessibilityHint='By clicking on this button, you will be prompted to a new interface, where you will be able to create a new account.'
+                                        onPress={() => navigate('Register')}
+                                    >
+                                        <Text style={globalStyle.buttonText}>
+                                            Sign Up
+                                    </Text>
+                                    </TouchableOpacity>
+                                </View>
+
+                            </View>
+
+                        </View>
+                        <View style={{ width: width * 0.3, height: height * 0.25, background: 'white', opacity: 0.9, padding: 10, marginTop: 30, borderRadius: 20 }}>
+                            <View style={{ padding: height * 0.03 }}>
+                                <Text style={[globalStyle.subTitleText, { fontWeight: 'bold', color: "lightslategrey" }]}>
+                                    Contributor
+                                    </Text>
+                                <Text style={[globalStyle.infoText, { paddingVertical: height * 0.025, lineHeight: height * 0.0667 }]}>
+                                    Kin Shuen Cheah, Kong Man Teng, Jeng Yang Kong
+                                    Special Thanks to Dr. Sicily for guidance.
+                                    </Text>
                             </View>
                         </View>
-                        
-                        
                     </View>
                 </View>
-                
-            
+            </View>
         </View>
     );
 };
@@ -179,10 +157,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         flexDirection: 'row',
         marginBottom: height * 0.0222,
-    },
-    image: {
-        width: width * 0.4,
-        height: height * 0.3
     },
     background: {
         width: width, height: height,
@@ -213,7 +187,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
     },
-   
+
 });
 
 export default LoginScreen;

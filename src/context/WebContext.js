@@ -17,7 +17,7 @@ const webReducer = (state, action) => {
     case 'set_email':
       return { ...state, registerEmail: action.registerEmail }
     case 'login':
-      return { ...state, token: action.token };
+      return { ...state, token: action.token, password: action.password };
     case 'get_token':
       return { ...state, username: action.username, token: action.token, rememberMe: action.rememberMe };
     case 'logout':
@@ -29,11 +29,16 @@ const webReducer = (state, action) => {
     case 'get_images':
       return { ...state, images: action.images }
     case 'delete_upload_images':
-      return {...state, uploadFile: action.uploadFile}
+      return { ...state, uploadFile: action.uploadFile }
     case 'delete_db_images':
-      return {...state, images: action.images}
+      return { ...state, images: action.images }
     case 'toggle_loading':
-      return {...state, isLoading: action.isLoading}
+      return { ...state, isLoading: action.isLoading }
+    case 'reset':
+      return {
+        username: '', password: '', registerEmail: '', registerUsername: '', registerPassword: '', comfirmPassword: '',
+        rememberMe: false, token: null, uploadFile: [], images: [], isLoading: false
+      }
     default:
       return state;
   }
@@ -92,7 +97,7 @@ const login = dispatch => {
         }
       }
 
-      dispatch({ type: 'login', token: resp.data.token })
+      dispatch({ type: 'login', token: resp.data.token, password: '' })
       return resp.success ? navigate('Home') : alert('Incorrect username or password.');
     } catch (error) {
       alert('Incorrect username or password.')
@@ -149,38 +154,50 @@ const getImages = dispatch => {
 const deleteUploadImg = dispatch => {
   return (file, files) => {
     files = files.filter(item => item.id !== file.id)
-    dispatch({ type: 'delete_upload_images', uploadFile: files})
+    dispatch({ type: 'delete_upload_images', uploadFile: files })
   }
 }
 
 const deleteAllUploadImg = dispatch => {
   return () => {
-    dispatch({type: 'delete_upload_images', uploadFile: []})
+    dispatch({ type: 'delete_upload_images', uploadFile: [] })
   }
 }
 
 const deleteDBImgs = dispatch => {
   return (id, files) => {
-    files = files.filter(item => item.file.id !== id)
-    dispatch({ type: 'delete_db_images', images: files})
+    files = files.filter(item => item.file._id !== id)
+    dispatch({ type: 'delete_db_images', images: files })
   }
 }
 
 const deleteAllDBImgs = dispatch => {
   return () => {
-    dispatch({type: 'delete_db_images', images: []})
+    dispatch({ type: 'delete_db_images', images: [] })
   }
 }
 
 const loading = dispatch => {
   return (isLoading) => {
     const opposite = !isLoading;
-    dispatch({ type: 'toggle_loading', isLoading: opposite})
+    dispatch({ type: 'toggle_loading', isLoading: opposite })
+  }
+}
+
+const reset = dispatch => {
+  return () => {
+    dispatch({ type: 'reset' })
   }
 }
 
 export const { Context, Provider } = createWebContext(
   webReducer,
-  { setUserName, setPassword, setRegisterUserName, setRegisterPassword, setComfirmPassword, setEmail, login, getToken, toggleRememberMe, chooseFile, getImages, deleteUploadImg, deleteAllUploadImg, loading, deleteDBImgs, deleteAllDBImgs },
-  { username: '', password: '', registerEmail: '', registerUsername: '', registerPassword: '', comfirmPassword: '', rememberMe: false, token: null, uploadFile: [], images: [], isLoading: false }
+  {
+    setUserName, setPassword, setRegisterUserName, setRegisterPassword, setComfirmPassword, setEmail, login, getToken,
+    toggleRememberMe, chooseFile, getImages, deleteUploadImg, deleteAllUploadImg, loading, deleteDBImgs, deleteAllDBImgs, reset
+  },
+  {
+    username: '', password: '', registerEmail: '', registerUsername: '', registerPassword: '', comfirmPassword: '',
+    rememberMe: false, token: null, uploadFile: [], images: [], isLoading: false
+  }
 );

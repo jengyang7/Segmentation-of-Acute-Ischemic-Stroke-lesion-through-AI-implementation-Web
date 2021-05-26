@@ -12,10 +12,7 @@ import FeatherIcon from 'feather-icons-react';
 import { setNavigator } from './navigationRef';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { navigate } from './navigationRef';
-import ResultScreen from './screens/ResultScreen';
 import { globalStyle } from './styles/global';
-import ForgotPassScreen from './screens/ForgotPassScreen';
-
 
 
 const navigator = createStackNavigator(
@@ -53,19 +50,6 @@ const navigator = createStackNavigator(
         title: 'Upload'
       })
     },
-    Result: {
-      screen: ResultScreen,
-      navigationOptions: () => ({
-        title: 'Results'
-      })
-    },
-    ForgetPassword: {
-      screen: ForgotPassScreen,
-      navigationOptions: () => ({
-        title: 'Reset password',
-        headerRight: () => null
-      })
-    }
   },
   {
     initialRouteName: 'Login',
@@ -76,12 +60,12 @@ const navigator = createStackNavigator(
       },
       headerTintColor: 'Black',
       headerTitle: (props) => (
-            <Image style={{width: height * 0.222, height: height * 0.0667 }} source={require('./images/logo.png')}></Image>
-            ),
+        <Image style={{ width: height * 0.222, height: height * 0.0667 }} source={require('./images/logo.png')}></Image>
+      ),
       headerRight: () => (
         <View style={{ flexDirection: 'row' }}>
-          <View style={[styles.viewIconText,  {backgroundColor:'steelblue', borderRadius: height * 0.01667}]}>
-          <Image style={styles.background} source={require('./images/logo.png')}></Image>
+          <View style={[styles.viewIconText, { backgroundColor: 'steelblue', borderRadius: height * 0.01667 }]}>
+            <Image style={styles.background} source={require('./images/logo.png')}></Image>
 
             <FeatherIcon
               cursor='pointer'
@@ -102,7 +86,7 @@ const navigator = createStackNavigator(
             </TouchableOpacity>
           </View>
           <TouchableOpacity
-            style={[styles.navigationText,  {backgroundColor:'steelblue', borderRadius: height * 0.01667}]}
+            style={[styles.navigationText, { backgroundColor: 'steelblue', borderRadius: height * 0.01667 }]}
             accessible={true}
             accessiblityLabel='Click me'
             accessibilityHint='Click to navigate to Database Screen where you can download or see the details of the image.'
@@ -113,7 +97,7 @@ const navigator = createStackNavigator(
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.navigationText,  {backgroundColor:'steelblue', borderRadius: height * 0.01667}]}
+            style={[styles.navigationText, { backgroundColor: 'steelblue', borderRadius: height * 0.01667 }]}
             accessible={true}
             accessibilityLabel='Click me'
             accessibilityHint='Click to navigate to Upload Screen where you can upload your image to be segmented.'
@@ -123,7 +107,7 @@ const navigator = createStackNavigator(
               Upload Image
             </Text>
           </TouchableOpacity>
-          <View style={[styles.viewIconText,  {backgroundColor:'steelblue', borderRadius: height * 0.01667}]}>
+          <View style={[styles.viewIconText, { backgroundColor: 'steelblue', borderRadius: height * 0.01667 }]}>
             <TouchableOpacity
               style={{ marginHorizontal: 7 }}
               accessible={true}
