@@ -22,14 +22,19 @@ def verify_password(password, hash_from_database):
     return does_match
 
 
+# /login route 
 @app.route('/login', methods = ["POST"])
 def login():
+    # validate user according schema
     data = validate_user(request.get_json())
     if data['success']:
         data = data['data']
+        # look up for user in database
         user = mongo.db.user.find_one({'username': data['username']})
+        # check password hash matches the password hash in database
         if user and flask_bcrypt.check_password_hash(user['password'], data['password']):
             del user['password']
+            # issues access token
             access_token = create_access_token(identity=data)
             refresh_token = create_refresh_token(identity=data)
             user['token'] = access_token

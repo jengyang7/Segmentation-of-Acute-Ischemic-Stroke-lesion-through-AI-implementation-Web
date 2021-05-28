@@ -3,7 +3,6 @@ import { ActivityIndicator, Dimensions, FlatList, Image, View, Text, StyleSheet,
 import FeatherIcon from "feather-icons-react"
 import { Context } from '../context/WebContext';
 import { globalStyle } from '../styles/global';
-import DwvComponent from '../DwvComponent';
 import FileSaver from 'file-saver';
 import { Infotip } from '@trendmicro/react-tooltip';
 import '@trendmicro/react-tooltip/dist/react-tooltip.css';
@@ -13,7 +12,8 @@ const DatabaseScreen = () => {
     const { state, getImages, loading, deleteDBImgs, deleteAllDBImgs } = useContext(Context);
     useEffect(() => {
         getFile();
-    }, []);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [state.uploadFile]);
 
     const getFile = async () => {
         loading(false)
@@ -27,8 +27,8 @@ const DatabaseScreen = () => {
             headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${state.token}` }
         };
         try {
-            console.log(state)
             let resp1 = await fetch('/retrieve_filename', reqOption1).then(data => data.json());
+            console.log(resp1)
             for (let i = 0; i < resp1.data.length; i++) {
                 let resp2 = await fetch('/retrieve/' + resp1.data[i].filename, reqOption2).then(data => data);
                 console.log(resp2)
@@ -51,7 +51,7 @@ const DatabaseScreen = () => {
         }
         try {
             let resp = await fetch('/retrieve/' + name, reqOption).then(data => data.blob());
-            // console.log(resp)
+            console.log(resp)
             FileSaver.saveAs(resp, "database_image.nii");
         } catch (error) {
             console.log(`Error: ${error}`);
@@ -60,10 +60,10 @@ const DatabaseScreen = () => {
 
     const deleteImages = async (...args) => {
         var file = [];
-        if (args.length == 0) {
+        if (args.length === 0) {
             file = state.images
 
-        } else if (args.length == 1) {
+        } else if (args.length === 1) {
             file = args
         }
         const reqOption = {
@@ -71,17 +71,19 @@ const DatabaseScreen = () => {
             headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${state.token}` }
         }
         try {
-            if (args.length == 1){
+            if (args.length === 1) {
                 for (let i = 0; i < file.length; i++) {
                     console.log(file[i].file.filename)
                     let resp = await fetch('/delete/' + file[i].file.filename, reqOption).then(data => data.json());
+                    console.log(resp)
                     await deleteDBImgs(file[i].file._id, state.images);
                 }
             } else {
                 let resp = await fetch('/delete_all', reqOption).then(data => data.json());
+                console.log(resp)
                 await deleteAllDBImgs()
             }
-            
+
         } catch (error) {
             console.log(`Error: ${error}`);
         }
@@ -93,86 +95,90 @@ const DatabaseScreen = () => {
         </View>
     ) :
         (
-            <View style={{  background:'white', opacity: 0.9, padding: height * 0.01 , borderRadius: 20 }}>
-                <ImageBackground  style={styles.background} source={require('../images/stroke.jpg')} />
-                <View style={{  margin:50, background:'white', opacity: 0.9, padding: height * 0.01 , borderRadius: 20 }}>
-                    <Text style={[globalStyle.titleText, {color: 'lightslategrey'}]}>
+            <View style={{ background: 'white', opacity: 0.9, padding: height * 0.01, borderRadius: height * 0.0222 }}>
+                <ImageBackground style={styles.background} source={require('../images/stroke.jpg')} />
+                <View style={{ margin: 50, background: 'white', opacity: 0.9, padding: height * 0.01, borderRadius: height * 0.0222 }}>
+                    <Text style={[globalStyle.titleText, { color: 'lightslategrey' }]}>
                         Your Data
                     </Text>
                     <FeatherIcon
-                        style={{ alignSelf: 'flex-end', marginRight: 100 }}
+                        style={{ alignSelf: 'flex-end', marginRight: height * 0.1111, backgroundColor: "lightsteelblue", borderRadius: height * 0.0222, padding: height * 0.01667, color: 'white' }}
                         cursor='pointer'
                         icon='refresh-ccw'
-                        onClick={async() => await getFile()}
+                        onClick={async () => await getFile()}
                     />
                     <FeatherIcon
-                        style={{ alignSelf: 'flex-end', marginRight: 100, marginTop: 20}}
+                        style={{ alignSelf: 'flex-end', marginRight: height * 0.1111, marginTop: height * 0.0222, backgroundColor: "lightsteelblue", borderRadius: height * 0.0222, padding: height * 0.01667, color: 'white' }}
                         cursor='pointer'
                         icon='trash-2'
-                        onClick={async() => {
-                            await deleteImages();
-                            alert('You have deleted all images.');
+                        onClick={async () => {
+                            if (state.images.length > 0) {
+                                await deleteImages();
+                                alert('You have deleted all images. Please click on the refresh icon to see your latest data if it is not updated.');
+                            } else {
+                                alert('No images found in your database!')
+                            }
+
                         }}
                     />
                     <FlatList
-                    keyExtractor={image => image.file.filename}
-                    data={state.images}
-                    numColumns={2}
-                    renderItem={({ item }) => {
-                        return (
-                            <View style={styles.body}>
-                                {/* <DwvComponent /> */}
-                                <Image
-                                    style={styles.databaseImage}
-                                    accessible={true}
-                                    accessibilityLabel='A stroke image'
-                                    accessibilityHint='Click to zoom in the image.'
-                                    source={require('../images/CTscan.jpg')}
-                                    onClick={() => { }}
-                                />
-                                
-                                <FeatherIcon
-                                    cursor='pointer'
-                                    icon='trash-2'
-                                    style={{ color: 'white', position: 'absolute', left: width * 0.01, top: height * 0.0333 }}
-                                    onClick={async() => {
-                                        await deleteImages(item);
-                                        alert('You have deleted an image. Please click on the refresh icon to see your latest data.')
-                                    }}
-                                />
-                                <View style={{ justifyContent: 'space-between' }}>
-                                    <Infotip
-                                        tooltipStyle={{ whiteSpace: 'nowrap' }}
-                                        data-html={true}
-                                        content={() => {
-                                            return (
-                                                <Text>
-                                                    {`Name: ${item.file.filename}\n`}
-                                                    {`Type: NIFTI\n`}
-                                                    {`Size: ${(item.file.length / 1000000).toFixed(2)}MB\n`}
-                                                    {`Date uploaded: ${item.file.uploadDate.slice(0, 11)} ${'' + (parseInt(item.file.uploadDate.slice(11, 13), 10) + 8) < 24 ? (parseInt(item.file.uploadDate.slice(11, 13), 10) + 8) : (parseInt(item.file.uploadDate.slice(11, 13), 10) + 8 - 24)}${item.file.uploadDate.slice(13, 19)}`}
-                                                </Text>);
-                                        }}
-                                    >
-                                        <FeatherIcon
-                                            cursor='pointer'
-                                            style={{ color: 'white', position: 'absolute', right: width * 0.01, top: height * 0.01 }}
-                                            icon='info'
-                                        />
-                                    </Infotip>
+                        keyExtractor={image => image.file._id}
+                        data={state.images}
+                        numColumns={2}
+                        renderItem={({ item }) => {
+                            return (
+                                <View style={styles.body}>
+                                    <Image
+                                        style={styles.databaseImage}
+                                        accessible={true}
+                                        accessibilityLabel='A stroke image'
+                                        accessibilityHint='Click to zoom in the image.'
+                                        source={require('../images/CTscan.jpg')}
+                                        onClick={() => { }}
+                                    />
+
                                     <FeatherIcon
                                         cursor='pointer'
-                                        style={{ color: 'white', position: 'absolute', right: width * 0.01, bottom: height * 0.01 }}
-                                        icon='download'
-                                        onClick={() => downloadFile(item.name)}
+                                        icon='trash-2'
+                                        style={{ color: 'white', position: 'absolute', left: width * 0.01, top: height * 0.0333 }}
+                                        onClick={async () => {
+                                            await deleteImages(item);
+                                            alert('You have deleted an image. Please click on the refresh icon to see your latest data if it is not updated.')
+                                        }}
                                     />
-                                </View>
-                            </View>)
-                    }}
-                />
+                                    <View style={{ justifyContent: 'space-between' }}>
+                                        <Infotip
+                                            tooltipStyle={{ whiteSpace: 'nowrap' }}
+                                            data-html={true}
+                                            content={() => {
+                                                return (
+                                                    <Text>
+                                                        {`Name: ${item.file.filename}\n`}
+                                                        {`Type: NIFTI\n`}
+                                                        {`Size: ${(item.file.length / 1000000).toFixed(2)}MB\n`}
+                                                        {`Date uploaded: ${item.file.uploadDate.slice(0, 11)} ${'' + (parseInt(item.file.uploadDate.slice(11, 13), 10) + 8) < 24 ? (parseInt(item.file.uploadDate.slice(11, 13), 10) + 8) : (parseInt(item.file.uploadDate.slice(11, 13), 10) + 8 - 24)}${item.file.uploadDate.slice(13, 19)}`}
+                                                    </Text>);
+                                            }}
+                                        >
+                                            <FeatherIcon
+                                                cursor='pointer'
+                                                style={{ color: 'white', position: 'absolute', right: width * 0.01, top: height * 0.01 }}
+                                                icon='info'
+                                            />
+                                        </Infotip>
+                                        <FeatherIcon
+                                            cursor='pointer'
+                                            style={{ color: 'white', position: 'absolute', right: width * 0.01, bottom: height * 0.01 }}
+                                            icon='download'
+                                            onClick={() => downloadFile(item.file.filename)}
+                                        />
+                                    </View>
+                                </View>)
+                        }}
+                    />
                 </View>
-                
-                
+
+
             </View>);
 };
 
