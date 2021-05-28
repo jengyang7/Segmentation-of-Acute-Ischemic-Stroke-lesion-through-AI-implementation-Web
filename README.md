@@ -1,9 +1,5 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## TODO
-Uploading image and view on backend
-create a database 
-make it online
 
 ## To run our project
 1) activate the backend environment (for first time launching the application. Once you have activated the environment, you do need to run this step anymore.)
@@ -27,6 +23,8 @@ make it online
 2) Open two terminal and run the following command on two seperate terminal
 ### `npm start`
 This will serve as the frontend
+
+3) If you encounter any problem, please contact kten0002@student.monash.edu or kche0071@student.monash.edu .
 
 ### `yarn start-api`
 This will serve as the backend 
