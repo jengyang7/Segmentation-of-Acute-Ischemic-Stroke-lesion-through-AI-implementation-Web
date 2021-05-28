@@ -87,10 +87,14 @@ const login = dispatch => {
       body: JSON.stringify({ username: username, password: password })
     };
     try {
+      // Clear the asyncstorage
       await AsyncStorage.clear();
       let resp = await fetch('/login', reqOption).then(data => data.json());
+      // If login successfully
       if (resp.success) {
+        // If remember me is ticked
         if (rememberMe) {
+          // Store the token and other information into asyncstorage
           await AsyncStorage.setItem('token', resp.data.token)
           await AsyncStorage.setItem('remember', rememberMe)
           await AsyncStorage.setItem('username', resp.data.username)
@@ -100,6 +104,7 @@ const login = dispatch => {
       dispatch({ type: 'login', token: resp.data.token, password: '' })
       return resp.success ? navigate('Home') : alert('Incorrect username or password.');
     } catch (error) {
+      // Alert the user
       alert('Incorrect username or password.')
       console.log(`Error: ${error}`);
     }
